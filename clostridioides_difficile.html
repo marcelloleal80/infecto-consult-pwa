@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123B5D">
+<title>Infecto Consult — Clostridioides difficile</title>
+<style>
+:root{--blue:#123B5D;--ink:#17212b;--muted:#61707d;--bg:#f5f7f9;--card:#fff;--line:#dfe5ea;--green:#e8f5ec;--yellow:#fff6dc;--red:#fde9e7;--cyan:#e8f4fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,Arial,sans-serif;color:var(--ink);line-height:1.5}
+header{background:var(--blue);color:white;padding:24px 18px}header .wrap,main{max-width:980px;margin:auto}
+.eyebrow{font-size:12px;letter-spacing:.12em;opacity:.8;font-weight:700}.title{font-size:30px;font-weight:800;margin:6px 0}.sub{opacity:.9}
+nav{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);overflow:auto;white-space:nowrap}
+nav button{border:0;background:transparent;padding:13px 12px;color:var(--blue);font-weight:700;cursor:pointer}
+main{padding:20px 14px 50px}.hero,.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0;box-shadow:0 2px 8px #00000008}
+.hero{background:var(--cyan)}h2{font-size:21px;margin:0 0 12px}h3{font-size:17px;margin:18px 0 8px}
+table{width:100%;border-collapse:collapse;margin:10px 0}th,td{border:1px solid var(--line);padding:9px;vertical-align:top;text-align:left}th{background:#f1f4f6}
+ul,ol{padding-left:22px}.alert,.warn,.success,.info{padding:13px 15px;border-radius:10px;margin:12px 0}.alert{background:var(--red)}.warn{background:var(--yellow)}.success{background:var(--green)}.info{background:var(--cyan)}
+.step{display:none}.step.active{display:block}
+.progress{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.progress button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 10px;cursor:pointer}.progress button.active{background:var(--blue);color:#fff}
+.controls{display:flex;justify-content:space-between;margin-top:14px}.controls button{padding:10px 14px;border:1px solid var(--line);border-radius:9px;background:#fff;cursor:pointer;font-weight:700}
+a{color:var(--blue);font-weight:700;text-decoration:none}.footer{font-size:12px;color:var(--muted);padding:20px 4px}
+@media(max-width:650px){.title{font-size:24px}table{font-size:14px}th,td{padding:7px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="eyebrow">INFECTO CONSULT · ROTEIRO DE DECISÃO CLÍNICA</div>
+<div class="title">Infecção por <i>Clostridioides difficile</i></div>
+<div class="sub">Suspeita → colonização × infecção → gravidade → diagnóstico → tratamento → recorrência → prevenção</div>
+</div></header>
+
+<nav>
+<button onclick="go(1)">Visão geral</button><button onclick="go(2)">Suspeitar</button>
+<button onclick="go(3)">Diagnóstico</button><button onclick="go(4)">Gravidade</button>
+<button onclick="go(5)">Tratamento</button><button onclick="go(6)">Recorrência</button>
+<button onclick="go(7)">Prevenção</button><button onclick="go(8)">Fluxograma</button>
+</nav>
+
+<main>
+<div class="hero">
+<b>🦠 Visão prática</b><br>
+Suspeitar em diarreia aquosa nova, especialmente após antibiótico, internação recente ou assistência à saúde.
+<strong>Testar apenas paciente sintomático e classificar gravidade antes de tratar.</strong>
+</div>
+
+<div class="progress" id="progress"></div>
+
+<section class="step active" data-step="1">
+<div class="card">
+<h2>1. Framework transversal — colonização vs infecção</h2>
+<div class="info"><b>Ponto decisivo:</b> não testar nem tratar paciente assintomático. Teste positivo sem diarreia compatível sugere colonização, não doença.</div>
+<table><tr><th>Conceito</th><th>Descrição prática</th></tr>
+<tr><td><b>Infecção por C. difficile</b></td><td>Doença causada por toxinas do <i>C. difficile</i>, geralmente com diarreia aquosa nova em paciente com fatores de risco.</td></tr>
+<tr><td><b>Colite pseudomembranosa</b></td><td>Forma de colite com placas/pseudomembranas na mucosa colônica; não é necessária para o diagnóstico na maioria dos casos.</td></tr>
+<tr><td><b>Colonização</b></td><td>Teste positivo sem diarreia ou sintomas compatíveis. Não tratar e evitar testar assintomáticos.</td></tr>
+<tr><td><b>Recorrência</b></td><td>Novos sintomas com teste positivo dentro de até 2 meses após término de tratamento anterior, após melhora do episódio inicial.</td></tr>
+<tr><td><b>Refratária</b></td><td>Persistência de sintomas apesar de tratamento apropriado.</td></tr></table>
+</div>
+<div class="card">
+<h2>Quadro clínico</h2>
+<ul><li>Diarreia aquosa, geralmente ≥3 evacuações líquidas/pastosas em 24 h.</li>
+<li>Uso atual ou recente de antibiótico, internação ou assistência à saúde.</li>
+<li>Idoso, institucionalizado, imunossuprimido ou com comorbidades podem apresentar maior risco.</li></ul>
+<h3>Red flags</h3>
+<ol><li>Hipotensão, choque ou hipoperfusão.</li><li>Dor abdominal severa, distensão importante ou defesa.</li><li>Íleo paralítico ou redução importante de evacuações em paciente tóxico.</li><li>Megacólon tóxico/colite tóxica.</li><li>Disenteria ou sangue nas fezes.</li><li>≥6 evacuações em 24 h ou diarreia muito volumosa.</li><li>Febre alta, sepse ou necessidade de internação.</li><li>Leucocitose importante ou piora de função renal.</li></ol>
+</div>
+</section>
+
+<section class="step" data-step="2">
+<div class="card">
+<h2>2. Quando suspeitar e quando testar</h2>
+<div class="info"><b>Regra prática:</b> testar <i>C. difficile</i> em paciente com diarreia clinicamente relevante e fatores de risco.</div>
+<h3>Indicações fortes</h3>
+<ul><li>≥3 evacuações líquidas/pastosas em 24 h sem causa alternativa clara.</li><li>Uso atual ou recente de antibiótico.</li><li>Internação por ≥3 dias.</li><li>Surto hospitalar ou alta suspeição institucional.</li><li>Diarreia persistente ou severa.</li><li>Sinais de gravidade: hipotensão, dor abdominal severa, febre alta, desidratação, ≥6 evacuações/dia.</li><li>Comorbidades graves ou alto risco: idoso, institucionalizado, imunossuprimido, doença cardíaca/renal/hepática, DII.</li></ul>
+<h3>Evitar testar</h3>
+<ul><li>Fezes formadas.</li><li>Paciente assintomático.</li><li>“Teste de cura” após melhora clínica.</li><li>Diarreia claramente explicada por laxativo recente, preparo intestinal ou outra causa evidente — reavaliar após suspender a causa.</li></ul>
+</div>
+<div class="card">
+<h2>Diagnóstico diferencial</h2>
+<table><tr><th>Categoria</th><th>Condições principais</th></tr>
+<tr><td>Infeccioso bacteriano</td><td><i>E. coli</i> O157:H7/toxina Shiga; disenteria, frequentemente sem febre; risco de SHU.</td></tr>
+<tr><td>Outras gastroenterites</td><td><i>Salmonella, Shigella, Campylobacter</i>, norovírus e outros.</td></tr>
+<tr><td>Inflamatório</td><td>Retocolite ulcerativa ou Crohn, inclusive exacerbação precipitada por infecção.</td></tr>
+<tr><td>Isquêmico</td><td>Colite isquêmica, especialmente em idosos, vasculopatas ou dor desproporcional.</td></tr>
+<tr><td>Disabsorção</td><td>Intolerância à lactose, doença celíaca e outras causas.</td></tr>
+<tr><td>Funcional/pós-infeccioso</td><td>Síndrome do intestino irritável pós-infecciosa.</td></tr>
+<tr><td>Medicamentos/laxativos</td><td>Laxativos, magnésio, metformina, procinéticos, nutrição enteral e outros.</td></tr></table>
+</div>
+</section>
+
+<section class="step" data-step="3">
+<div class="card">
+<h2>3. Investigação laboratorial</h2>
+<h3>Avaliação inicial</h3>
+<ul><li>Hemograma: leucocitose ajuda a classificar gravidade.</li><li>Creatinina, ureia e eletrólitos: desidratação, injúria renal e gravidade.</li><li>Albumina se quadro grave ou internado.</li><li>Lactato se hipotensão, sepse, hipoperfusão ou suspeita de colite fulminante.</li><li>PCR pode ajudar no acompanhamento, mas não define diagnóstico.</li></ul>
+<h3>Microbiologia / fezes</h3>
+<ul><li>Pesquisa de toxina de <i>C. difficile</i> conforme método disponível.</li><li>Coprocultura se disenteria, febre alta, surto, imunossupressão ou suspeita de patógeno bacteriano alternativo.</li><li>Teste molecular/NAAT ou algoritmo institucional — interpretar junto ao quadro clínico.</li><li>Painel molecular gastrointestinal quando indicado, especialmente em quadro grave ou surto.</li><li>Toxina Shiga / <i>E. coli</i> O157:H7 se diarreia sanguinolenta, dor abdominal importante ou suspeita epidemiológica.</li></ul>
+<h3>Interpretação de painel molecular</h3>
+<div class="warn">Painéis multiplex detectam microrganismos e genes que podem representar colonização ou infecção. Resultado positivo deve ser interpretado com sintomas, epidemiologia e gravidade.</div>
+<p>Exemplo do material: gene <i>eae</i> para EPEC pode não ser a causa da diarreia e nem sempre exige antibiótico. Em <i>C. difficile</i>, teste positivo sem diarreia sugere colonização.</p>
+</div>
+<div class="card">
+<h2>Imagem</h2>
+<h3>Quando não precisa</h3><p>Quadro leve/não grave, sem dor abdominal importante, distensão, sinais peritoneais e com boa evolução.</p>
+<h3>Quando solicitar TC de abdome/pelve</h3>
+<ul><li>Dor abdominal severa.</li><li>Distensão importante.</li><li>Defesa/peritonismo.</li><li>Sepse, hipotensão ou deterioração.</li><li>Suspeita de megacólon tóxico, perfuração ou colite fulminante.</li><li>Falha de resposta ao tratamento.</li></ul>
+<h3>Achados que mudam conduta</h3><ul><li>Megacólon.</li><li>Colite extensa/severa.</li><li>Pneumoperitônio/perfuração.</li><li>Íleo importante.</li><li>Complicações que indiquem avaliação cirúrgica.</li></ul>
+</div>
+</section>
+
+<section class="step" data-step="4">
+<div class="card">
+<h2>4. Classificação prática por gravidade</h2>
+<table><tr><th>Gravidade</th><th>Critérios práticos</th><th>Conduta inicial</th></tr>
+<tr><td><b>Leve / não grave</b></td><td>Diarreia, sem choque, sem íleo/megacólon; leucócitos &lt;15.000 e creatinina &lt;1,5 mg/dL.</td><td>Suspender antibiótico precipitante se possível, hidratar, confirmar diagnóstico e tratar conforme disponibilidade.</td></tr>
+<tr><td><b>Grave</b></td><td>Leucócitos ≥15.000/mm³ ou creatinina ≥1,5 mg/dL; maior risco em idosos, imunossuprimidos e comorbidades graves.</td><td>Avaliar internação, hidratação, eletrólitos, função renal e tratamento específico.</td></tr>
+<tr><td><b>Fulminante</b></td><td>Hipotensão/choque, íleo, megacólon tóxico, colite tóxica ou deterioração rápida.</td><td>Internar, considerar UTI, acionar cirurgia precocemente e tratar como emergência.</td></table>
+</div>
+<div class="card">
+<h2>Internação / UTI</h2>
+<h3>Internar se</h3><ul><li>Desidratação importante ou incapacidade de hidratação oral.</li><li>Idoso frágil, imunossuprimido ou comorbidades graves.</li><li>Creatinina elevada, leucocitose importante ou distúrbios eletrolíticos.</li><li>Dor abdominal importante, distensão ou febre alta.</li><li>Falha de tratamento ambulatorial.</li><li>Necessidade de isolamento hospitalar ou investigação de complicações.</li></ul>
+<h3>UTI / avaliação urgente se</h3><ul><li>Choque, hipotensão persistente ou necessidade de vasopressor.</li><li>Lactato elevado ou hipoperfusão.</li><li>Íleo, megacólon tóxico ou peritonite.</li><li>Insuficiência renal aguda grave.</li><li>Deterioração rápida ou sepse.</li></ul>
+</div>
+</section>
+
+<section class="step" data-step="5">
+<div class="card">
+<h2>5. Tratamento inicial</h2>
+<div class="warn"><b>Antes de tratar:</b> confirmar diarreia compatível, classificar gravidade, suspender antibiótico precipitante se possível e corrigir hidratação/eletrólitos. Em fulminante, não atrasar tratamento.</div>
+<h3>Medidas gerais</h3><ul><li>Suspender ou descalonar antibióticos não essenciais.</li><li>Evitar antiperistálticos em colite grave, febre, disenteria, íleo ou suspeita de megacólon.</li><li>Hidratação oral ou venosa conforme gravidade.</li><li>Corrigir eletrólitos.</li><li>Rever IBP se não houver indicação forte.</li><li>Precaução de contato no hospital; higiene das mãos com água e sabão quando possível.</li></ul>
+<h3>Tratamento específico</h3>
+<table><tr><th>Cenário</th><th>Esquema prático</th><th>Observações</th></tr>
+<tr><td><b>Episódio inicial leve/não grave</b></td><td>Vancomicina VO 125 mg 6/6 h por 10 dias <b>ou</b> fidaxomicina 200 mg VO 12/12 h por 10 dias.</td><td>Metronidazol 500 mg VO 8/8 h por 10 dias é alternativa apenas se opções preferenciais indisponíveis e quadro leve.</td></tr>
+<tr><td><b>Episódio inicial grave</b></td><td>Vancomicina VO 125 mg 6/6 h por 10 dias <b>ou</b> fidaxomicina 200 mg VO 12/12 h por 10 dias.</td><td>Avaliar internação, hidratação EV, eletrólitos e função renal.</td></tr>
+<tr><td><b>Fulminante</b></td><td>Vancomicina VO 500 mg 6/6 h + metronidazol 500 mg IV 8/8 h.</td><td>Se íleo, considerar vancomicina retal conforme protocolo local. Acionar cirurgia precocemente.</td></table>
+</div>
+</section>
+
+<section class="step" data-step="6">
+<div class="card">
+<h2>6. Recorrência</h2>
+<table><tr><th>Cenário</th><th>Esquema prático</th><th>Observações</th></tr>
+<tr><td><b>Primeira recorrência</b></td><td>Fidaxomicina 200 mg VO 12/12 h por 10 dias ou vancomicina em esquema prolongado/pulsado.</td><td>Escolha depende do tratamento usado no episódio inicial e disponibilidade.</td></tr>
+<tr><td><b>Recorrências múltiplas</b></td><td>Vancomicina prolongada/pulsada, fidaxomicina ou estratégias avançadas.</td><td>Considerar avaliação especializada; transplante de microbiota fecal pode ser opção em recorrências selecionadas.</td></table>
+<h3>Vancomicina prolongada/pulsada</h3>
+<ul><li>125 mg 6/6 h por 10–14 dias.</li><li>Depois 125 mg 12/12 h por 7–14 dias.</li><li>Depois 125 mg 1x/dia por 7 dias.</li><li>Depois 125 mg a cada 2–3 dias por 2–8 semanas.</li></ul>
+<h3>Transplante de microbiota fecal / terapias baseadas em microbiota</h3>
+<ul><li>Considerar em CDI recorrente, especialmente após ≥2 recorrências ou alto risco de nova recorrência, após completar antibiótico padrão.</li><li>Pode ser transplante convencional ou terapias baseadas em microbiota conforme protocolo/localidade.</li><li>Em imunocompetente com CDI recorrente, é opção para reduzir novas recorrências após tratamento antibiótico.</li><li>Em imunossupressão leve/moderada, considerar caso a caso com infectologia/gastroenterologia.</li><li>Evitar ou discutir com extrema cautela em imunossupressão grave, pelo risco infeccioso e necessidade de triagem rigorosa.</li><li>Em CDI grave/fulminante hospitalizada sem resposta, pode ser estratégia de resgate em centro experiente e abordagem multidisciplinar.</li></ul>
+</div>
+</section>
+
+<section class="step" data-step="7">
+<div class="card">
+<h2>7. Isolamento e prevenção de transmissão</h2>
+<table><tr><th>Medida</th><th>Conduta prática</th></tr>
+<tr><td><b>Precaução</b></td><td>Contato: quarto privativo/coorte, luvas e avental.</td></tr>
+<tr><td><b>Higiene das mãos</b></td><td>Água e sabão é preferível quando há suspeita/confirmado <i>C. difficile</i>, pois esporos resistem ao álcool.</td></tr>
+<tr><td><b>Ambiente</b></td><td>Limpeza terminal e desinfecção com produto esporicida conforme protocolo institucional.</td></tr>
+<tr><td><b>Antibióticos</b></td><td>Antimicrobial stewardship: reduzir exposição desnecessária a clindamicina, cefalosporinas, fluoroquinolonas, carbapenêmicos e antibióticos de amplo espectro.</td></tr>
+<tr><td><b>IBP</b></td><td>Reavaliar necessidade; manter apenas se indicação clara.</td></tr></table>
+</div>
+<div class="card">
+<h2>Medidas de suporte e seguimento</h2>
+<ul><li>Reavaliar evacuações, dor abdominal, febre, hidratação e sinais vitais diariamente se internado.</li>
+<li>Monitorar leucócitos, creatinina e eletrólitos em quadros moderados/graves.</li>
+<li>Espera-se melhora clínica em 48–72 h; se piora, revisar diagnóstico, complicações e adesão/absorção.</li>
+<li>Não repetir teste para documentar cura.</li>
+<li>Em recorrência, confirmar novo quadro clínico compatível antes de testar/tratar.</li>
+<li>Orientar retorno se febre, sangue nas fezes, dor abdominal importante, tontura/síncope, desidratação ou piora da diarreia.</li></ul>
+</div>
+</section>
+
+<section class="step" data-step="8">
+<div class="card">
+<h2>8. Fluxograma prático</h2>
+<div class="info"><b>Diarreia nova:</b> ≥3 evacuações líquidas/pastosas em 24 h</div>
+<div class="success"><b>Fator de risco ou alta suspeição?</b><br>SIM → testar <i>C. difficile</i><br>NÃO → avaliar outras causas de diarreia aguda</div>
+<div class="warn"><b>Classificar gravidade</b><br>Leve/não grave → vancomicina VO 125 mg 6/6 h 10 dias ou fidaxomicina<br>
+Grave → internar/monitorar + vancomicina VO ou fidaxomicina<br>
+Fulminante → UTI/cirurgia + vancomicina VO alta dose + metronidazol IV</div>
+<div class="card"><b>Reavaliar em 48–72 h</b><br><br>
+<strong>Melhora:</strong> completar tratamento; não fazer teste de cura.<br>
+<strong>Não melhora:</strong> rever diagnóstico, complicações, adesão, absorção e necessidade de imagem/cirurgia.</div>
+</div>
+<div class="card">
+<h2>Referências bibliográficas do material original</h2>
+<ol>
+<li>Sanford Guide. Gastroenteritis, diarrhea. Overview.</li>
+<li>IDSA. Clinical Practice Guidelines for the Diagnosis and Management of Infectious Diarrhea. 2016.</li>
+<li>American Gastroenterological Association. Guideline sobre diarreia / infecção intestinal. 2016.</li>
+<li>JAMA. 2016;315:2712.</li>
+<li>UpToDate. Approach to the adult with acute diarrhea in resource-rich settings.</li>
+<li>American Society of Colon and Rectal Surgeons. Clinical Practice Guidelines for the Management of <i>Clostridioides difficile</i> Infection. Diseases of the Colon & Rectum. 2021;64(6).</li>
+<li>IDSA/SHEA. Clinical Practice Guidelines for <i>Clostridium difficile</i> Infection in Adults and Children: 2017 Update. Clinical Infectious Diseases. 2018.</li>
+<li>American Gastroenterological Association. Clinical Practice Guideline on Fecal Microbiota–Based Therapies for Select Gastrointestinal Diseases. Gastroenterology. 2024.</li>
+</ol>
+</div>
+<div class="footer"><b>Infecto Consult — material de apoio à decisão clínica.</b><br>Conteúdo transposto do documento fornecido pelo usuário. Status editorial do material original: Em revisão. Última atualização registrada: 20 de julho de 2026.</div>
+</section>
+</main>
+
+<script>
+let current=1;
+const titles=["Visão geral","Suspeitar","Diagnóstico","Gravidade","Tratamento","Recorrência","Prevenção","Fluxograma"];
+function buildProgress(){
+ const p=document.getElementById("progress");
+ p.innerHTML=titles.map((t,i)=>`<button class="${i+1===current?'active':''}" onclick="go(${i+1})">${i+1}. ${t}</button>`).join("");
+}
+function go(n){
+ current=n;
+ document.querySelectorAll(".step").forEach(s=>s.classList.toggle("active",+s.dataset.step===n));
+ buildProgress(); window.scrollTo({top:0,behavior:"smooth"});
+}
+buildProgress();
+</script>
+</body>
+</html>

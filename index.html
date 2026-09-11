@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#123B5D">
 <meta name="description" content="Infecto Consult — apoio à decisão clínica em infectologia">
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
 <title>Infecto Consult</title>
 <style>
 :root{--navy:#123B5D;--blue:#287AA8;--bg:#F4F7F9;--card:#fff;--text:#173042;--muted:#687B88;--line:#DCE5EA;--gold:#C7A348}
@@ -24,15 +24,9 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:25px}
 </head>
 <body>
 <header><div class="wrap">
-<div class="bar"><div class="logo">Infecto <span>Consult</span></div><div class="badge">PWA • MVP 0.5</div></div>
+<div class="bar"><div class="logo">Infecto <span>Consult</span></div><div class="badge">PWA • MVP 0.7</div></div>
 <div class="hero"><h1>Decisão clínica. Sem perder tempo.</h1><p>Seu ambiente de consulta rápida em infectologia. Conteúdo organizado em módulos independentes para crescer sem reconstruir o aplicativo.</p></div>
 </div></header>
-<div id="installArea" style="margin:18px 0;display:none">
-  <button id="installBtn" style="border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer;">
-    📲 Instalar Infecto Consult
-  </button>
-</div>
-
 <div class="search"><input id="q" placeholder="🔎 Buscar síndrome ou módulo"></div>
 <main class="wrap">
 <div id="results"></div>
@@ -65,25 +59,5 @@ q.addEventListener("input",e=>{
 });
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
 </script>
-
-<script>
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  const area = document.getElementById('installArea');
-  const btn = document.getElementById('installBtn');
-  if (area && btn) {
-    area.style.display = 'block';
-    btn.onclick = async () => {
-      area.style.display = 'none';
-      deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
-      deferredPrompt = null;
-    };
-  }
-});
-</script>
-
 </body>
 </html>

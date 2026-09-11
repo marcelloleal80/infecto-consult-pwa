@@ -1,13 +1,12 @@
 {
   "name": "Infecto Consult",
   "short_name": "Infecto Consult",
-  "description": "Apoio à decisão clínica em infectologia",
+  "description": "Apoio à decisão clínica em Infectologia",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#F4F7F9",
   "theme_color": "#123B5D",
-  "lang": "pt-BR",
   "icons": [
     {
       "src": "icons/icon-192.png",

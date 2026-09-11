@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Infecto Consult — Pielonefrite Aguda</title>
+<style>
+:root{--navy:#16324f;--blue:#2563eb;--teal:#0f766e;--green:#15803d;--red:#b91c1c;--amber:#b45309;--purple:#6d28d9;--bg:#f5f7fa;--card:#fff;--text:#172033;--muted:#64748b;--line:#dbe2ea}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,Arial,sans-serif;color:var(--text);line-height:1.45}
+header{background:linear-gradient(135deg,#16324f,#245b83);color:#fff;padding:24px 18px}.wrap{max-width:1120px;margin:auto}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.8;font-weight:700}
+h1{margin:5px 0;font-size:28px}header p{margin:5px 0 0;opacity:.9}
+nav{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);overflow:auto;white-space:nowrap}
+nav button{border:0;background:transparent;padding:13px 14px;font-weight:700;color:#475569;cursor:pointer}nav button.active{color:var(--blue);border-bottom:3px solid var(--blue)}
+main{padding:18px}.tab{display:none}.tab.active{display:block}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 2px 8px #0f172a08;margin-bottom:14px}.card h2,.card h3{margin-top:0;color:var(--navy)}h2{font-size:20px}h3{font-size:16px}
+label{display:block;font-weight:700;font-size:14px;margin:11px 0 5px}select,input[type=text],input[type=number]{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;font-size:14px}
+button.action{border:0;border-radius:9px;padding:11px 14px;background:var(--blue);color:#fff;font-weight:700;cursor:pointer;margin-top:10px}.btn2{background:#e2e8f0!important;color:#1e293b!important}
+.result{border-left:5px solid var(--blue);background:#eff6ff;padding:13px;border-radius:9px;margin-top:12px}.result.ok{border-color:var(--green);background:#f0fdf4}.result.warn{border-color:var(--amber);background:#fffbeb}.result.danger{border-color:var(--red);background:#fef2f2}.result.purple{border-color:var(--purple);background:#f5f3ff}
+.badge{display:inline-block;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:800;background:#e2e8f0;margin:2px}.badge.red{background:#fee2e2;color:#991b1b}.badge.green{background:#dcfce7;color:#166534}.badge.blue{background:#dbeafe;color:#1d4ed8}.badge.amber{background:#fef3c7;color:#92400e}.badge.purple{background:#ede9fe;color:#5b21b6}
+ul{padding-left:20px}li{margin:5px 0}table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top}th{background:#f1f5f9;color:#334155}
+.callout{padding:13px;border-radius:10px;margin:10px 0}.redbox{background:#fef2f2;border:1px solid #fecaca}.greenbox{background:#f0fdf4;border:1px solid #bbf7d0}.bluebox{background:#eff6ff;border:1px solid #bfdbfe}.amberbox{background:#fffbeb;border:1px solid #fde68a}.purplebox{background:#f5f3ff;border:1px solid #ddd6fe}
+.small{font-size:12px;color:var(--muted)}.score{font-size:25px;font-weight:800;color:var(--navy)}.check{display:flex;gap:8px;align-items:flex-start;margin:7px 0;font-weight:500}.check input{width:auto;margin-top:4px}
+.kpi{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:12px}.kpi b{display:block;font-size:12px;color:var(--muted)}.kpi span{font-size:20px;font-weight:800;color:var(--navy)}
+.hidden{display:none}.drug{font-weight:800;color:var(--navy)}.dose{font-family:ui-monospace,monospace}.note{font-size:13px;color:#475569}
+footer{max-width:1120px;margin:0 auto;padding:10px 18px 30px;color:#64748b;font-size:12px}
+@media(max-width:750px){.grid,.grid3{grid-template-columns:1fr}h1{font-size:24px}main{padding:12px}table{font-size:12px}}
+</style>
+</head>
+<body><div style="padding:10px 16px"><a href="index.html" style="text-decoration:none;font-weight:700">← Infecto Consult</a></div>
+<header><div class="wrap">
+<div class="eyebrow">INFECTO CONSULT · ROTEIRO DE DECISÃO CLÍNICA</div>
+<h1>Pielonefrite Aguda</h1>
+<p>Estratificação → microbiologia → antibiótico empírico → imagem → controle de foco → descalonamento</p>
+</div></header>
+
+<nav><div class="wrap">
+<button class="tabBtn active" data-tab="inicio">Visão geral</button>
+<button class="tabBtn" data-tab="triagem">1. Triagem</button>
+<button class="tabBtn" data-tab="diagnostico">2. Diagnóstico</button>
+<button class="tabBtn" data-tab="tratamento">3. Antibiótico</button>
+<button class="tabBtn" data-tab="imagem">4. Imagem</button>
+<button class="tabBtn" data-tab="especial">5. Especiais</button>
+<button class="tabBtn" data-tab="follow">6. Reavaliação</button>
+<button class="tabBtn" data-tab="referencias">Referências</button>
+</div></nav>
+
+<main class="wrap">
+
+<section id="inicio" class="tab active">
+<div class="grid">
+<div class="card"><h2>Quando pensar em pielonefrite?</h2>
+<p>ITU <b>sistêmica</b> com febre &gt;38°C, calafrios, dor em flanco/lombar, náuseas/vômitos ou dor à punho-percussão lombar, com ou sem disúria, urgência e polaciúria.</p>
+<div class="callout bluebox"><b>Atualização conceitual EAU:</b> a classificação atual privilegia <b>ITU localizada</b> versus <b>ITU sistêmica</b>, em vez da antiga dicotomia “não complicada × complicada”. Pielonefrite é uma ITU sistêmica; fatores de risco determinam maior chance de evolução desfavorável ou falha terapêutica.</div>
+</div>
+<div class="card"><h2>Checklist inicial</h2>
+<div class="check"><input type="checkbox"> Sinais vitais e avaliação de gravidade/sepse</div>
+<div class="check"><input type="checkbox"> Urocultura + antibiograma antes do ATB, se possível</div>
+<div class="check"><input type="checkbox"> Capacidade de hidratação e absorção VO</div>
+<div class="check"><input type="checkbox"> Cultura urinária prévia e antibióticos recentes</div>
+<div class="check"><input type="checkbox"> Risco de ESBL/MDR/Pseudomonas</div>
+<div class="check"><input type="checkbox"> Litíase/obstrução/anormalidade urinária</div>
+</div></div>
+
+<div class="card"><h2>As 4 perguntas que mudam a conduta</h2>
+<div class="grid3">
+<div class="kpi"><b>1 · Gravidade</b><span>Está grave?</span><p class="small">Sepse, choque, disfunção orgânica?</p></div>
+<div class="kpi"><b>2 · Controle de foco</b><span>Está obstruído?</span><p class="small">Cálculo, hidronefrose, retenção?</p></div>
+<div class="kpi"><b>3 · Resistência</b><span>Qual o risco?</span><p class="small">ESBL/MDR, cultura prévia, ATB recente?</p></div>
+</div></div>
+</section>
+
+<section id="triagem" class="tab">
+<div class="card"><h2>1. Triagem — algoritmo integrado</h2>
+<div class="grid">
+<div>
+<label>Gravidade clínica</label><select id="estado">
+<option value="estavel">Estável, sem disfunção orgânica</option>
+<option value="grave">Grave / sepse / disfunção orgânica</option>
+<option value="choque">Choque séptico / instabilidade</option>
+</select>
+<label>Via oral</label><select id="vo"><option value="sim">Tolera e absorve VO</option><option value="nao">Vômitos / não tolera VO</option></select>
+<label>Gestação</label><select id="gest"><option value="nao">Não</option><option value="sim">Sim</option></select>
+<label>Sexo</label><select id="sexo"><option value="f">Mulher</option><option value="m">Homem</option></select>
+<label>Suspeita de obstrução</label><select id="obstrucao"><option value="nao">Não</option><option value="sim">Sim</option></select>
+</div>
+<div>
+<label>Risco microbiológico / complicação</label>
+<div class="check"><input type="checkbox" id="stone"> Litíase urinária</div>
+<div class="check"><input type="checkbox" id="abn"> Anormalidade anatômica/funcional</div>
+<div class="check"><input type="checkbox" id="cat"> Cateter/dispositivo urinário</div>
+<div class="check"><input type="checkbox" id="abx"> ATB sistêmico recente</div>
+<div class="check"><input type="checkbox" id="mdr"> ESBL/MDR prévio ou colonização</div>
+<div class="check"><input type="checkbox" id="pseu"> Pseudomonas prévia / exposição hospitalar relevante</div>
+<div class="check"><input type="checkbox" id="renal"> Disfunção renal relevante</div>
+<div class="check"><input type="checkbox" id="imuno"> Imunossupressão</div>
+<button class="action" onclick="triagem()">Gerar decisão integrada</button>
+<div id="triagemResult"></div>
+</div></div></div>
+
+<div class="card"><h2>Interpretação</h2>
+<div class="grid3">
+<div class="callout greenbox"><b>Ambulatório</b><br>Estável + tolera VO + sem necessidade de controle de foco + seguimento confiável.</div>
+<div class="callout amberbox"><b>Hospital/observação</b><br>Vômitos, desidratação, gestação, fatores importantes de risco ou necessidade de terapia IV.</div>
+<div class="callout redbox"><b>Urgência</b><br>Choque/sepse grave ou suspeita de pielonefrite obstrutiva: antibiótico imediato + controle de foco quando indicado.</div>
+</div></div>
+</section>
+
+<section id="diagnostico" class="tab">
+<div class="card"><h2>2. Diagnóstico e microbiologia</h2>
+<div class="grid">
+<div><h3>Urina</h3><ul>
+<li><b>EAS:</b> leucócitos, hemácias e nitrito auxiliam o diagnóstico.</li>
+<li><b>Urocultura + antibiograma:</b> realizar em <b>todos os casos de pielonefrite</b>.</li>
+<li>Colher antes do antibiótico sempre que isso não atrasar tratamento de paciente grave.</li>
+</ul></div>
+<div><h3>Sangue</h3><ul>
+<li>Hemograma, creatinina e eletrólitos conforme gravidade e comorbidades.</li>
+<li><b>Hemoculturas:</b> especialmente em sepse, doença grave, dúvida diagnóstica ou situações em que o resultado possa modificar a terapia.</li>
+<li>Lactato quando houver suspeita de hipoperfusão/sepse.</li>
+</ul></div></div>
+<div class="callout amberbox"><b>Não tratar o exame isoladamente:</b> bacteriúria, leucocitúria ou nitrito positivo devem ser interpretados no contexto clínico. O diagnóstico de pielonefrite é clínico + laboratorial.</div>
+</div>
+</section>
+
+<section id="tratamento" class="tab">
+<div class="card"><h2>3. Antibiótico — motor de decisão</h2>
+<p class="note">O algoritmo abaixo prioriza gravidade, risco de resistência, cultura prévia, uso recente de antibióticos, Pseudomonas/ESBL, gestação, função renal e possibilidade de terapia oral.</p>
+<div class="grid">
+<div>
+<label>Gravidade</label><select id="tgrav"><option value="amb">Leve/moderada, estável</option><option value="hosp">Hospitalar, sem choque</option><option value="crit">Sepse grave/choque ou deterioração</option></select>
+<label>Risco de ESBL/MDR</label><select id="tesbl"><option value="baixo">Baixo</option><option value="alto">Alto — cultura prévia, colonização ou exposição relevante</option></select>
+<label>Risco de Pseudomonas</label><select id="tpseu"><option value="baixo">Baixo</option><option value="alto">Alto — isolamento prévio/exposição epidemiológica relevante</option></select>
+<label>Fluoroquinolona</label><select id="tfq"><option value="ok">Sem uso recente e suscetibilidade/resistência local favorável</option><option value="nao">Uso recente, contraindicação ou resistência elevada</option></select>
+</div>
+<div>
+<label>Cultura prévia disponível?</label><select id="tcultura"><option value="nao">Não</option><option value="sens">Sim — patógeno suscetível a opção usual</option><option value="res">Sim — resistência relevante conhecida</option></select>
+<label>Função renal</label><select id="trenal"><option value="normal">Sem alteração relevante</option><option value="alterada">Alterada — ajustar doses / evitar toxicidade</option></select>
+<label>Resultado da cultura atual</label><select id="tatu"><option value="pendente">Pendente</option><option value="sens">Suscetível ao esquema</option><option value="res">Resistente ao esquema</option></select>
+<button class="action" onclick="antibiotico()">Gerar estratégia antimicrobiana</button>
+<div id="atbResult"></div>
+</div></div></div>
+
+<div class="card"><h2>Regimes usuais — adulto</h2>
+<table><thead><tr><th>Cenário</th><th>Opção</th><th>Exemplo de dose</th><th>Comentário</th></tr></thead><tbody>
+<tr><td>VO</td><td class="drug">Ciprofloxacino</td><td class="dose">500 mg 12/12 h por 7 dias</td><td>Opção em pacientes selecionados; considerar resistência local, uso prévio e alertas de segurança das fluoroquinolonas.</td></tr>
+<tr><td>VO</td><td class="drug">Levofloxacino</td><td class="dose">750 mg 1x/dia por 5 dias</td><td>Esquema curto em cenário apropriado; ajustar à função renal.</td></tr>
+<tr><td>VO</td><td class="drug">SMX-TMP</td><td class="dose">160/800 mg 12/12 h por 14 dias</td><td>Preferir quando suscetibilidade conhecida. Se empírico e suscetibilidade desconhecida, considerar dose inicial parenteral de longa ação conforme protocolo.</td></tr>
+<tr><td>VO</td><td class="drug">Cefalosporina oral</td><td class="dose">Ex.: cefpodoxima 200 mg 12/12 h</td><td>Alternativa menos robusta que fluoroquinolona/SMX-TMP em alguns cenários; seguir diretriz e antibiograma local.</td></tr>
+<tr><td>IV</td><td class="drug">Ceftriaxona</td><td class="dose">1–2 g IV 1x/dia</td><td>Opção frequente para hospitalização sem necessidade de cobertura ampliada específica.</td></tr>
+<tr><td>IV</td><td class="drug">Cefepime</td><td class="dose">2 g IV 8–12/12 h, conforme gravidade/protocolo</td><td>Considerar quando houver indicação de cobertura antipseudomonas; ajustar à função renal.</td></tr>
+<tr><td>IV</td><td class="drug">Piperacilina/tazobactam</td><td class="dose">4,5 g IV 6–8/8 h, conforme protocolo/infusão</td><td>Selecionar de acordo com epidemiologia e suscetibilidade; não presumir equivalência a carbapenêmico para ESBL em quadros graves.</td></tr>
+<tr><td>IV</td><td class="drug">Aminoglicosídeo</td><td class="dose">Dose baseada em peso e protocolo</td><td>Pode ser útil em cenários selecionados; monitorar função renal e toxicidade.</td></tr>
+<tr><td>ESBL grave/alto risco</td><td class="drug">Meropenem</td><td class="dose">1 g IV 8/8 h</td><td>Reservar para indicação microbiológica/epidemiológica adequada; considerar infusão prolongada segundo protocolo.</td></tr>
+<tr><td>ESBL estável selecionado</td><td class="drug">Ertapenem</td><td class="dose">1 g IV 1x/dia</td><td>Útil quando não é necessária cobertura contra Pseudomonas e há possibilidade de terapia ambulatorial/SAD.</td></tr>
+</tbody></table>
+<p class="small">Doses são exemplos para adultos e devem ser ajustadas à função renal, gravidade, alergias, interações, peso quando aplicável e protocolo institucional.</p>
+</div>
+
+<div class="card"><h2>Não usar como tratamento de pielonefrite</h2>
+<div class="grid3">
+<div class="callout redbox"><b>Nitrofurantoína</b><br>Não atinge concentrações adequadas no parênquima renal.</div>
+<div class="callout redbox"><b>Fosfomicina oral</b><br>Não deve ser usada como tratamento de pielonefrite/ITU sistêmica.</div>
+<div class="callout redbox"><b>Pivmecilinam</b><br>Não é opção para pielonefrite nas recomendações EAU/NICE citadas.</div>
+</div></div>
+</section>
+
+<section id="imagem" class="tab">
+<div class="card"><h2>4. Imagem e controle de foco</h2>
+<div class="grid">
+<div class="callout bluebox"><b>Ultrassom inicialmente</b><ul>
+<li>História de litíase.</li><li>Alteração da função renal.</li><li>Suspeita de obstrução/hidronefrose.</li><li>Outros fatores de risco que aumentem chance de complicação.</li>
+</ul></div>
+<div class="callout redbox"><b>TC/RM — quando ampliar</b><ul>
+<li>Deterioração clínica/sepse.</li><li>Obstrução ou hidronefrose suspeita.</li><li>Persistência de febre/sintomas após 48–72 h de terapia adequada.</li><li>Suspeita de abscesso renal/perinefrético ou outra complicação.</li>
+</ul></div></div>
+<div class="callout amberbox"><b>Gestação:</b> priorizar ultrassom; RM pode ser utilizada em situações selecionadas. Evitar radiação ionizante quando não indispensável.</div>
+<div class="callout redbox"><b>Pielonefrite obstrutiva:</b> antibiótico não substitui o controle de foco. Avaliação urológica urgente para descompressão quando houver obstrução infectada.</div>
+</div>
+</section>
+
+<section id="especial" class="tab">
+<div class="card"><h2>5. Situações especiais</h2>
+<table><thead><tr><th>Situação</th><th>Como o algoritmo muda</th></tr></thead><tbody>
+<tr><td><b>Gestação</b></td><td>Baixo limiar para avaliação hospitalar. Escolher antibiótico compatível com gestação; evitar fluoroquinolonas. Terapia IV quando vômitos, incapacidade de VO ou doença grave. Após melhora, revisar step-down e duração conforme protocolo obstétrico/infectológico.</td></tr>
+<tr><td><b>Homem</b></td><td>Sexo masculino isoladamente não define “ITU complicada” na classificação EAU atual. Avaliar envolvimento prostático, retenção e outros fatores de risco. Se prostatite estiver presente, a duração/escolha do tratamento muda.</td></tr>
+<tr><td><b>Obstrução/cálculo</b></td><td>Considerar emergência urológica quando houver infecção + obstrução. Antibiótico imediato + descompressão quando indicada.</td></tr>
+<tr><td><b>ESBL/MDR</b></td><td>Usar culturas prévias, exposição antimicrobiana e epidemiologia local. Em doença grave/obstrução com alto risco de ESBL, considerar carbapenêmico empiricamente; descalonar assim que possível.</td></tr>
+<tr><td><b>Disfunção renal</b></td><td>Ajustar dose e intervalo dos antimicrobianos renais. Atenção especial aos aminoglicosídeos.</td></tr>
+<tr><td><b>Cateter</b></td><td>Se ITU associada a cateter e este puder ser removido/trocado, considerar manejo do dispositivo antes/início do antibiótico, conforme cenário.</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="follow" class="tab">
+<div class="card"><h2>6. Reavaliação em 48–72 horas</h2>
+<div class="grid">
+<div><h3>Boa resposta</h3><ul>
+<li>Melhora clínica e dos sintomas sistêmicos.</li>
+<li>Sem sinais de complicação.</li>
+<li>Consegue hidratar-se e tomar medicação VO.</li>
+<li>Cultura disponível: direcionar para o agente mais estreito eficaz.</li>
+<li>Se terapia IV: considerar <b>step-down oral</b> quando clinicamente estável e houver opção ativa.</li>
+</ul></div>
+<div><h3>Resposta inadequada</h3><ul>
+<li>Revisar urocultura/antibiograma e culturas prévias.</li>
+<li>Verificar adesão, absorção, dose e ajuste renal.</li>
+<li>Procurar obstrução, cálculo, abscesso ou foco não controlado.</li>
+<li>Considerar diagnóstico alternativo.</li>
+<li>Reavaliar necessidade de internação/terapia IV.</li>
+</ul></div></div>
+<div class="callout danger"><b>Regra prática:</b> persistência de sintomas após 48–72 h de tratamento adequado não significa automaticamente “trocar antibiótico”; primeiro procure resistência, obstrução, abscesso, problema de absorção/adesão ou diagnóstico alternativo.</div>
+<div class="callout greenbox"><b>Urocultura de controle:</b> em paciente assintomático após o tratamento, não é rotineiramente necessária segundo EAU. Situações especiais, especialmente gestação, podem seguir protocolos específicos.</div>
+</div>
+</section>
+
+<section id="referencias" class="tab">
+<div class="card"><h2>Referências bibliográficas</h2>
+<ol>
+<li><b>European Association of Urology (EAU).</b> Guidelines on Urological Infections. Versão vigente. Seções sobre pielonefrite e ITU sistêmica. <a href="https://uroweb.org/guidelines/urological-infections/" target="_blank" rel="noopener">Uroweb — Guidelines on Urological Infections</a>.</li>
+<li><b>NICE.</b> Pyelonephritis (acute): antimicrobial prescribing. NG111. Recomendações sobre cultura, antibioticoterapia, gestação, revisão em 48 h e segurança das fluoroquinolonas. <a href="https://www.nice.org.uk/guidance/ng111/chapter/recommendations" target="_blank" rel="noopener">NICE NG111</a>.</li>
+<li><b>Gupta K, et al.</b> International Clinical Practice Guidelines for the Treatment of Acute Uncomplicated Cystitis and Pyelonephritis in Women. IDSA/ESCMID. <i>Clin Infect Dis.</i> 2011;52:e103–e120.</li>
+</ol>
+<div class="callout amberbox"><b>Nota sobre diretrizes:</b> a diretriz EAU atual utiliza a classificação “localizada × sistêmica” e recomenda individualizar o tratamento sistêmico conforme gravidade, fatores de risco de resistência, culturas prévias e epidemiologia local. A diretriz IDSA/ESCMID de 2011 permanece como referência histórica para pielonefrite não complicada em mulheres, mas não deve ser interpretada isoladamente para todos os cenários atuais.</div>
+</div>
+</section>
+
+</main>
+
+<footer>
+<b>Infecto Consult — Pielonefrite Aguda</b><br>
+Esta é uma ferramenta de apoio à decisão e não substitui protocolo institucional, avaliação clínica ou atualização normativa.
+</footer>
+
+<script>
+document.querySelectorAll('.tabBtn').forEach(b=>b.addEventListener('click',()=>{
+ document.querySelectorAll('.tabBtn').forEach(x=>x.classList.remove('active'));
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+ b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+function triagem(){
+ const e=estado.value,v=vo.value,o=obstrucao.value,g=gest.value,s=sexo.value;
+ const risk=['stone','abn','cat','abx','mdr','pseu','renal','imuno'].some(id=>document.getElementById(id).checked);
+ let cls='ok',title='Possível manejo ambulatorial',desc='';
+ if(e==='choque'){cls='danger';title='EMERGÊNCIA: choque/instabilidade';desc='Reanimação, culturas sem atrasar terapia, antibiótico IV imediato e avaliação para controle de foco/UTI.'}
+ else if(e==='grave'){cls='danger';title='Internação e terapia IV inicial';desc='Quadro sistêmico grave/sepse. Escolher empirismo conforme gravidade, culturas prévias e risco de resistência.'}
+ else if(o==='sim'){cls='danger';title='Suspeita de pielonefrite obstrutiva';desc='Investigar obstrução com imagem e solicitar avaliação urológica urgente. Antibiótico isoladamente pode ser insuficiente.'}
+ else if(g==='sim'){cls='warn';title='Gestação: baixo limiar para hospitalização';desc='Avaliar gravidade, hidratação e necessidade de terapia parenteral. Selecionar antibiótico compatível com gestação.'}
+ else if(v==='nao'){cls='warn';title='Não tolera VO';desc='Considerar terapia IV e observação/internação até controle de vômitos e melhora clínica.'}
+ else if(risk){cls='warn';title='ITU sistêmica com fatores de risco';desc='Individualizar empirismo, cultura prévia, resistência local e necessidade de imagem. Não assumir automaticamente que todo caso exige internação.'}
+ else{desc='Paciente estável, tolerando VO e sem fator de risco selecionado que imponha investigação ou hospitalização. Manejo ambulatorial pode ser apropriado com seguimento confiável.'}
+ document.getElementById('triagemResult').innerHTML=`<div class="result ${cls}"><b>${title}</b><br>${desc}<br><span class="badge blue">Urocultura + antibiograma</span><span class="badge ${risk?'amber':'green'}">${risk?'Fatores de risco presentes':'Sem fator de risco selecionado'}</span>${s==='m'?'<span class="badge purple">Avaliar próstata</span>':''}</div>`;
+}
+
+function antibiotico(){
+ const g=tgrav.value,e=tesbl.value,p=tpseu.value,f=tfq.value,c=tcultura.value,r=trenal.value,a=tatu.value;
+ let cls='ok',title='',desc='',extra='';
+ if(g==='crit'||(e==='alto'&&p==='alto')){
+   cls='danger';title='Ampliar empirismo para quadro grave/alto risco';
+   desc='Considerar cobertura ampliada conforme epidemiologia local e culturas prévias. Se alto risco de ESBL em paciente crítico/obstruído, meropenem é uma opção de referência; se necessidade de Pseudomonas, selecionar agente ativo. Não esquecer controle de foco.';
+ } else if(e==='alto'){
+   cls='warn';title='Alto risco de ESBL/MDR';
+   desc='Basear o empirismo no isolamento urinário prévio, colonização, exposição antimicrobiana e epidemiologia local. Carbapenêmico pode ser indicado em cenário de maior gravidade/alto risco; ertapenem é opção quando Pseudomonas não é uma preocupação.';
+ } else if(p==='alto'){
+   cls='warn';title='Considerar cobertura antipseudomonas';
+   desc='Selecionar cefepime, piperacilina/tazobactam ou outro agente ativo conforme antibiograma local e exposição prévia. Ajustar rapidamente quando houver cultura.';
+ } else if(g==='amb'&&f==='ok'){
+   title='Opção oral pode ser considerada';
+   desc='Fluoroquinolona pode ser opção empírica em paciente selecionado quando resistência local é favorável e não há contraindicação/uso recente. Alternativas orais dependem de suscetibilidade e protocolo.';
+ } else {
+   title='Terapia parenteral inicial individualizada';
+   desc='Ceftriaxona é uma opção frequente para paciente hospitalizado sem necessidade de cobertura ampliada específica. Se contraindicação ou risco microbiológico diferente, ajustar ao cenário.';
+ }
+ if(c==='sens')extra='<br><b>Cultura prévia suscetível:</b> use-a para aumentar a precisão do empirismo, se o isolamento for clinicamente relevante e recente.';
+ if(c==='res')extra='<br><b>Cultura prévia resistente:</b> evite empirismo com o agente ao qual o paciente apresentou resistência, salvo nova evidência microbiológica que justifique.';
+ if(a==='res') {cls='danger';extra+='<br><b>Urocultura atual resistente:</b> trocar para agente ativo conforme antibiograma, mesmo que haja melhora clínica.'}
+ if(a==='sens')extra+='<br><b>Urocultura atual suscetível:</b> descalonar para o agente eficaz de menor espectro possível.';
+ if(r==='alterada')extra+='<br><b>Função renal alterada:</b> revisar dose/intervalo e toxicidade antes da prescrição.';
+ document.getElementById('atbResult').innerHTML=`<div class="result ${cls}"><b>${title}</b><br>${desc}${extra}</div>`;
+}
+</script>
+</body>
+</html>

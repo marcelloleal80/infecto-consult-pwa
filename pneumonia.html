@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Infecto Consult — Pneumonia v2</title>
+<style>
+:root{--a:#155e75;--ab:#e8f4f7;--b:#d7dfe4;--bg:#f5f7f8;--p:#fff;--t:#17212b;--m:#64727d;--ok:#eaf6ee;--warn:#fff5e6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.45}main{max-width:1220px;margin:auto;padding:24px 16px 50px}h1{margin:0;font-size:1.7rem}h2{font-size:1.08rem;margin:0 0 12px}.sub,.small{color:var(--m);font-size:.86rem}.top{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:18px}.badge{display:inline-block;border:1px solid var(--b);border-radius:999px;padding:5px 9px;font-size:.78rem;background:#fff}.call,.result{background:var(--ab);border-left:5px solid var(--a);border-radius:10px;padding:13px 15px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.box{background:var(--p);border:1px solid var(--b);border-radius:14px;padding:16px}.s12{grid-column:span 12}.s8{grid-column:span 8}.s6{grid-column:span 6}.s4{grid-column:span 4}.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.fields2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.field label{display:block;font-size:.84rem;margin-bottom:4px}.input{width:100%;padding:9px;border:1px solid var(--b);border-radius:9px;background:#fff;font:inherit}.actions{display:flex;gap:8px;margin-top:12px}.btn{border:1px solid var(--b);border-radius:9px;padding:9px 13px;background:#fff;font:inherit;font-weight:650;cursor:pointer}.primary{background:var(--a);color:#fff;border-color:var(--a)}.tablewrap{overflow:auto}.tbl{width:100%;border-collapse:collapse;font-size:.88rem}.tbl th,.tbl td{padding:8px;border-bottom:1px solid var(--b);text-align:left;vertical-align:top}.tbl th{font-weight:650}.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.check{display:flex;gap:8px;align-items:flex-start;font-size:.9rem}.check input{margin-top:4px}.hidden{display:none}.notice{background:var(--warn);border-left:5px solid #b7791f;padding:12px;border-radius:9px}.ok{background:var(--ok);border-left:5px solid #3f7d4f;padding:12px;border-radius:9px}.sectionnav{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0}.sectionnav a{border:1px solid var(--b);background:#fff;border-radius:999px;padding:6px 10px;text-decoration:none;color:var(--t);font-size:.82rem}.ref{font-size:.8rem;color:var(--m)}@media(max-width:820px){.grid{display:block}.box{margin-bottom:14px}.fields,.fields2,.checks{grid-template-columns:1fr}.top{display:block}.sectionnav{overflow:auto;flex-wrap:nowrap}.sectionnav a{white-space:nowrap}}
+</style>
+</head>
+<body><div style="padding:10px 16px"><a href="index.html" style="text-decoration:none;font-weight:700">← Infecto Consult</a></div>
+<main>
+<div class="top"><div><h1>🫁 Pneumonia — Decisão Clínica</h1><div class="sub">Infecto Consult • Protótipo v2.0</div></div><span class="badge">PAC adulto • versão editorial</span></div>
+
+<div class="call"><strong>Fluxo:</strong> confirmar PAC → avaliar gravidade → PSI/local de tratamento → risco de MRSA/Pseudomonas → esquema empírico → microbiologia/descalonamento → estabilidade → duração.</div>
+
+<div class="sectionnav">
+<a href="#psi">PSI</a><a href="#grave">PAC grave</a><a href="#risco">MRSA/Pseudomonas</a><a href="#abx">Antibiótico</a><a href="#micro">Microbiologia</a><a href="#dur">Duração</a><a href="#stepdown">IV → VO</a>
+</div>
+
+<div class="grid">
+<section class="box s12" id="psi">
+<h2>1. PSI — escore completo + pré-triagem</h2>
+<div class="sub">O PSI utiliza 20 variáveis. A classe I verdadeira depende da etapa de pré-triagem; o cálculo abaixo fornece a pontuação das variáveis contínuas/demográficas e a classe correspondente quando aplicável.</div>
+<div class="fields" style="margin-top:12px">
+<div class="field"><label>Idade (anos)</label><input id="age" class="input" type="number" min="18" value="65"></div>
+<div class="field"><label>Sexo</label><select id="sex" class="input"><option value="M">Masculino</option><option value="F">Feminino</option></select></div>
+<div class="field"><label>Instituição de longa permanência</label><select id="nh" class="input"><option value="0">Não</option><option value="10">Sim</option></select></div>
+<div class="field"><label>Neoplasia</label><select id="neo" class="input"><option value="0">Não</option><option value="30">Sim</option></select></div>
+<div class="field"><label>Doença hepática</label><select id="hep" class="input"><option value="0">Não</option><option value="20">Sim</option></select></div>
+<div class="field"><label>Insuficiência cardíaca</label><select id="hf" class="input"><option value="0">Não</option><option value="10">Sim</option></select></div>
+<div class="field"><label>Doença cerebrovascular</label><select id="cva" class="input"><option value="0">Não</option><option value="10">Sim</option></select></div>
+<div class="field"><label>Doença renal</label><select id="renal" class="input"><option value="0">Não</option><option value="10">Sim</option></select></div>
+<div class="field"><label>Alteração do estado mental</label><select id="mental" class="input"><option value="0">Não</option><option value="20">Sim</option></select></div>
+<div class="field"><label>FR ≥30/min</label><select id="rr" class="input"><option value="0">Não</option><option value="20">Sim</option></select></div>
+<div class="field"><label>PAS &lt;90 mmHg</label><select id="sbp" class="input"><option value="0">Não</option><option value="20">Sim</option></select></div>
+<div class="field"><label>Temperatura &lt;35 ou ≥40 °C</label><select id="temp" class="input"><option value="0">Não</option><option value="15">Sim</option></select></div>
+<div class="field"><label>Pulso ≥125/min</label><select id="pulse" class="input"><option value="0">Não</option><option value="10">Sim</option></select></div>
+<div class="field"><label>pH arterial &lt;7,35</label><select id="ph" class="input"><option value="0">Não</option><option value="30">Sim</option></select></div>
+<div class="field"><label>BUN ≥30 mg/dL</label><select id="bun" class="input"><option value="0">Não</option><option value="20">Sim</option></select></div>
+<div class="field"><label>Na &lt;130 mmol/L</label><select id="na" class="input"><option value="0">Não</option><option value="20">Sim</option></select></div>
+<div class="field"><label>Glicose ≥250 mg/dL</label><select id="glu" class="input"><option value="0">Não</option><option value="10">Sim</option></select></div>
+<div class="field"><label>Hematócrito &lt;30%</label><select id="hct" class="input"><option value="0">Não</option><option value="10">Sim</option></select></div>
+<div class="field"><label>PaO₂ &lt;60 mmHg</label><select id="pao2" class="input"><option value="0">Não</option><option value="10">Sim</option></select></div>
+<div class="field"><label>Derrame pleural</label><select id="eff" class="input"><option value="0">Não</option><option value="10">Sim</option></select></div>
+</div>
+<div class="actions"><button class="btn primary" id="calcPsi">Calcular PSI</button><button class="btn" id="resetPsi">Limpar</button></div>
+<div id="psiOut" class="result" style="margin-top:12px">Informe os dados e calcule.</div>
+</section>
+
+<section class="box s6">
+<h2>2. PAC grave — ATS/IDSA</h2>
+<div class="sub">1 critério maior OU ≥3 menores → PAC grave.</div>
+<div class="checks" style="margin-top:12px">
+<label class="check"><input class="sev" type="checkbox" id="mv">Ventilação mecânica invasiva</label>
+<label class="check"><input class="sev" type="checkbox" id="shock">Choque séptico com vasopressor</label>
+<label class="check"><input class="sev" type="checkbox" id="rr30">FR ≥30/min</label>
+<label class="check"><input class="sev" type="checkbox" id="pfr">PaO₂/FiO₂ ≤250</label>
+<label class="check"><input class="sev" type="checkbox" id="multi">Infiltrado multilobar</label>
+<label class="check"><input class="sev" type="checkbox" id="conf">Confusão/desorientação</label>
+<label class="check"><input class="sev" type="checkbox" id="bun20">BUN ≥20 mg/dL</label>
+<label class="check"><input class="sev" type="checkbox" id="wbc4">Leucócitos &lt;4.000/mm³</label>
+<label class="check"><input class="sev" type="checkbox" id="plt100">Plaquetas &lt;100.000/mm³</label>
+<label class="check"><input class="sev" type="checkbox" id="temp36">Temperatura &lt;36°C</label>
+<label class="check"><input class="sev" type="checkbox" id="hypo">Hipotensão com necessidade de reposição agressiva</label>
+</div>
+<div id="sevOut" class="result" style="margin-top:12px">Marque os critérios presentes.</div>
+</section>
+
+<section class="box s6" id="risco">
+<h2>3. Risco de MRSA / Pseudomonas</h2>
+<div class="sub">A diretriz recomenda cobertura empiricamente ampliada quando fatores de risco específicos estiverem presentes; gravidade isolada não é suficiente.</div>
+<div style="margin-top:12px">
+<label class="check"><input class="risk" type="checkbox" id="priorMRSA">MRSA previamente isolado do trato respiratório</label><br>
+<label class="check"><input class="risk" type="checkbox" id="priorPsa">Pseudomonas previamente isolada do trato respiratório</label><br>
+<label class="check"><input class="risk" type="checkbox" id="hospIV">Hospitalização + antibiótico parenteral nos últimos 90 dias</label><br>
+<label class="check"><input class="risk" type="checkbox" id="localRisk">Outro fator epidemiológico validado localmente</label>
+</div>
+<div id="riskOut" class="result" style="margin-top:12px">Sem fator marcado.</div>
+</section>
+
+<section class="box s12" id="abx">
+<h2>4. Esquema antibiótico empírico</h2>
+<div class="fields">
+<div class="field"><label>Local de tratamento</label><select id="site" class="input"><option value="out">Ambulatorial</option><option value="ward">Internação — não grave</option><option value="icu">UTI — grave</option></select></div>
+<div class="field"><label>Comorbidades relevantes</label><select id="comorb" class="input"><option value="no">Não</option><option value="yes">Sim</option></select></div>
+<div class="field"><label>Alergia grave a penicilina/cefalosporina?</label><select id="allergy" class="input"><option value="no">Não</option><option value="yes">Sim</option></select></div>
+</div>
+<div class="actions"><button class="btn primary" id="makeAbx">Gerar esquema</button></div>
+<div id="abxOut" class="result" style="margin-top:12px">Selecione o cenário.</div>
+<div class="small" style="margin-top:8px">Se houver risco de MRSA/Pseudomonas, o esquema deve ser ampliado conforme o risco específico e culturas prévias. Ajustar a escolhas ao antibiograma e à epidemiologia local.</div>
+</section>
+
+<section class="box s8" id="micro">
+<h2>5. Microbiologia, descalonamento e resposta</h2>
+<div class="fields2">
+<div>
+<strong>Quando investigar mais?</strong>
+<ul><li>PAC grave</li><li>Risco de MRSA/Pseudomonas</li><li>Falha terapêutica</li><li>Complicação/derrame/empiema</li><li>Contexto epidemiológico específico</li></ul>
+</div>
+<div>
+<strong>Em 48–72 h</strong>
+<ul><li>Reavaliar estabilidade</li><li>Rever culturas/PCR</li><li>Descalonar quando possível</li><li>Mudar IV → VO quando clinicamente apropriado</li><li>Reconsiderar diagnóstico se não houver resposta</li></ul>
+</div>
+</div>
+</section>
+
+<section class="box s4" id="stepdown">
+<h2>6. IV → VO</h2>
+<div class="sub">Não é necessário completar tratamento IV apenas por “tempo de uso”.</div>
+<ul><li>Estabilidade clínica</li><li>Hemodinâmica adequada</li><li>Via oral funcionante</li><li>Opção oral ativa disponível</li><li>Sem indicação específica para terapia IV prolongada</li></ul>
+<div class="ok"><strong>Princípio:</strong> descalonar e mudar para VO assim que clinicamente adequado.</div>
+</section>
+
+<section class="box s8" id="dur">
+<h2>7. Duração — ATS 2025</h2>
+<div class="sub">A duração deve ser baseada na avaliação diária da estabilidade clínica.</div>
+<div class="fields2" style="margin-top:12px">
+<div class="field"><label>Atingiu estabilidade clínica?</label><select id="stable" class="input"><option value="no">Não</option><option value="yes">Sim</option></select></div>
+<div class="field"><label>Dia da estabilidade</label><select id="stableDay" class="input"><option value="3">D3</option><option value="4">D4</option><option value="5">D5</option><option value="6">Após D5</option></select></div>
+<div class="field"><label>PAC grave?</label><select id="durSevere" class="input"><option value="no">Não</option><option value="yes">Sim</option></select></div>
+<div class="field"><label>Patógeno/complicação que exige tratamento prolongado?</label><select id="prolonged" class="input"><option value="no">Não</option><option value="yes">Sim</option></select></div>
+</div>
+<div class="actions"><button class="btn primary" id="calcDur">Calcular duração</button></div>
+<div id="durOut" class="result" style="margin-top:12px">A duração final depende da estabilidade e do cenário microbiológico.</div>
+</section>
+
+<section class="box s4">
+<h2>8. Quando prolongar/reavaliar</h2>
+<ul><li>Instabilidade persistente</li><li>Empiema/abscesso</li><li>Bacteremia com foco complicado</li><li>MRSA/Pseudomonas conforme foco e resposta</li><li>Legionella ou outros agentes com duração específica</li><li>Imunocomprometimento: individualizar</li></ul>
+<div class="notice"><strong>Não use “7–14 dias” automaticamente.</strong> Primeiro defina estabilidade, agente e complicação.</div>
+</section>
+
+<section class="box s12">
+<h2>📌 Resumo de plantão</h2>
+<div class="fields2">
+<div class="call"><strong>1.</strong> PSI ajuda a decidir local de tratamento; não substitui avaliação de gravidade.</div>
+<div class="call"><strong>2.</strong> 1 critério maior ou ≥3 menores = PAC grave → avaliar UTI.</div>
+<div class="call"><strong>3.</strong> MRSA/Pseudomonas: procure fatores de risco específicos e culturas prévias.</div>
+<div class="call"><strong>4.</strong> Reavalie em 48–72 h: estabilidade + microbiologia + descalonamento + IV→VO.</div>
+</div>
+</section>
+
+<section class="box s12">
+<h2>📚 Referências e notas de versão</h2>
+<p class="ref"><strong>PSI:</strong> Fine et al.; ferramenta prognóstica validada para estratificação de risco de mortalidade em PAC. <br>
+<strong>ATS/IDSA 2019:</strong> diagnóstico e tratamento de adultos com PAC, incluindo critérios de PAC grave e tratamento empírico. <br>
+<strong>ATS 2025:</strong> diretriz oficial atualizada; para adultos com PAC não grave que atingem estabilidade, sugere &lt;5 dias, mínimo 3 dias; para PAC grave estável, sugere ≥5 dias. A duração deve ser definida pela avaliação diária da estabilidade clínica. <br>
+<strong>Escopo:</strong> adulto com pneumonia adquirida na comunidade. Não se aplica diretamente a HAP/VAP, imunocomprometidos ou situações especiais sem adaptação.</p>
+<p class="ref">Fontes verificadas: ATS/IDSA 2019; ATS Clinical Practice Guideline 2025; Fine/PSI. citeturn0search32turn0search30turn0search6</p>
+</section>
+</div>
+</main>
+
+<script>
+function v(id){return document.getElementById(id)}
+const psiFields=['nh','neo','hep','hf','cva','renal','mental','rr','sbp','temp','pulse','ph','bun','na','glu','hct','pao2','eff'];
+function calcPsi(){
+ let age=+v('age').value||0, score=v('sex').value==='F'?Math.max(0,age-10):age;
+ psiFields.forEach(id=>score += +v(id).value||0);
+ let cls=score<=70?'II':score<=90?'III':score<=130?'IV':'V';
+ let action=cls==='II'?'Geralmente ambulatorial, se condições clínicas e sociais permitirem.':cls==='III'?'Observação/curta permanência ou decisão individualizada.':cls==='IV'?'Internação.':'Internação; avaliar gravidade e necessidade de UTI.';
+ v('psiOut').innerHTML='<strong>PSI: '+score+' pontos — Classe '+cls+'</strong><br>'+action+'<div class="small" style="margin-top:7px">Nota: a classe I exige a etapa de pré-triagem do PSI. O escore total é um apoio à decisão de local de tratamento, não um substituto para avaliação clínica.</div>';
+}
+v('calcPsi').onclick=calcPsi;v('resetPsi').onclick=()=>location.reload();
+document.querySelectorAll('.sev').forEach(x=>x.onchange=()=>{
+ let major=+v('mv').checked + +v('shock').checked;
+ let minor=['rr30','pfr','multi','conf','bun20','wbc4','plt100','temp36','hypo'].filter(id=>v(id).checked).length;
+ v('sevOut').innerHTML=major||minor>=3?'<strong>🚨 PAC GRAVE</strong><br>'+major+' critério(s) maior(es) e '+minor+' menor(es). Avaliar UTI e suporte avançado.':'<strong>Sem critérios de PAC grave pelos itens marcados.</strong><br>'+minor+' critério(s) menor(es).';
+});
+document.querySelectorAll('.risk').forEach(x=>x.onchange=()=>{
+ let mr=v('priorMRSA').checked,psa=v('priorPsa').checked,h=v('hospIV').checked,l=v('localRisk').checked;
+ let arr=[];if(mr)arr.push('MRSA prévio');if(psa)arr.push('Pseudomonas prévia');if(h)arr.push('hospitalização + antibiótico IV em 90 dias');if(l)arr.push('fator local');
+ v('riskOut').innerHTML=arr.length?'<strong>⚠️ Fator(es) de risco:</strong> '+arr.join(' • ')+'<br><span class="small">Validar cobertura ampliada e obter microbiologia quando indicada.</span>':'<strong>Nenhum fator de risco marcado.</strong><br><span class="small">Não ampliar apenas pela gravidade.</span>';
+});
+v('makeAbx').onclick=()=>{
+ let s=v('site').value,c=v('comorb').value,a=v('allergy').value,t='';
+ if(s==='out'){
+  if(c==='no')t=a==='no'?'<strong>Ambulatorial sem comorbidades:</strong> amoxicilina em dose alta ou doxiciclina.':'<strong>Ambulatorial com comorbidades:</strong> β-lactâmico + macrolídeo/doxiciclina OU fluoroquinolona respiratória.';
+  else t+='<strong>Alergia grave a β-lactâmico:</strong> considerar fluoroquinolona respiratória, após avaliar riscos/contraindicações.';
+ }else if(s==='ward'){
+  t=a==='no'?'<strong>Enfermaria, não grave:</strong> β-lactâmico + macrolídeo OU fluoroquinolona respiratória.':'<strong>Alergia grave:</strong> fluoroquinolona respiratória, individualizando riscos.';
+ }else{
+  t=a==='no'?'<strong>UTI/PAC grave:</strong> β-lactâmico + macrolídeo OU β-lactâmico + fluoroquinolona respiratória.':'<strong>Alergia grave:</strong> individualizar alternativa ao β-lactâmico; considerar consulta especializada.';
+ }
+ v('abxOut').innerHTML=t+'<br><span class="small">Se risco de MRSA/Pseudomonas, adicionar cobertura específica conforme fator de risco. Ajustar ao antibiograma, função renal/hepática, interações e protocolo local.</span>';
+};
+v('calcDur').onclick=()=>{
+ let st=v('stable').value,se=v('durSevere').value==='yes',pr=v('prolonged').value==='yes',d=v('stableDay').value,t='';
+ if(st==='no')t='<strong>Não finalize a duração.</strong> Reavalie estabilidade diariamente.';
+ else if(pr)t='<strong>Individualizar/prolongar.</strong> O patógeno ou a complicação determina a duração; não aplicar automaticamente a regra de PAC não complicada.';
+ else if(se)t='<strong>≥5 dias</strong>, desde que haja estabilidade clínica e resposta adequada.';
+ else if(d==='3')t='<strong>&lt;5 dias pode ser considerado; mínimo 3 dias</strong> em PAC não grave que atingiu estabilidade, conforme ATS 2025.';
+ else t='<strong>&lt;5 dias pode ser considerado</strong> se PAC não grave e estável; se a estabilidade ocorreu mais tarde, individualizar e manter até estabilidade com resposta adequada.';
+ v('durOut').innerHTML=t;
+};
+</script>
+</body>
+</html>

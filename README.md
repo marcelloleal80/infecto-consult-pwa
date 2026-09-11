@@ -1,13 +1,17 @@
 # Infecto Consult — PWA MVP 0.8
 
-Versão com popup próprio de instalação.
+Estrutura simplificada para o GitHub Pages.
 
-Quando o navegador considerar o site instalável, o Infecto Consult apresenta automaticamente:
-**Instalar Infecto Consult → Instalar aplicativo**
+Arquivos que devem ficar na raiz:
+- index.html
+- manifest.json
+- sw.js
+- icon-192.png
+- icon-512.png
+- icon.svg
+- pneumonia.html
+- pielonefrite.html
 
-O botão usa o mecanismo oficial `beforeinstallprompt` do navegador para abrir a instalação nativa.
+O `index.html` apresenta automaticamente o popup de instalação quando o navegador disponibiliza o evento PWA `beforeinstallprompt`.
 
-Importante: o navegador controla quando `beforeinstallprompt` é disparado. O site não consegue obrigar o Chrome a mostrar a caixa nativa em qualquer situação. O popup do Infecto Consult é automático assim que o navegador disponibiliza o evento.
-
-## Publicação
-Atualize no GitHub os arquivos `index.html`, `manifest.json`, `sw.js` e a pasta `icons/`.
+Importante: o navegador controla quando a instalação nativa pode ser oferecida. O site não pode obrigar o Chrome a abrir a janela nativa em qualquer circunstância.

@@ -21,10 +21,21 @@ main{padding:0 18px 55px}.section{margin-top:28px}.section h2{font-size:12px;tex
 footer{text-align:center;color:var(--muted);font-size:11px;padding:25px}
 @media(max-width:700px){.grid{grid-template-columns:1fr 1fr}.hero h1{font-size:29px}}@media(max-width:470px){.grid{grid-template-columns:1fr}}
 </style>
+
+<style id="install-pwa-css">
+#pwaInstallOverlay{position:fixed;inset:0;background:rgba(0,0,0,.42);display:none;align-items:flex-end;justify-content:center;z-index:9999;padding:18px}
+#pwaInstallCard{width:min(440px,100%);background:#fff;border-radius:22px;padding:22px;box-shadow:0 18px 50px rgba(0,0,0,.25);font-family:inherit}
+#pwaInstallCard .pwaIcon{width:72px;height:72px;border-radius:16px;display:block;margin:0 auto 12px}
+#pwaInstallCard h3{margin:0 0 7px;text-align:center;font-size:21px}
+#pwaInstallCard p{margin:0 0 17px;text-align:center;color:#555;line-height:1.45}
+#pwaInstallBtn{width:100%;border:0;border-radius:13px;padding:13px 16px;font-size:16px;font-weight:700;cursor:pointer}
+#pwaInstallLater{width:100%;border:0;background:transparent;padding:11px;margin-top:5px;cursor:pointer;color:#666}
+</style>
+
 </head>
 <body>
 <header><div class="wrap">
-<div class="bar"><div class="logo">Infecto <span>Consult</span></div><div class="badge">PWA • MVP 0.7</div></div>
+<div class="bar"><div class="logo">Infecto <span>Consult</span></div><div class="badge">PWA • MVP 0.8</div></div>
 <div class="hero"><h1>Decisão clínica. Sem perder tempo.</h1><p>Seu ambiente de consulta rápida em infectologia. Conteúdo organizado em módulos independentes para crescer sem reconstruir o aplicativo.</p></div>
 </div></header>
 <div class="search"><input id="q" placeholder="🔎 Buscar síndrome ou módulo"></div>
@@ -59,5 +70,56 @@ q.addEventListener("input",e=>{
 });
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
 </script>
+
+<div id="pwaInstallOverlay" role="dialog" aria-modal="true" aria-labelledby="pwaInstallTitle">
+  <div id="pwaInstallCard">
+    <img class="pwaIcon" src="icons/icon-192.png" alt="Infecto Consult">
+    <h3 id="pwaInstallTitle">Instalar Infecto Consult</h3>
+    <p>Tenha o Infecto Consult na tela inicial para acesso rápido, como um aplicativo.</p>
+    <button id="pwaInstallBtn">📲 Instalar aplicativo</button>
+    <button id="pwaInstallLater">Agora não</button>
+  </div>
+</div>
+
+
+<script id="pwa-install-script">
+(() => {
+  let deferredPrompt = null;
+  const overlay = document.getElementById('pwaInstallOverlay');
+  const installBtn = document.getElementById('pwaInstallBtn');
+  const laterBtn = document.getElementById('pwaInstallLater');
+
+  const showPopup = () => {
+    if (overlay && deferredPrompt && !window.matchMedia('(display-mode: standalone)').matches) {
+      overlay.style.display = 'flex';
+    }
+  };
+
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredPrompt = event;
+    // Pequeno atraso para o usuário terminar de carregar a página.
+    setTimeout(showPopup, 900);
+  });
+
+  installBtn?.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    overlay.style.display = 'none';
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  });
+
+  laterBtn?.addEventListener('click', () => {
+    overlay.style.display = 'none';
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    if (overlay) overlay.style.display = 'none';
+  });
+})();
+</script>
+
 </body>
 </html>

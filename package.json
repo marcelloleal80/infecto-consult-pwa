@@ -1,0 +1,11 @@
+{
+  "name": "infecto-consult-pwa",
+  "version": "0.9.1",
+  "private": true,
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "@notionhq/client": "latest"
+  }
+}

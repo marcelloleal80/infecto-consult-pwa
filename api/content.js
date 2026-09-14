@@ -1,183 +1,78 @@
 const { Client } = require('@notionhq/client')
 
-function richTextToPlain(arr) {
-  return Array.isArray(arr)
-    ? arr.map(t => t.plain_text || '').join('')
-    : ''
+function plain(arr) {
+  return Array.isArray(arr) ? arr.map(x => x.plain_text || '').join('') : ''
 }
 
-function getTitle(page) {
-  const props = page.properties || {}
-
-  // Primeiro tenta a propriedade do nosso banco
-  const named = props['Título']
-
-  if (named?.type === 'title') {
-    return richTextToPlain(named.title)
-  }
-
-  // Fallback: procura qualquer propriedade do tipo title
-  for (const value of Object.values(props)) {
-    if (value?.type === 'title') {
-      return richTextToPlain(value.title)
-    }
-  }
-
-  return 'Sem título'
+function propText(p) {
+  if (!p) return ''
+  if (p.type === 'title') return plain(p.title)
+  if (p.type === 'rich_text') return plain(p.rich_text)
+  if (p.type === 'select') return p.select?.name || ''
+  if (p.type === 'status') return p.status?.name || ''
+  if (p.type === 'url') return p.url || ''
+  if (p.type === 'checkbox') return !!p.checkbox
+  if (p.type === 'multi_select') return (p.multi_select || []).map(x => x.name)
+  return ''
 }
 
-function getDescription(page) {
-  const props = page.properties || {}
-
-  const property = props['Descrição curta']
-
-  if (property?.type === 'rich_text') {
-    return richTextToPlain(property.rich_text)
-  }
-
-  const fallback = Object.values(props).find(
-    p => p?.type === 'rich_text'
-  )
-
-  return fallback
-    ? richTextToPlain(fallback.rich_text)
-    : ''
+function pageTitle(page) {
+  const p = Object.values(page.properties || {}).find(x => x?.type === 'title')
+  return propText(p) || 'Sem título'
 }
 
-function getIcon(page) {
-  const icon = page.icon
-
-  if (icon?.type === 'emoji') {
-    return icon.emoji
-  }
-
+function pageIcon(page) {
+  if (page.icon?.type === 'emoji') return page.icon.emoji
   return '🧬'
 }
 
-function isPublished(page) {
-  const property =
-    page.properties?.['Publicar no site']
-
-  return property?.type === 'checkbox'
-    ? property.checkbox === true
-    : false
+function getDataSourceId(database) {
+  return database.data_sources?.[0]?.id || process.env.NOTION_DATABASE_ID
 }
 
 module.exports = async function handler(req, res) {
-
   try {
-
-    if (
-      !process.env.NOTION_TOKEN ||
-      !process.env.NOTION_DATABASE_ID
-    ) {
-
-      return res.status(200).json({
-        source: 'fallback',
-        warning: 'Configure NOTION_TOKEN e NOTION_DATABASE_ID.',
-        items: []
-      })
-
+    if (!process.env.NOTION_TOKEN || !process.env.NOTION_DATABASE_ID) {
+      return res.status(200).json({ source: 'fallback', warning: 'Configure NOTION_TOKEN e NOTION_DATABASE_ID no Vercel.', items: [] })
     }
 
-    const notion = new Client({
-      auth: process.env.NOTION_TOKEN,
-      notionVersion: '2025-09-03'
-    })
+    const notion = new Client({ auth: process.env.NOTION_TOKEN, notionVersion: '2025-09-03' })
+    const db = await notion.databases.retrieve({ database_id: process.env.NOTION_DATABASE_ID })
+    const dataSourceId = getDataSourceId(db)
 
-    /*
-     * Descobre automaticamente o Data Source
-     */
-
-    const database =
-      await notion.databases.retrieve({
-        database_id:
-          process.env.NOTION_DATABASE_ID
-      })
-
-    const dataSources =
-      database.data_sources || []
-
-    if (!dataSources.length) {
-      throw new Error(
-        'Nenhum Data Source encontrado.'
-      )
-    }
-
-    const dataSourceId =
-      dataSources[0].id
-
-    /*
-     * Consulta as páginas
-     */
-
-    const response =
-      await notion.dataSources.query({
+    let results = []
+    let cursor
+    do {
+      const response = await notion.dataSources.query({
         data_source_id: dataSourceId,
-        page_size: 100
+        page_size: 100,
+        ...(cursor ? { start_cursor: cursor } : {})
       })
+      results.push(...response.results)
+      cursor = response.has_more ? response.next_cursor : null
+    } while (cursor)
 
-    /*
-     * Somente páginas marcadas
-     * como "Publicar no site"
-     */
+    const items = results
+      .filter(page => page.object === 'page')
+      .filter(page => page.properties?.['Publicar no site']?.checkbox === true)
+      .map(page => ({
+        id: page.id,
+        title: pageTitle(page),
+        description: propText(page.properties?.['Descrição curta']),
+        icon: pageIcon(page),
+        category: propText(page.properties?.['Categoria']),
+        level: propText(page.properties?.['Nível de página']),
+        miniApps: propText(page.properties?.['MiniApps usados']),
+        extraTabs: propText(page.properties?.['Abas adicionais']),
+        premium: !!page.properties?.['Página premium']?.checkbox,
+        notionUrl: page.url,
+        updatedAt: page.last_edited_time
+      }))
 
-    const items =
-      response.results
-        .filter(page =>
-          page.object === 'page' &&
-          isPublished(page)
-        )
-        .map(page => ({
-
-          id: page.id,
-
-          title: getTitle(page),
-
-          description:
-            getDescription(page),
-
-          icon:
-            getIcon(page),
-
-          notionUrl:
-            page.url,
-
-          updatedAt:
-            page.last_edited_time
-
-        }))
-
-    res.setHeader(
-      'Cache-Control',
-      's-maxage=60, stale-while-revalidate=300'
-    )
-
-    return res.status(200).json({
-
-      source: 'notion',
-
-      items
-
-    })
-
+    res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300')
+    return res.status(200).json({ source: 'notion', items })
   } catch (error) {
-
-    console.error(
-      'Erro Notion:',
-      error
-    )
-
-    return res.status(500).json({
-
-      error:
-        error.message ||
-        'Erro ao ler Notion',
-
-      items: []
-
-    })
-
+    console.error(error)
+    return res.status(500).json({ error: error.message || 'Erro ao ler Notion', items: [] })
   }
-
 }

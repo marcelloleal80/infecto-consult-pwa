@@ -69,15 +69,10 @@ async function loadNotionContent(){
   const res=await fetch('/api/content');
   const data=await res.json();
   if(data.items && data.items.length){
-   modules=[...staticModules,...data.items.map(item=>[item.title,'conteudo.html?id='+encodeURIComponent(item.id),item.description||item.title])
+   modules=[...staticModules,...data.items.map(item=>[item.title,'conteudo.html?id='+encodeURIComponent(item.id),item.description||item.title])];
    renderNotionSection(data.items);
   }
  }catch(e){console.warn('Notion indisponível',e)}
-}
-function renderNotionSection(items){
- const home=document.getElementById('home');
- const html=`<div class="section"><h2>Conteúdos vindos do Notion</h2><div class="grid">${items.map(item=>`<div class="card feature" onclick="openModule('${item.notionUrl}')"><div class="ico">${item.icon||'🧬'}</div><h3>${item.title}</h3><p>${item.description||'Conteúdo editorial sincronizado do Notion.'}</p><span class="open">Abrir no Notion →</span></div>`).join('')}</div></div>`;
- home.insertAdjacentHTML('afterbegin',html);
 }
 function openModule(url){location.href=url}
 q.addEventListener("input",e=>{

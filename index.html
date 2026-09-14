@@ -69,7 +69,7 @@ async function loadNotionContent(){
   const res=await fetch('/api/content');
   const data=await res.json();
   if(data.items && data.items.length){
-   modules=[...staticModules,...data.items.map(item=>[item.title,item.notionUrl,item.description||item.title])];
+   modules=[...staticModules,...data.items.map(item=>[item.title,'conteudo.html?id='+encodeURIComponent(item.id),item.description||item.title])
    renderNotionSection(data.items);
   }
  }catch(e){console.warn('Notion indisponível',e)}

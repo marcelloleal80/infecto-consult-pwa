@@ -1,215 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0f766e">
-
-<title>Infecto Consult</title>
-
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123B5D"><title>Infecto Consult</title>
 <style>
-*{box-sizing:border-box}
-
-body{
- margin:0;
- font-family:Inter,Arial,sans-serif;
- background:#f5f7f8;
- color:#17202a;
- line-height:1.6
-}
-
-header{
- background:#0f766e;
- color:white;
- padding:18px 20px;
- position:sticky;
- top:0;
- z-index:5;
- box-shadow:0 2px 8px #0002
-}
-
-.header{
- max-width:900px;
- margin:auto;
- display:flex;
- align-items:center;
- gap:14px
-}
-
-.back{
- font-size:26px;
- cursor:pointer
-}
-
-.brand{
- font-weight:700;
- font-size:19px
-}
-
-main{
- max-width:900px;
- margin:0 auto;
- padding:28px 18px 60px
-}
-
-.card{
- background:white;
- border-radius:16px;
- padding:28px;
- box-shadow:0 2px 12px #0000000d
-}
-
-.title{
- font-size:30px;
- line-height:1.2;
- margin:0 0 25px
-}
-
-h1{
- font-size:25px;
- margin-top:30px
-}
-
-h2{
- font-size:21px;
- margin-top:28px;
- color:#0f766e
-}
-
-h3{
- font-size:18px;
- margin-top:22px
-}
-
-p{
- margin:10px 0
-}
-
-ul,ol{
- padding-left:25px
-}
-
-li{
- margin:6px 0
-}
-
-blockquote{
- margin:18px 0;
- padding:14px 18px;
- border-left:4px solid #0f766e;
- background:#f0fdfa
-}
-
-.callout{
- margin:18px 0;
- padding:15px 18px;
- border-radius:10px;
- background:#ecfeff
-}
-
-hr{
- border:0;
- border-top:1px solid #ddd;
- margin:25px 0
-}
-
-.loading{
- text-align:center;
- padding:50px;
- color:#667085
-}
-
-.error{
- padding:20px;
- background:#fff1f2;
- color:#b42318;
- border-radius:10px
-}
-
-@media(max-width:600px){
- .card{padding:20px}
- .title{font-size:25px}
-}
-</style>
-</head>
-
+:root{--navy:#123b5d;--blue:#287aa8;--bg:#f5f7f9;--card:#fff;--text:#1d2730;--muted:#65727e;--line:#dce3e8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.58 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}.wrap{max-width:1180px;margin:auto;padding:0 16px 50px}
+header{background:linear-gradient(135deg,#0d304a,#287aa8);color:#fff;padding:18px 0 20px}.top{display:flex;gap:12px;align-items:center;justify-content:space-between}.brand{font-size:20px;font-weight:800}.back{color:#fff;text-decoration:none;border:1px solid #ffffff55;border-radius:999px;padding:7px 12px;font-size:13px}.title{display:flex;align-items:center;gap:12px;margin:18px 0 5px}.icon{font-size:30px}.title h1{font-size:25px;line-height:1.15;margin:0}.meta{font-size:12px;opacity:.88}
+.tabs{display:flex;gap:7px;overflow:auto;padding:10px 0;position:sticky;top:0;background:rgba(245,247,249,.96);z-index:5;border-bottom:1px solid var(--line)}.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 13px;white-space:nowrap;cursor:pointer;color:var(--navy);font-weight:650}.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:16px;box-shadow:0 2px 8px #00000008}.panel h2{color:var(--navy);font-size:22px;margin:0 0 16px}.panel h3{color:#244e68;margin-top:25px}.panel h4{margin-top:20px;color:#315d73}.panel p{margin:8px 0}.panel ul{padding-left:24px}.panel li{margin:4px 0}.panel a{color:#126c9b}.panel blockquote{margin:16px 0;padding:12px 16px;border-left:4px solid var(--blue);background:#eef6fa}.callout{display:flex;gap:12px;padding:13px 15px;border:1px solid var(--line);border-radius:10px;background:#f8fbfc;margin:14px 0}.callout-icon{font-size:21px}.table-wrap{overflow:auto;margin:15px 0}.table-wrap table{border-collapse:collapse;width:100%;min-width:620px}.table-wrap th,.table-wrap td{border:1px solid var(--line);padding:9px;vertical-align:top;text-align:left}.table-wrap th{background:#eef3f6}.columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.column{min-width:0}.media,.external-embed,.file-link{padding:12px;border:1px dashed var(--line);border-radius:9px;background:#fafcfd}.media a,.external-embed a{font-weight:700}.panel img{max-width:100%;height:auto;border-radius:8px}.panel figure{margin:16px 0}.panel figcaption{font-size:12px;color:var(--muted)}details{border:1px solid var(--line);border-radius:9px;padding:10px 12px;margin:10px 0}summary{cursor:pointer;font-weight:650}.spacer{height:5px}.todo{display:block;margin:7px 0}.todo input{margin-right:8px}.equation,pre{background:#f3f5f7;padding:10px;border-radius:8px;overflow:auto}.miniapp{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}.miniapp iframe{width:100%;min-height:760px;border:0}.notice{padding:14px;border-radius:10px;background:#fff8e8;border:1px solid #f0d69a}.footer{color:var(--muted);font-size:12px;margin-top:18px}
+@media(max-width:700px){.wrap{padding:0 10px 35px}.title h1{font-size:21px}.panel{padding:15px}.miniapp iframe{min-height:900px}}
+</style></head>
 <body>
-
-<header>
- <div class="header">
-  <div class="back" onclick="history.back()">‹</div>
-  <div class="brand">🧬 Infecto Consult</div>
- </div>
-</header>
-
-<main>
- <div class="card">
-
-  <div id="loading" class="loading">
-   Carregando conteúdo clínico...
-  </div>
-
-  <div id="content" style="display:none">
-   <h1 class="title" id="title"></h1>
-   <div id="body"></div>
-  </div>
-
- </div>
-</main>
-
+<header><div class="wrap"><div class="top"><div class="brand">🧬 Infecto Consult</div><a class="back" href="index.html">← Conteúdos</a></div><div class="title"><div class="icon" id="icon">🧬</div><div><h1 id="title">Carregando…</h1><div class="meta" id="meta"></div></div></div></div></header>
+<main class="wrap"><div class="tabs" id="tabs"></div><div id="decisor"></div><div id="content"></div><div class="footer" id="footer"></div></main>
 <script>
-
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const params=new URLSearchParams(location.search), id=params.get('id');
+let data;
+const miniMap={CURB65:'pneumonia.html',PSI:'pneumonia.html'};
+function miniHtml(){
+ const names=(data.miniApps||'').match(/\[MINIAPP:([^\]]+)\]/g)?.map(x=>x.match(/\[MINIAPP:([^\]]+)\]/)[1])||[];
+ const urls=[...new Set(names.map(n=>miniMap[n]).filter(Boolean))];
+ if(!urls.length)return `<div class="notice"><strong>Decisor clínico</strong><br>Esta página está marcada como interativa no Notion, mas o MiniApp ainda não está associado a um arquivo do PWA.</div>`;
+ return urls.map(u=>`<div class="miniapp"><iframe src="${u}" title="Decisor clínico"></iframe></div>`).join('<div style="height:14px"></div>');
+}
+function activate(i){document.querySelectorAll('.tab').forEach((b,j)=>b.classList.toggle('active',j===i));document.querySelectorAll('.tabpanel').forEach((p,j)=>p.style.display=j===i?'block':'none');}
 async function load(){
-
- const params = new URLSearchParams(location.search)
- const id = params.get('id')
-
- if(!id){
-   showError('Página não informada.')
-   return
- }
-
- try{
-
-   const response = await fetch('/api/page?id=' + encodeURIComponent(id))
-   const data = await response.json()
-
-   if(!response.ok){
-     throw new Error(data.error || 'Erro ao carregar conteúdo')
-   }
-
-   document.title = data.title + ' — Infecto Consult'
-
-   document.getElementById('title').textContent =
-      (data.icon || '🧬') + ' ' + data.title
-
-   document.getElementById('body').innerHTML = data.content
-
-   document.getElementById('loading').style.display='none'
-   document.getElementById('content').style.display='block'
-
- }catch(error){
-
-   showError(error.message)
-
- }
-
+ if(!id){document.getElementById('content').innerHTML='<div class="notice">Página não informada.</div>';return}
+ try{const r=await fetch('/api/page?id='+encodeURIComponent(id));data=await r.json();if(!r.ok)throw new Error(data.error||'Erro');
+  document.title=data.title+' — Infecto Consult';document.getElementById('icon').textContent=data.icon||'🧬';document.getElementById('title').textContent=data.title;document.getElementById('meta').textContent=(data.category||'')+(data.premium?' · Premium':'');
+  const tabs=[{label:'Decisor clínico',special:true},...(data.tabs||[])];
+  document.getElementById('tabs').innerHTML=tabs.map((t,i)=>`<button class="tab" onclick="activate(${i})">${esc(t.label)}</button>`).join('');
+  document.getElementById('decisor').innerHTML='<div class="tabpanel panel" style="display:none"><h2>Decisor clínico</h2>'+miniHtml()+'</div>';
+  document.getElementById('content').innerHTML=(data.tabs||[]).map(t=>`<section class="tabpanel panel" style="display:none"><h2>${esc(t.label)}</h2>${t.html}</section>`).join('');
+  document.getElementById('footer').innerHTML=data.notionUrl?`Fonte editorial: <a href="${esc(data.notionUrl)}" target="_blank" rel="noopener">Notion</a>`:'';
+  activate(0);
+ }catch(e){document.getElementById('content').innerHTML='<div class="notice"><strong>Não foi possível carregar o conteúdo.</strong><br>'+esc(e.message)+'</div>'}
 }
-
-function showError(message){
-
- document.getElementById('loading').style.display='none'
-
- const box=document.createElement('div')
- box.className='error'
- box.textContent='Não foi possível carregar o conteúdo: '+message
-
- document.querySelector('.card').appendChild(box)
-}
-
-load()
-
-</script>
-
-</body>
-</html>
+load();
+</script></body></html>

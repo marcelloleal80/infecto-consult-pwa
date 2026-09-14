@@ -1,1049 +1,144 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <meta name="theme-color" content="#123B5D">
 <meta name="description" content="Infecto Consult — apoio à decisão clínica em infectologia">
-
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png" type="image/png">
-
 <title>Infecto Consult</title>
-
 <style>
-
-:root{
-  --navy:#123B5D;
-  --blue:#287AA8;
-  --bg:#F4F7F9;
-  --card:#fff;
-  --text:#173042;
-  --muted:#687B88;
-  --line:#DCE5EA;
-  --gold:#C7A348
-}
-
-*{
-  box-sizing:border-box
-}
-
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Inter,Arial,sans-serif
-}
-
-header{
-  background:linear-gradient(135deg,#0d304a,#287aa8);
-  color:#fff;
-  padding:22px 18px 55px
-}
-
-.wrap{
-  max-width:1100px;
-  margin:auto
-}
-
-.bar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center
-}
-
-.logo{
-  font-size:25px;
-  font-weight:800
-}
-
-.logo span{
-  font-weight:400
-}
-
-.badge{
-  font-size:11px;
-  border:1px solid #ffffff55;
-  border-radius:20px;
-  padding:7px 10px
-}
-
-.hero{
-  margin-top:35px
-}
-
-.hero h1{
-  font-size:35px;
-  margin:0 0 8px
-}
-
-.hero p{
-  margin:0;
-  color:#dcebf3;
-  max-width:680px
-}
-
-.search{
-  max-width:1100px;
-  margin:-27px auto 0;
-  padding:0 18px
-}
-
-.search input{
-  width:100%;
-  height:58px;
-  border:1px solid var(--line);
-  border-radius:15px;
-  padding:0 20px;
-  font-size:16px;
-  box-shadow:0 10px 30px #17304218;
-  outline:0
-}
-
-main{
-  padding:0 18px 55px
-}
-
-.section{
-  margin-top:28px
-}
-
-.section h2{
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:1.2px;
-  color:var(--muted);
-  margin:0 0 12px
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px
-}
-
-.card{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:15px;
-  padding:19px;
-  min-height:155px;
-  cursor:pointer;
-  transition:.15s
-}
-
-.card:hover{
-  transform:translateY(-1px);
-  box-shadow:0 8px 24px #17304212
-}
-
-.feature{
-  border:2px solid #287aa844
-}
-
-.notion-card{
-  border:2px solid #0f766e55
-}
-
-.ico{
-  font-size:26px;
-  margin-bottom:11px
-}
-
-.card h3{
-  margin:0 0 6px;
-  font-size:17px
-}
-
-.card p{
-  margin:0;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.45
-}
-
-.open{
-  display:inline-block;
-  margin-top:13px;
-  background:var(--navy);
-  color:#fff;
-  border-radius:9px;
-  padding:8px 11px;
-  font-size:12px;
-  font-weight:700
-}
-
-.results button{
-  width:100%;
-  text-align:left;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:12px;
-  margin:5px 0;
-  cursor:pointer
-}
-
-.info{
-  margin-top:24px;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:15px;
-  font-size:13px;
-  color:var(--muted)
-}
-
-.notion-status{
-  margin-top:12px;
-  padding:10px 14px;
-  background:#ecfdf5;
-  border:1px solid #a7f3d0;
-  border-radius:10px;
-  color:#065f46;
-  font-size:12px
-}
-
-footer{
-  text-align:center;
-  color:var(--muted);
-  font-size:11px;
-  padding:25px
-}
-
-@media(max-width:700px){
-
-  .grid{
-    grid-template-columns:1fr 1fr
-  }
-
-  .hero h1{
-    font-size:29px
-  }
-
-}
-
-@media(max-width:470px){
-
-  .grid{
-    grid-template-columns:1fr
-  }
-
-}
-
+:root{--navy:#123B5D;--blue:#287AA8;--bg:#F4F7F9;--card:#fff;--text:#173042;--muted:#687B88;--line:#DCE5EA;--gold:#C7A348}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
+header{background:linear-gradient(135deg,#0d304a,#287aa8);color:#fff;padding:22px 18px 55px}.wrap{max-width:1100px;margin:auto}.bar{display:flex;justify-content:space-between;align-items:center}.logo{font-size:25px;font-weight:800}.logo span{font-weight:400}.badge{font-size:11px;border:1px solid #ffffff55;border-radius:20px;padding:7px 10px}
+.hero{margin-top:35px}.hero h1{font-size:35px;margin:0 0 8px}.hero p{margin:0;color:#dcebf3;max-width:680px}
+.search{max-width:1100px;margin:-27px auto 0;padding:0 18px}.search input{width:100%;height:58px;border:1px solid var(--line);border-radius:15px;padding:0 20px;font-size:16px;box-shadow:0 10px 30px #17304218;outline:0}
+main{padding:0 18px 55px}.section{margin-top:28px}.section h2{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin:0 0 12px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:19px;min-height:155px;cursor:pointer}.card:hover{transform:translateY(-1px);box-shadow:0 8px 24px #17304212}.feature{border:2px solid #287aa844}.ico{font-size:26px;margin-bottom:11px}.card h3{margin:0 0 6px;font-size:17px}.card p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}.open{display:inline-block;margin-top:13px;background:var(--navy);color:#fff;border-radius:9px;padding:8px 11px;font-size:12px;font-weight:700}
+.results button{width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;margin:5px 0;cursor:pointer}
+.info{margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px;font-size:13px;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:25px}
+@media(max-width:700px){.grid{grid-template-columns:1fr 1fr}.hero h1{font-size:29px}}@media(max-width:470px){.grid{grid-template-columns:1fr}}
 </style>
 
 <style id="install-pwa-css">
-
-#pwaInstallOverlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.42);
-  display:none;
-  align-items:flex-end;
-  justify-content:center;
-  z-index:9999;
-  padding:18px
-}
-
-#pwaInstallCard{
-  width:min(440px,100%);
-  background:#fff;
-  border-radius:22px;
-  padding:22px;
-  box-shadow:0 18px 50px rgba(0,0,0,.25);
-  font-family:inherit
-}
-
-#pwaInstallCard .pwaIcon{
-  width:72px;
-  height:72px;
-  border-radius:16px;
-  display:block;
-  margin:0 auto 12px
-}
-
-#pwaInstallCard h3{
-  margin:0 0 7px;
-  text-align:center;
-  font-size:21px
-}
-
-#pwaInstallCard p{
-  margin:0 0 17px;
-  text-align:center;
-  color:#555;
-  line-height:1.45
-}
-
-#pwaInstallBtn{
-  width:100%;
-  border:0;
-  border-radius:13px;
-  padding:13px 16px;
-  font-size:16px;
-  font-weight:700;
-  cursor:pointer
-}
-
-#pwaInstallLater{
-  width:100%;
-  border:0;
-  background:transparent;
-  padding:11px;
-  margin-top:5px;
-  cursor:pointer;
-  color:#666
-}
-
+#pwaInstallOverlay{position:fixed;inset:0;background:rgba(0,0,0,.42);display:none;align-items:flex-end;justify-content:center;z-index:9999;padding:18px}
+#pwaInstallCard{width:min(440px,100%);background:#fff;border-radius:22px;padding:22px;box-shadow:0 18px 50px rgba(0,0,0,.25);font-family:inherit}
+#pwaInstallCard .pwaIcon{width:72px;height:72px;border-radius:16px;display:block;margin:0 auto 12px}
+#pwaInstallCard h3{margin:0 0 7px;text-align:center;font-size:21px}
+#pwaInstallCard p{margin:0 0 17px;text-align:center;color:#555;line-height:1.45}
+#pwaInstallBtn{width:100%;border:0;border-radius:13px;padding:13px 16px;font-size:16px;font-weight:700;cursor:pointer}
+#pwaInstallLater{width:100%;border:0;background:transparent;padding:11px;margin-top:5px;cursor:pointer;color:#666}
 </style>
 
 </head>
-
 <body>
-
-<header>
-
-<div class="wrap">
-
-<div class="bar">
-
-<div class="logo">
-Infecto <span>Consult</span>
-</div>
-
-<div class="badge">
-PWA • MVP 0.9
-</div>
-
-</div>
-
-<div class="hero">
-
-<h1>
-Decisão clínica. Sem perder tempo.
-</h1>
-
-<p>
-Seu ambiente de consulta rápida em infectologia.
-Conteúdo organizado em módulos independentes para crescer sem reconstruir o aplicativo.
-</p>
-
-</div>
-
-</div>
-
-</header>
-
-
-<div class="search">
-
-<input
-id="q"
-placeholder="🔎 Buscar síndrome ou módulo"
-autocomplete="off">
-
-</div>
-
-
+<header><div class="wrap">
+<div class="bar"><div class="logo">Infecto <span>Consult</span></div><div class="badge">PWA • MVP 0.8</div></div>
+<div class="hero"><h1>Decisão clínica. Sem perder tempo.</h1><p>Seu ambiente de consulta rápida em infectologia. Conteúdo organizado em módulos independentes para crescer sem reconstruir o aplicativo.</p></div>
+</div></header>
+<div class="search"><input id="q" placeholder="🔎 Buscar síndrome ou módulo"></div>
 <main class="wrap">
-
 <div id="results"></div>
-
-
 <div id="home">
-
-
-<!-- CONTEÚDOS DO NOTION SERÃO INSERIDOS AQUI -->
-
-
-<div class="section">
-
-<h2>
-Módulos clínicos
-</h2>
-
-<div class="grid">
-
-
-<div
-class="card feature"
-onclick="openModule('pneumonia.html')">
-
-<div class="ico">🫁</div>
-
-<h3>
-Pneumonia — Decisão Clínica
-</h3>
-
-<p>
-PSI, PAC grave, risco de MRSA/Pseudomonas,
-antibiótico, microbiologia, IV→VO e duração.
-</p>
-
-<span class="open">
-Abrir módulo →
-</span>
-
+<div class="section"><h2>Módulos clínicos</h2><div class="grid">
+<div class="card feature" onclick="openModule('pneumonia.html')"><div class="ico">🫁</div><h3>Pneumonia — Decisão Clínica</h3><p>PSI, PAC grave, risco de MRSA/Pseudomonas, antibiótico, microbiologia, IV→VO e duração.</p><span class="open">Abrir módulo →</span></div>
+<div class="card feature" onclick="openModule('pielonefrite.html')"><div class="ico">🧪</div><h3>Pielonefrite Aguda</h3><p>Triagem, microbiologia, antibiótico empírico, imagem, situações especiais e reavaliação.</p><span class="open">Abrir módulo →</span></div>
+<div class="card feature" onclick="openModule('clostridioides_difficile.html')"><div class="ico">🦠</div><h3>Infecção por <i>Clostridioides difficile</i></h3><p>Diagnóstico, colonização × infecção, gravidade, tratamento, recorrência e prevenção.</p><span class="open">Abrir módulo →</span></div>
+ <div class="card"><div class="ico">🚨</div><h3>Sepse</h3><p>Estrutura reservada para o próximo módulo.</p><span class="open">Em breve</span></div>
+</div></div>
+<div class="section"><h2>Próximos módulos</h2><div class="grid">
+<div class="card"><div class="ico">💊</div><h3>Antimicrobianos</h3><p>Banco transversal: dose, espectro, ajuste renal/hepático, interações e alertas.</p></div>
+<div class="card"><div class="ico">🦠</div><h3>Patógenos</h3><p>Resistência, epidemiologia e opções terapêuticas.</p></div>
+<div class="card"><div class="ico">🔬</div><h3>Exames</h3><p>Interpretação e utilidade na decisão clínica.</p></div>
+</div></div>
+<div class="info"><b>Arquitetura do MVP:</b> esta tela é a “casca” do PWA; cada síndrome fica em seu próprio arquivo. Assim, você pode acrescentar novos módulos sem reescrever a página inicial. Os dois módulos enviados foram incorporados como arquivos independentes.</div>
 </div>
-
-
-<div
-class="card feature"
-onclick="openModule('pielonefrite.html')">
-
-<div class="ico">🧪</div>
-
-<h3>
-Pielonefrite Aguda
-</h3>
-
-<p>
-Triagem, microbiologia, antibiótico empírico,
-imagem, situações especiais e reavaliação.
-</p>
-
-<span class="open">
-Abrir módulo →
-</span>
-
-</div>
-
-
-<div
-class="card feature"
-onclick="openModule('clostridioides_difficile.html')">
-
-<div class="ico">🦠</div>
-
-<h3>
-Infecção por <i>Clostridioides difficile</i>
-</h3>
-
-<p>
-Diagnóstico, colonização × infecção,
-gravidade, tratamento, recorrência e prevenção.
-</p>
-
-<span class="open">
-Abrir módulo →
-</span>
-
-</div>
-
-
-<div class="card">
-
-<div class="ico">🚨</div>
-
-<h3>
-Sepse
-</h3>
-
-<p>
-Estrutura reservada para o próximo módulo.
-</p>
-
-<span class="open">
-Em breve
-</span>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-<div class="section">
-
-<h2>
-Próximos módulos
-</h2>
-
-<div class="grid">
-
-
-<div class="card">
-
-<div class="ico">💊</div>
-
-<h3>
-Antimicrobianos
-</h3>
-
-<p>
-Banco transversal: dose, espectro,
-ajuste renal/hepático, interações e alertas.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<div class="ico">🦠</div>
-
-<h3>
-Patógenos
-</h3>
-
-<p>
-Resistência, epidemiologia e opções terapêuticas.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<div class="ico">🔬</div>
-
-<h3>
-Exames
-</h3>
-
-<p>
-Interpretação e utilidade na decisão clínica.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-<div class="info">
-
-<b>Arquitetura do MVP:</b>
-
-o Infecto Consult utiliza o Notion como fonte editorial.
-Novos conteúdos podem ser adicionados ao banco do Notion
-e carregados automaticamente pela aplicação.
-
-</div>
-
-
-</div>
-
 </main>
-
-
-<footer>
-
-Infecto Consult • MVP PWA • Conteúdo clínico deve ser validado e atualizado antes do uso assistencial.
-
-</footer>
-
-
+<footer>Infecto Consult • MVP PWA • Conteúdo clínico deve ser validado e atualizado antes do uso assistencial.</footer>
 <script>
-
-/* =========================================================
-   MÓDULOS ESTÁTICOS
-========================================================= */
-
-const staticModules = [
-
-[
-"Pneumonia — Decisão Clínica",
-"pneumonia.html",
-"PSI PAC grave MRSA Pseudomonas antibiótico duração"
-],
-
-[
-"Pielonefrite Aguda",
-"pielonefrite.html",
-"pielonefrite ITU urocultura ESBL MDR imagem antibiótico"
-],
-
-[
-"Infecção por Clostridioides difficile",
-"clostridioides_difficile.html",
-"Clostridioides difficile C difficile diarreia colonização infecção gravidade tratamento recorrência"
-]
-
+const staticModules=[
+["Pneumonia — Decisão Clínica","pneumonia.html","PSI PAC grave MRSA Pseudomonas antibiótico duração"],
+["Pielonefrite Aguda","pielonefrite.html","pielonefrite ITU urocultura ESBL MDR imagem antibiótico"],
+["Infecção por Clostridioides difficile","clostridioides_difficile.html","Clostridioides difficile C difficile diarreia colonização infecção gravidade tratamento recorrência"]
 ];
-
-
-let modules = [...staticModules];
-
-
-/* =========================================================
-   ABRIR MÓDULO
-========================================================= */
-
-function openModule(url){
-
-  location.href = url;
-
-}
-
-
-/* =========================================================
-   CARREGAR NOTION
-========================================================= */
-
+let modules=[...staticModules];
 async function loadNotionContent(){
-
-  try{
-
-    const response = await fetch('/api/content');
-
-    if(!response.ok){
-
-      throw new Error(
-        'API retornou erro HTTP ' + response.status
-      );
-
-    }
-
-    const data = await response.json();
-
-    console.log('Infecto Consult — Notion:', data);
-
-
-    if(data.items && data.items.length){
-
-      /*
-        Adiciona os conteúdos do Notion
-        ao mecanismo de busca.
-      */
-
-      modules = [
-
-        ...staticModules,
-
-        ...data.items.map(item => [
-
-          item.title,
-
-          'conteudo.html?id=' +
-          encodeURIComponent(item.id),
-
-          item.description || item.title
-
-        ])
-
-      ];
-
-
-      /*
-        Mostra os conteúdos na página inicial.
-      */
-
-      renderNotionSection(data.items);
-
-    }
-
-  }catch(error){
-
-    console.error(
-      'Erro ao carregar Notion:',
-      error
-    );
-
+ try{
+  const res=await fetch('/api/content');
+  const data=await res.json();
+  if(data.items && data.items.length){
+   modules=[...staticModules,...data.items.map(item=>[item.title,item.notionUrl,item.description||item.title])];
+   renderNotionSection(data.items);
   }
-
+ }catch(e){console.warn('Notion indisponível',e)}
 }
-
-
-/* =========================================================
-   MOSTRAR CONTEÚDOS DO NOTION
-========================================================= */
-
 function renderNotionSection(items){
-
-  const home =
-    document.getElementById('home');
-
-
-  if(!home){
-
-    return;
-
-  }
-
-
-  const cards = items.map(item => {
-
-    const url =
-      'conteudo.html?id=' +
-      encodeURIComponent(item.id);
-
-
-    return `
-
-      <div
-        class="card notion-card"
-        onclick="openModule('${url}')"
-      >
-
-        <div class="ico">
-          ${item.icon || '🧬'}
-        </div>
-
-        <h3>
-          ${escapeHtml(item.title)}
-        </h3>
-
-        <p>
-          ${escapeHtml(
-            item.description ||
-            'Conteúdo editorial sincronizado do Notion.'
-          )}
-        </p>
-
-        <span class="open">
-          Abrir conteúdo →
-        </span>
-
-      </div>
-
-    `;
-
-  }).join('');
-
-
-  const section = document.createElement('div');
-
-  section.className = 'section';
-
-
-  section.innerHTML = `
-
-    <h2>
-      Conteúdos vindos do Notion
-    </h2>
-
-    <div class="grid">
-      ${cards}
-    </div>
-
-    <div class="notion-status">
-      ✓ Conteúdo sincronizado automaticamente com o Notion
-    </div>
-
-  `;
-
-
-  /*
-    Insere a seção no início da página.
-  */
-
-  home.insertBefore(
-    section,
-    home.firstElementChild
-  );
-
+ const home=document.getElementById('home');
+ const html=`<div class="section"><h2>Conteúdos vindos do Notion</h2><div class="grid">${items.map(item=>`<div class="card feature" onclick="openModule('conteudo.html?id=${item.id}')"><div class="ico">${item.icon||'🧬'}</div><h3>${item.title}</h3><p>${item.description||'Conteúdo editorial sincronizado do Notion.'}</p><span class="open">Abrir conteúdo →</span></div>`).join('')}</div></div>`;
+ home.insertAdjacentHTML('afterbegin',html);
 }
-
-
-/* =========================================================
-   SEGURANÇA BÁSICA PARA TEXTO DO NOTION
-========================================================= */
-
-function escapeHtml(value){
-
-  return String(value || '')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#039;');
-
-}
-
-
-/* =========================================================
-   BUSCA
-========================================================= */
-
-const searchInput =
-  document.getElementById('q');
-
-
-searchInput.addEventListener(
-  'input',
-  function(event){
-
-    const search =
-      event.target.value
-        .toLowerCase()
-        .trim();
-
-
-    const results =
-      document.getElementById('results');
-
-
-    if(!search){
-
-      results.innerHTML = '';
-
-      return;
-
-    }
-
-
-    const matches =
-      modules.filter(module =>
-
-        (
-          module[0] +
-          ' ' +
-          module[2]
-        )
-        .toLowerCase()
-        .includes(search)
-
-      );
-
-
-    if(!matches.length){
-
-      results.innerHTML = `
-
-        <p style="color:#687B88">
-          Nenhum módulo encontrado.
-        </p>
-
-      `;
-
-      return;
-
-    }
-
-
-    results.innerHTML = matches.map(module => `
-
-      <button
-        onclick="openModule('${module[1]}')"
-      >
-
-        🔎
-
-        <b>
-          ${escapeHtml(module[0])}
-        </b>
-
-        <br>
-
-        <small>
-          ${escapeHtml(module[2])}
-        </small>
-
-      </button>
-
-    `).join('');
-
-  }
-);
-
-
-/* =========================================================
-   SERVICE WORKER
-========================================================= */
-
-if(
-  'serviceWorker' in navigator
-){
-
-  window.addEventListener(
-    'load',
-    function(){
-
-      navigator.serviceWorker
-        .register('sw.js')
-        .catch(
-          function(error){
-
-            console.warn(
-              'Service Worker:',
-              error
-            );
-
-          }
-        );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   INICIALIZAÇÃO
-========================================================= */
-
+function openModule(url){location.href=url}
+q.addEventListener("input",e=>{
+ const s=e.target.value.toLowerCase().trim(),r=document.getElementById("results");
+ if(!s){r.innerHTML="";return}
+ const h=modules.filter(m=>(m[0]+m[2]).toLowerCase().includes(s));
+ r.innerHTML=h.length?h.map(m=>`<button onclick="openModule('${m[1]}')">🔎 <b>${m[0]}</b><br><small>${m[2]}</small></button>`).join(""):"<p style='color:#687B88'>Nenhum módulo encontrado.</p>";
+});
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
 loadNotionContent();
-
 </script>
 
-
-<!-- =======================================================
-     INSTALAÇÃO PWA
-======================================================== -->
-
-<div
-id="pwaInstallOverlay"
-role="dialog"
-aria-modal="true"
-aria-labelledby="pwaInstallTitle"
->
-
-<div id="pwaInstallCard">
-
-<img
-class="pwaIcon"
-src="icon-192.png"
-alt="Infecto Consult"
->
-
-<h3 id="pwaInstallTitle">
-Instalar Infecto Consult
-</h3>
-
-<p>
-Tenha o Infecto Consult na tela inicial
-para acesso rápido, como um aplicativo.
-</p>
-
-<button id="pwaInstallBtn">
-📲 Instalar aplicativo
-</button>
-
-<button id="pwaInstallLater">
-Agora não
-</button>
-
-</div>
-
+<div id="pwaInstallOverlay" role="dialog" aria-modal="true" aria-labelledby="pwaInstallTitle">
+  <div id="pwaInstallCard">
+    <img class="pwaIcon" src="icon-192.png" alt="Infecto Consult">
+    <h3 id="pwaInstallTitle">Instalar Infecto Consult</h3>
+    <p>Tenha o Infecto Consult na tela inicial para acesso rápido, como um aplicativo.</p>
+    <button id="pwaInstallBtn">📲 Instalar aplicativo</button>
+    <button id="pwaInstallLater">Agora não</button>
+  </div>
 </div>
 
 
 <script id="pwa-install-script">
-
 (() => {
-
   let deferredPrompt = null;
-
-
-  const overlay =
-    document.getElementById(
-      'pwaInstallOverlay'
-    );
-
-
-  const installBtn =
-    document.getElementById(
-      'pwaInstallBtn'
-    );
-
-
-  const laterBtn =
-    document.getElementById(
-      'pwaInstallLater'
-    );
-
+  const overlay = document.getElementById('pwaInstallOverlay');
+  const installBtn = document.getElementById('pwaInstallBtn');
+  const laterBtn = document.getElementById('pwaInstallLater');
 
   const showPopup = () => {
-
-    if(
-      overlay &&
-      deferredPrompt &&
-      !window.matchMedia(
-        '(display-mode: standalone)'
-      ).matches
-    ){
-
-      overlay.style.display =
-        'flex';
-
+    if (overlay && deferredPrompt && !window.matchMedia('(display-mode: standalone)').matches) {
+      overlay.style.display = 'flex';
     }
-
   };
 
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredPrompt = event;
+    // Pequeno atraso para o usuário terminar de carregar a página.
+    setTimeout(showPopup, 900);
+  });
 
-  window.addEventListener(
-    'beforeinstallprompt',
-    (event) => {
+  installBtn?.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    overlay.style.display = 'none';
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  });
 
-      event.preventDefault();
+  laterBtn?.addEventListener('click', () => {
+    overlay.style.display = 'none';
+  });
 
-      deferredPrompt = event;
-
-      setTimeout(
-        showPopup,
-        900
-      );
-
-    }
-  );
-
-
-  installBtn?.addEventListener(
-    'click',
-    async () => {
-
-      if(!deferredPrompt){
-
-        return;
-
-      }
-
-
-      overlay.style.display =
-        'none';
-
-
-      deferredPrompt.prompt();
-
-
-      await deferredPrompt.userChoice;
-
-
-      deferredPrompt = null;
-
-    }
-  );
-
-
-  laterBtn?.addEventListener(
-    'click',
-    () => {
-
-      overlay.style.display =
-        'none';
-
-    }
-  );
-
-
-  window.addEventListener(
-    'appinstalled',
-    () => {
-
-      deferredPrompt = null;
-
-      if(overlay){
-
-        overlay.style.display =
-          'none';
-
-      }
-
-    }
-  );
-
+  window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    if (overlay) overlay.style.display = 'none';
+  });
 })();
-
 </script>
-
 
 </body>
 </html>

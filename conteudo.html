@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0f766e">
+
+<title>Infecto Consult</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ font-family:Inter,Arial,sans-serif;
+ background:#f5f7f8;
+ color:#17202a;
+ line-height:1.6
+}
+
+header{
+ background:#0f766e;
+ color:white;
+ padding:18px 20px;
+ position:sticky;
+ top:0;
+ z-index:5;
+ box-shadow:0 2px 8px #0002
+}
+
+.header{
+ max-width:900px;
+ margin:auto;
+ display:flex;
+ align-items:center;
+ gap:14px
+}
+
+.back{
+ font-size:26px;
+ cursor:pointer
+}
+
+.brand{
+ font-weight:700;
+ font-size:19px
+}
+
+main{
+ max-width:900px;
+ margin:0 auto;
+ padding:28px 18px 60px
+}
+
+.card{
+ background:white;
+ border-radius:16px;
+ padding:28px;
+ box-shadow:0 2px 12px #0000000d
+}
+
+.title{
+ font-size:30px;
+ line-height:1.2;
+ margin:0 0 25px
+}
+
+h1{
+ font-size:25px;
+ margin-top:30px
+}
+
+h2{
+ font-size:21px;
+ margin-top:28px;
+ color:#0f766e
+}
+
+h3{
+ font-size:18px;
+ margin-top:22px
+}
+
+p{
+ margin:10px 0
+}
+
+ul,ol{
+ padding-left:25px
+}
+
+li{
+ margin:6px 0
+}
+
+blockquote{
+ margin:18px 0;
+ padding:14px 18px;
+ border-left:4px solid #0f766e;
+ background:#f0fdfa
+}
+
+.callout{
+ margin:18px 0;
+ padding:15px 18px;
+ border-radius:10px;
+ background:#ecfeff
+}
+
+hr{
+ border:0;
+ border-top:1px solid #ddd;
+ margin:25px 0
+}
+
+.loading{
+ text-align:center;
+ padding:50px;
+ color:#667085
+}
+
+.error{
+ padding:20px;
+ background:#fff1f2;
+ color:#b42318;
+ border-radius:10px
+}
+
+@media(max-width:600px){
+ .card{padding:20px}
+ .title{font-size:25px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="header">
+  <div class="back" onclick="history.back()">‹</div>
+  <div class="brand">🧬 Infecto Consult</div>
+ </div>
+</header>
+
+<main>
+ <div class="card">
+
+  <div id="loading" class="loading">
+   Carregando conteúdo clínico...
+  </div>
+
+  <div id="content" style="display:none">
+   <h1 class="title" id="title"></h1>
+   <div id="body"></div>
+  </div>
+
+ </div>
+</main>
+
+<script>
+
+async function load(){
+
+ const params = new URLSearchParams(location.search)
+ const id = params.get('id')
+
+ if(!id){
+   showError('Página não informada.')
+   return
+ }
+
+ try{
+
+   const response = await fetch('/api/page?id=' + encodeURIComponent(id))
+   const data = await response.json()
+
+   if(!response.ok){
+     throw new Error(data.error || 'Erro ao carregar conteúdo')
+   }
+
+   document.title = data.title + ' — Infecto Consult'
+
+   document.getElementById('title').textContent =
+      (data.icon || '🧬') + ' ' + data.title
+
+   document.getElementById('body').innerHTML = data.content
+
+   document.getElementById('loading').style.display='none'
+   document.getElementById('content').style.display='block'
+
+ }catch(error){
+
+   showError(error.message)
+
+ }
+
+}
+
+function showError(message){
+
+ document.getElementById('loading').style.display='none'
+
+ const box=document.createElement('div')
+ box.className='error'
+ box.textContent='Não foi possível carregar o conteúdo: '+message
+
+ document.querySelector('.card').appendChild(box)
+}
+
+load()
+
+</script>
+
+</body>
+</html>

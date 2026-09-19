@@ -35,7 +35,7 @@ async function load(){
   document.getElementById('decisor').innerHTML='<div class="tabpanel panel" style="display:none"><h2>Decisor clínico</h2>'+miniHtml()+'</div>';
   document.getElementById('content').innerHTML=(data.tabs||[]).map(t=>`<section class="tabpanel panel" style="display:none"><h2>${esc(t.label)}</h2>${t.html}</section>`).join('');
   document.getElementById('footer').innerHTML=data.notionUrl?`Fonte editorial: <a href="${esc(data.notionUrl)}" target="_blank" rel="noopener">Notion</a>`:'';
-  activate(0);
+  activate(data.miniApps && data.miniApps.length ? 0 : 1);
  }catch(e){document.getElementById('content').innerHTML='<div class="notice"><strong>Não foi possível carregar o conteúdo.</strong><br>'+esc(e.message)+'</div>'}
 }
 load();

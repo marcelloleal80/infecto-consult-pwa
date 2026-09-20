@@ -180,6 +180,21 @@ async function renderBlock(notion, block, depth = 0) {
       return `<h4>${textOf(block)}</h4>${inner}`
 
 
+    case 'heading_4':
+
+      return `<h5>${textOf(block)}</h5>${inner}`
+
+
+    case 'heading_5':
+
+      return `<h6>${textOf(block)}</h6>${inner}`
+
+
+    case 'heading_6':
+
+      return `<h6>${textOf(block)}</h6>${inner}`
+
+
     case 'bulleted_list_item':
 
       return `<li>${textOf(block)}${
@@ -493,7 +508,11 @@ async function renderBlock(notion, block, depth = 0) {
 
     case 'table_of_contents':
 
-      return ''
+      return `
+        <div class="table-of-contents-placeholder">
+          Índice de conteúdo
+        </div>
+      `
 
 
     case 'unsupported':
@@ -511,9 +530,45 @@ async function renderBlock(notion, block, depth = 0) {
       return inner
 
 
-    default:
+    default: {
 
-      return inner || ''
+      /*
+       * REGRA DE INTEGRIDADE EDITORIAL
+       *
+       * Nenhum bloco deve desaparecer silenciosamente.
+       *
+       * Se houver texto no bloco:
+       *   → preservamos o texto.
+       *
+       * Se houver filhos:
+       *   → preservamos os filhos.
+       *
+       * Se não conseguirmos interpretar o bloco:
+       *   → mostramos um aviso no PWA.
+       *
+       * Assim, um bloco novo ou ainda não mapeado
+       * não simplesmente desaparece.
+       */
+
+      const fallbackText = textOf(block)
+
+      if (fallbackText || inner) {
+
+        return `
+          <div class="notion-unsupported-block">
+            ${fallbackText}
+            ${inner}
+          </div>
+        `
+      }
+
+      return `
+        <aside class="callout">
+          ⚠️ Bloco do Notion não mapeado pelo PWA:
+          ${esc(type)}
+        </aside>
+      `
+    }
   }
 }
 
@@ -728,7 +783,7 @@ module.exports = async function handler(req, res) {
 
 
     /*
-     * Renderiza todos os blocos.
+     * Renderiza TODOS os blocos.
      */
 
     const rendered =
@@ -743,7 +798,14 @@ module.exports = async function handler(req, res) {
 
 
     /*
-     * Divide em seções.
+     * Divide em seções para as abas adicionais.
+     *
+     * IMPORTANTE:
+     * isso NÃO é usado para montar a aba
+     * principal "Visão geral".
+     *
+     * A aba "Visão geral" usa fullHtml,
+     * que contém TODOS os blocos.
      */
 
     const sections =
@@ -856,22 +918,59 @@ module.exports = async function handler(req, res) {
 
 
     /*
-     * Conteúdo integral da página.
+     * =========================================================
+     * INTEGRIDADE DO CONTEÚDO
+     * =========================================================
      *
-     * Regra de integridade editorial:
-     * a aba "Visão geral" deve conter TODO o conteúdo
-     * renderizado pelo Notion, independentemente de como
-     * os headings estejam estruturados na página.
+     * Esta é a parte mais importante da correção.
      *
-     * Isso evita que um bloco válido (por exemplo,
-     * um heading_3 como "Se profunda:") desapareça
-     * apenas por causa do mapeamento de abas.
+     * A aba "Visão geral" NÃO depende de:
+     *
+     *   - heading_1
+     *   - heading_2
+     *   - heading_3
+     *   - heading_4
+     *   - nome de seção
+     *   - BASE
+     *   - abas adicionais
+     *
+     * Ela recebe TODOS os blocos renderizados,
+     * na ordem em que foram recebidos do Notion.
+     *
+     * Portanto:
+     *
+     * Notion:
+     *
+     *   bloco 1
+     *   bloco 2
+     *   🧠
+     *   bloco 4
+     *   "Se profunda:"
+     *   bloco 6
+     *
+     * vira:
+     *
+     *   bloco 1
+     *   bloco 2
+     *   🧠
+     *   bloco 4
+     *   "Se profunda:"
+     *   bloco 6
+     *
+     * no HTML integral.
+     *
+     * Não fazemos seleção editorial para essa aba.
      */
+
     const fullHtml =
       wrapLists(
         rendered.join('')
       )
 
+
+    /*
+     * A primeira aba é SEMPRE o conteúdo integral.
+     */
 
     const tabDefs = [
       {
@@ -884,41 +983,45 @@ module.exports = async function handler(req, res) {
     const addIfPresent =
       (label, section) => {
 
+        /*
+         * A Visão geral já contém tudo.
+         * Não criar uma segunda aba duplicada.
+         */
+        if (normalize(label) === 'visao geral') {
+          return
+        }
+
+
+        const target =
+          normalize(section || label)
+
+
         const match =
           sections.find(s =>
-            normalize(s.title) ===
-              normalize(
-                section || label
-              ) ||
-
-            normalize(s.title).includes(
-              normalize(
-                section || label
-              )
-            )
+            normalize(s.title) === target ||
+            normalize(s.title).includes(target)
           )
 
 
         if (match) {
 
-          /*
-           * Não recriar uma segunda aba "Visão geral".
-           * A primeira aba já contém o conteúdo integral.
-           */
-          if (normalize(label) === 'visao geral') {
-            return
-          }
-
-          const html =
-            wrapLists(
-              match.html
+          const alreadyExists =
+            tabDefs.some(t =>
+              normalize(t.label) ===
+              normalize(label)
             )
 
-          if (!tabDefs.some(t => t.label === label)) {
+
+          if (!alreadyExists) {
+
             tabDefs.push({
               label,
-              html
+              html:
+                wrapLists(
+                  match.html
+                )
             })
+
           }
 
         }
@@ -948,6 +1051,9 @@ module.exports = async function handler(req, res) {
     /*
      * Qualquer seção não mapeada
      * vira uma aba própria.
+     *
+     * Isso é apenas para navegação.
+     * NÃO interfere no fullHtml.
      */
 
     const usedHtml =
@@ -966,12 +1072,35 @@ module.exports = async function handler(req, res) {
         )
 
 
+      /*
+       * A Visão geral já contém
+       * toda a página.
+       */
+      if (
+        normalize(s.title) ===
+        'visao geral'
+      ) {
+        return
+      }
+
+
       if (!usedHtml.has(html)) {
 
-        tabDefs.push({
-          label: s.title,
-          html
-        })
+        const alreadyExists =
+          tabDefs.some(t =>
+            normalize(t.label) ===
+            normalize(s.title)
+          )
+
+
+        if (!alreadyExists) {
+
+          tabDefs.push({
+            label: s.title,
+            html
+          })
+
+        }
 
       }
 
@@ -1005,30 +1134,44 @@ module.exports = async function handler(req, res) {
 
         premium,
 
+
         /*
-         * NOVO:
-         * lista automática de MiniApps HTML
+         * Lista automática de MiniApps HTML
          * encontrados nos blocos do Notion.
          */
+
         miniApps:
           detectedMiniApps,
+
 
         /*
          * Compatibilidade com a propriedade antiga.
          */
+
         legacyMiniApps,
+
 
         notionUrl:
           page.url,
 
+
         updatedAt:
           page.last_edited_time,
 
+
         /*
-         * Conteúdo integral, usado como garantia de que
-         * nenhum bloco editorial válido fique de fora.
+         * =====================================================
+         * HTML INTEGRAL DA PÁGINA
+         * =====================================================
+         *
+         * Esta é a nova fonte da aba "Visão geral".
+         *
+         * Contém TODOS os blocos renderizados
+         * na ordem original do Notion.
          */
+
         fullHtml,
+
 
         tabs:
           tabDefs

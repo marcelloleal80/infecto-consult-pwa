@@ -68,6 +68,14 @@ function headingText(block) {
 }
 
 
+function plainTextOf(arr) {
+  return (arr || [])
+    .map(x => x.plain_text || '')
+    .join('')
+    .trim()
+}
+
+
 function normalize(s) {
   return String(s || '')
     .toLowerCase()
@@ -75,6 +83,48 @@ function normalize(s) {
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, ' ')
     .trim()
+}
+
+
+/*
+ * Detecta automaticamente arquivos HTML
+ * anexados diretamente à página do Notion.
+ *
+ * Isso elimina a necessidade de colocar
+ * cada MiniApp no GitHub.
+ */
+function detectMiniApps(blocks) {
+
+  return (blocks || [])
+    .filter(block => block.type === 'file')
+    .map(block => {
+
+      const d = block.file || {}
+
+      const name =
+        d.name ||
+        plainTextOf(d.caption) ||
+        ''
+
+      const url =
+        d.type === 'external'
+          ? d.external?.url
+          : d.file?.url
+
+      const isHtml =
+        /\.html?(\?|$)/i.test(name) ||
+        /\.html?(\?|$)/i.test(url || '')
+
+      if (!isHtml) return null
+
+      return {
+        id: block.id,
+        name: name || 'Decisor clínico',
+        url: `/api/miniapp?blockId=${encodeURIComponent(block.id)}`
+      }
+
+    })
+    .filter(Boolean)
 }
 
 
@@ -86,11 +136,21 @@ async function renderBlock(notion, block, depth = 0) {
   let inner = ''
 
   if (block.has_children) {
-    const children = await allChildren(notion, block.id)
+
+    const children = await allChildren(
+      notion,
+      block.id
+    )
 
     inner = (
       await Promise.all(
-        children.map(c => renderBlock(notion, c, depth + 1))
+        children.map(c =>
+          renderBlock(
+            notion,
+            c,
+            depth + 1
+          )
+        )
       )
     ).join('')
   }
@@ -99,24 +159,29 @@ async function renderBlock(notion, block, depth = 0) {
   switch (type) {
 
     case 'paragraph':
+
       return d.rich_text?.length
         ? `<p>${rich(d.rich_text)}</p>`
         : '<div class="spacer"></div>'
 
 
     case 'heading_1':
+
       return `<h2>${textOf(block)}</h2>${inner}`
 
 
     case 'heading_2':
+
       return `<h3>${textOf(block)}</h3>${inner}`
 
 
     case 'heading_3':
+
       return `<h4>${textOf(block)}</h4>${inner}`
 
 
     case 'bulleted_list_item':
+
       return `<li>${textOf(block)}${
         inner
           ? `<div class="nested-list">${inner}</div>`
@@ -125,6 +190,7 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'numbered_list_item':
+
       return `<li>${textOf(block)}${
         inner
           ? `<div class="nested-list">${inner}</div>`
@@ -133,10 +199,12 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'quote':
+
       return `<blockquote>${textOf(block)}${inner}</blockquote>`
 
 
     case 'callout':
+
       return `
         <aside class="callout">
           <div class="callout-icon">
@@ -151,9 +219,14 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'to_do':
+
       return `
         <label class="todo">
-          <input type="checkbox" disabled ${d.checked ? 'checked' : ''}>
+          <input
+            type="checkbox"
+            disabled
+            ${d.checked ? 'checked' : ''}
+          >
           ${textOf(block)}
           ${inner}
         </label>
@@ -161,6 +234,7 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'toggle':
+
       return `
         <details>
           <summary>${textOf(block)}</summary>
@@ -170,10 +244,12 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'divider':
+
       return '<hr>'
 
 
     case 'code':
+
       return `
         <pre>
           <code>${esc(
@@ -186,6 +262,7 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'equation':
+
       return `
         <div class="equation">
           ${esc(d.expression || '')}
@@ -194,6 +271,7 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'bookmark':
+
       return `
         <p class="embed-link">
           <a
@@ -212,6 +290,7 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'link_preview':
+
       return `
         <p class="embed-link">
           <a
@@ -226,6 +305,7 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'embed':
+
       return `
         <div class="external-embed">
           <a
@@ -240,6 +320,7 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'video': {
+
       const src =
         d.type === 'external'
           ? d.external?.url
@@ -260,6 +341,7 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'audio': {
+
       const src =
         d.type === 'external'
           ? d.external?.url
@@ -280,6 +362,7 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'image': {
+
       const src =
         d.type === 'external'
           ? d.external?.url
@@ -306,6 +389,7 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'file': {
+
       const src =
         d.type === 'external'
           ? d.external?.url
@@ -333,6 +417,7 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'child_page':
+
       return `
         <p class="child-page">
           📄 ${esc(d.title || 'Página relacionada')}
@@ -342,21 +427,29 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'column_list':
+
       return `<div class="columns">${inner}</div>`
 
 
     case 'column':
+
       return `<div class="column">${inner}</div>`
 
 
     case 'table': {
-      const rows = block.has_children
-        ? await allChildren(notion, block.id)
-        : []
+
+      const rows =
+        block.has_children
+          ? await allChildren(
+              notion,
+              block.id
+            )
+          : []
 
       const trs = rows.map(row => {
 
-        const cells = row.table_row?.cells || []
+        const cells =
+          row.table_row?.cells || []
 
         return `
           <tr>
@@ -366,7 +459,10 @@ async function renderBlock(notion, block, depth = 0) {
                 i === 0 &&
                 d.has_column_header
 
-              const tag = isHeader ? 'th' : 'td'
+              const tag =
+                isHeader
+                  ? 'th'
+                  : 'td'
 
               return `
                 <${tag}>
@@ -391,14 +487,17 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'table_row':
+
       return ''
 
 
     case 'table_of_contents':
+
       return ''
 
 
     case 'unsupported':
+
       return `
         <aside class="callout">
           ⚠️ Bloco do Notion ainda não suportado pelo PWA:
@@ -408,23 +507,18 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'synced_block':
+
       return inner
 
 
     default:
+
       return inner || ''
   }
 }
 
 
 function wrapLists(html) {
-
-  /*
-   * Transforma blocos consecutivos <li>
-   * em listas <ul>.
-   *
-   * O conteúdo interno dos itens permanece preservado.
-   */
 
   return html.replace(
     /(?:<li>[\s\S]*?<\/li>)+/g,
@@ -437,12 +531,6 @@ function splitSections(blocks, rendered) {
 
   const sections = []
 
-  /*
-   * Todo conteúdo começa em uma seção "Visão geral".
-   * Assim nenhum conteúdo anterior ao primeiro heading_1
-   * é perdido.
-   */
-
   let current = {
     title: 'Visão geral',
     html: ''
@@ -453,21 +541,19 @@ function splitSections(blocks, rendered) {
 
   blocks.forEach((block, index) => {
 
-    const piece = rendered[index] || ''
+    const piece =
+      rendered[index] || ''
 
-
-    /*
-     * Apenas heading_1 cria uma nova aba/seção.
-     *
-     * heading_2 e heading_3 permanecem dentro
-     * da seção atual.
-     */
 
     if (block.type === 'heading_1') {
 
-      const title = headingText(block)
-        .replace(/^\s*[-–—]\s*TESTE.*$/i, '')
-        .trim()
+      const title =
+        headingText(block)
+          .replace(
+            /^\s*[-–—]\s*TESTE.*$/i,
+            ''
+          )
+          .trim()
 
 
       current = {
@@ -483,12 +569,9 @@ function splitSections(blocks, rendered) {
 
 
     /*
-     * Regra fundamental:
-     *
-     * todo bloco que não for heading_1
-     * deve ser preservado dentro da seção atual.
+     * Todo bloco que não seja heading_1
+     * permanece dentro da seção atual.
      */
-
     current.html += piece
 
   })
@@ -577,116 +660,159 @@ module.exports = async function handler(req, res) {
 
   try {
 
-    const id = req.query?.id
+    const id =
+      req.query?.id
 
 
     if (!id) {
+
       return res
         .status(400)
         .json({
-          error: 'Informe ?id=PAGE_ID'
+          error:
+            'Informe ?id=PAGE_ID'
         })
+
     }
 
 
     if (!process.env.NOTION_TOKEN) {
+
       return res
         .status(500)
         .json({
-          error: 'NOTION_TOKEN não configurado.'
+          error:
+            'NOTION_TOKEN não configurado.'
         })
+
     }
 
 
-    const notion = new Client({
-      auth: process.env.NOTION_TOKEN,
-      notionVersion: '2025-09-03'
-    })
+    const notion =
+      new Client({
+        auth:
+          process.env.NOTION_TOKEN,
+        notionVersion:
+          '2025-09-03'
+      })
 
 
     /*
-     * Recupera a página principal.
+     * Recupera a página.
      */
 
-    const page = await notion.pages.retrieve({
-      page_id: id
-    })
+    const page =
+      await notion.pages.retrieve({
+        page_id: id
+      })
 
 
     /*
-     * Recupera TODOS os blocos de primeiro nível
-     * da página, com paginação.
+     * Recupera TODOS os blocos.
      */
 
-    const blocks = await allChildren(
-      notion,
-      id
-    )
-
-
-    /*
-     * Renderiza TODOS os blocos.
-     */
-
-    const rendered = await Promise.all(
-      blocks.map(b =>
-        renderBlock(notion, b)
+    const blocks =
+      await allChildren(
+        notion,
+        id
       )
-    )
 
 
     /*
-     * Divide o conteúdo em seções.
+     * Detecta automaticamente os
+     * arquivos HTML anexados ao Notion.
      */
 
-    const sections = splitSections(
-      blocks,
-      rendered
-    )
+    const detectedMiniApps =
+      detectMiniApps(blocks)
 
 
-    const props = page.properties || {}
+    /*
+     * Renderiza todos os blocos.
+     */
+
+    const rendered =
+      await Promise.all(
+        blocks.map(b =>
+          renderBlock(
+            notion,
+            b
+          )
+        )
+      )
+
+
+    /*
+     * Divide em seções.
+     */
+
+    const sections =
+      splitSections(
+        blocks,
+        rendered
+      )
+
+
+    const props =
+      page.properties || {}
 
 
     const get = name => {
 
-      const p = props[name]
+      const p =
+        props[name]
 
       if (!p) return ''
 
 
       if (p.type === 'title') {
+
         return (p.title || [])
-          .map(x => x.plain_text || '')
+          .map(x =>
+            x.plain_text || ''
+          )
           .join('')
+
       }
 
 
       if (p.type === 'rich_text') {
+
         return (p.rich_text || [])
-          .map(x => x.plain_text || '')
+          .map(x =>
+            x.plain_text || ''
+          )
           .join('')
+
       }
 
 
       if (p.type === 'select') {
+
         return p.select?.name || ''
+
       }
 
 
       if (p.type === 'status') {
+
         return p.status?.name || ''
+
       }
 
 
       if (p.type === 'checkbox') {
+
         return !!p.checkbox
+
       }
 
 
       if (p.type === 'multi_select') {
+
         return (p.multi_select || [])
           .map(x => x.name)
+
       }
 
 
@@ -715,7 +841,12 @@ module.exports = async function handler(req, res) {
         : '🧬'
 
 
-    const miniApps =
+    /*
+     * Mantém o valor antigo da propriedade
+     * para compatibilidade.
+     */
+
+    const legacyMiniApps =
       get('MiniApps usados') ||
       ''
 
@@ -724,45 +855,40 @@ module.exports = async function handler(req, res) {
       !!get('Página premium')
 
 
-    /*
-     * Identifica quais seções do Notion
-     * estão disponíveis.
-     */
-
-    const available =
-      sections.map(s =>
-        normalize(s.title)
-      )
-
-
     const tabDefs = []
 
 
-    const addIfPresent = (
-      label,
-      section
-    ) => {
+    const addIfPresent =
+      (label, section) => {
 
-      const match = sections.find(s =>
-        normalize(s.title) ===
-          normalize(section || label) ||
+        const match =
+          sections.find(s =>
+            normalize(s.title) ===
+              normalize(
+                section || label
+              ) ||
 
-        normalize(s.title).includes(
-          normalize(section || label)
-        )
-      )
+            normalize(s.title).includes(
+              normalize(
+                section || label
+              )
+            )
+          )
 
 
-      if (match) {
+        if (match) {
 
-        tabDefs.push({
-          label,
-          html: wrapLists(match.html)
-        })
+          tabDefs.push({
+            label,
+            html:
+              wrapLists(
+                match.html
+              )
+          })
+
+        }
 
       }
-
-    }
 
 
     const baseTabs =
@@ -785,27 +911,24 @@ module.exports = async function handler(req, res) {
 
 
     /*
-     * REGRA DE INTEGRIDADE:
-     *
-     * Nunca esconder conteúdo editorial
-     * apenas porque o título da seção
-     * não está no conjunto padrão.
-     *
-     * Qualquer seção que não tenha sido
-     * associada a uma aba padrão vira
-     * automaticamente uma aba própria.
+     * Qualquer seção não mapeada
+     * vira uma aba própria.
      */
 
     const usedHtml =
       new Set(
-        tabDefs.map(t => t.html)
+        tabDefs.map(
+          t => t.html
+        )
       )
 
 
     sections.forEach(s => {
 
       const html =
-        wrapLists(s.html)
+        wrapLists(
+          s.html
+        )
 
 
       if (!usedHtml.has(html)) {
@@ -821,11 +944,8 @@ module.exports = async function handler(req, res) {
 
 
     /*
-     * Durante o desenvolvimento/teste,
-     * não utilizar cache.
-     *
-     * Isso evita que o Vercel entregue
-     * uma versão antiga do conteúdo do Notion.
+     * Durante a fase de teste:
+     * impedir cache do Vercel.
      */
 
     res.setHeader(
@@ -834,29 +954,45 @@ module.exports = async function handler(req, res) {
     )
 
 
-    return res.status(200).json({
+    return res
+      .status(200)
+      .json({
 
-      source: 'notion',
+        source: 'notion',
 
-      id,
+        id,
 
-      title,
+        title,
 
-      icon,
+        icon,
 
-      category,
+        category,
 
-      premium,
+        premium,
 
-      miniApps,
+        /*
+         * NOVO:
+         * lista automática de MiniApps HTML
+         * encontrados nos blocos do Notion.
+         */
+        miniApps:
+          detectedMiniApps,
 
-      notionUrl: page.url,
+        /*
+         * Compatibilidade com a propriedade antiga.
+         */
+        legacyMiniApps,
 
-      updatedAt: page.last_edited_time,
+        notionUrl:
+          page.url,
 
-      tabs: tabDefs
+        updatedAt:
+          page.last_edited_time,
 
-    })
+        tabs:
+          tabDefs
+
+      })
 
 
   } catch (error) {

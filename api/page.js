@@ -1,15 +1,16 @@
 const { Client } = require('@notionhq/client')
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({
-  '&':'&amp;',
-  '<':'&lt;',
-  '>':'&gt;',
-  '"':'&quot;',
-  "'":'&#39;'
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;'
 }[c]))
 
 const rich = arr => (arr || []).map(x => {
-  let s = esc(x.plain_text || '')
+  let s = esc(x.plain_text || '').replace(/\n/g, '<br>')
+
   const a = x.annotations || {}
 
   if (a.code) s = `<code>${s}</code>`
@@ -48,7 +49,12 @@ async function allChildren(notion, blockId) {
 
 function textOf(block) {
   const data = block[block.type]
-  return rich(data?.rich_text || data?.caption || [])
+
+  return rich(
+    data?.rich_text ||
+    data?.caption ||
+    []
+  )
 }
 
 
@@ -72,110 +78,6 @@ function normalize(s) {
 }
 
 
-/*
- * ============================================================
- * DETECÇÃO AUTOMÁTICA DE MINIAPPS HTML NO NOTION
- * ============================================================
- *
- * Qualquer arquivo .html anexado à página do Notion passa a ser
- * reconhecido automaticamente como um MiniApp.
- *
- * Exemplo:
- *
- * Página Notion: Pneumonia comunitária
- * └── arquivo: pneumonia_decisor.html
- *
- * Página Notion: Infecção pós-craniotomia
- * └── arquivo: pos_craniotomia_decisor.html
- *
- * Página Notion: Pé diabético
- * └── arquivo: pe_diabetico_decisor.html
- *
- * Não é necessário colocar esses arquivos no GitHub.
- */
-
-
-function detectMiniAppFiles(blocks) {
-
-  return blocks
-    .filter(block => block.type === 'file')
-    .map(block => {
-
-      const d = block.file || {}
-
-      /*
-       * Nome do arquivo.
-       *
-       * O Notion normalmente fornece d.name.
-       * Como fallback, usamos a legenda/caption.
-       */
-
-      const name =
-        d.name ||
-        (d.caption || [])
-          .map(x => x.plain_text || '')
-          .join('')
-          .trim() ||
-        'decisor.html'
-
-
-      /*
-       * URL original do arquivo no Notion.
-       *
-       * Para arquivo hospedado pelo Notion:
-       * d.file.url
-       *
-       * Para arquivo externo:
-       * d.external.url
-       */
-
-      const sourceUrl =
-        d.type === 'external'
-          ? d.external?.url
-          : d.file?.url
-
-
-      /*
-       * Só reconhecemos arquivos HTML.
-       */
-
-      const isHtml =
-        /\.html?$/i.test(name) ||
-        /\.html?(?:\?|#)/i.test(sourceUrl || '')
-
-
-      if (!isHtml) return null
-
-
-      /*
-       * O navegador NÃO usará diretamente a URL temporária
-       * do Notion.
-       *
-       * Ele usará nossa própria API:
-       *
-       * /api/miniapp?blockId=...
-       *
-       * O endpoint /api/miniapp será criado no próximo passo.
-       */
-
-      return {
-        id: block.id,
-        name,
-        url: `/api/miniapp?blockId=${encodeURIComponent(block.id)}`,
-        source: 'notion'
-      }
-
-    })
-    .filter(Boolean)
-}
-
-
-/*
- * ============================================================
- * RENDERIZAÇÃO DOS BLOCOS DO NOTION
- * ============================================================
- */
-
 async function renderBlock(notion, block, depth = 0) {
 
   const type = block.type
@@ -184,7 +86,6 @@ async function renderBlock(notion, block, depth = 0) {
   let inner = ''
 
   if (block.has_children) {
-
     const children = await allChildren(notion, block.id)
 
     inner = (
@@ -204,15 +105,15 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'heading_1':
-      return `<h2>${textOf(block)}</h2>` + inner
+      return `<h2>${textOf(block)}</h2>${inner}`
 
 
     case 'heading_2':
-      return `<h3>${textOf(block)}</h3>` + inner
+      return `<h3>${textOf(block)}</h3>${inner}`
 
 
     case 'heading_3':
-      return `<h4>${textOf(block)}</h4>` + inner
+      return `<h4>${textOf(block)}</h4>${inner}`
 
 
     case 'bulleted_list_item':
@@ -252,11 +153,7 @@ async function renderBlock(notion, block, depth = 0) {
     case 'to_do':
       return `
         <label class="todo">
-          <input
-            type="checkbox"
-            disabled
-            ${d.checked ? 'checked' : ''}
-          >
+          <input type="checkbox" disabled ${d.checked ? 'checked' : ''}>
           ${textOf(block)}
           ${inner}
         </label>
@@ -279,13 +176,11 @@ async function renderBlock(notion, block, depth = 0) {
     case 'code':
       return `
         <pre>
-          <code>
-            ${esc(
-              (d.rich_text || [])
-                .map(x => x.plain_text || '')
-                .join('')
-            )}
-          </code>
+          <code>${esc(
+            (d.rich_text || [])
+              .map(x => x.plain_text || '')
+              .join('')
+          )}</code>
         </pre>
       `
 
@@ -344,15 +239,16 @@ async function renderBlock(notion, block, depth = 0) {
       `
 
 
-    case 'video':
+    case 'video': {
+      const src =
+        d.type === 'external'
+          ? d.external?.url
+          : d.file?.url
+
       return `
         <div class="media">
           <a
-            href="${esc(
-              d.type === 'external'
-                ? d.external?.url
-                : d.file?.url
-            )}"
+            href="${esc(src || '#')}"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -360,17 +256,19 @@ async function renderBlock(notion, block, depth = 0) {
           </a>
         </div>
       `
+    }
 
 
-    case 'audio':
+    case 'audio': {
+      const src =
+        d.type === 'external'
+          ? d.external?.url
+          : d.file?.url
+
       return `
         <div class="media">
           <a
-            href="${esc(
-              d.type === 'external'
-                ? d.external?.url
-                : d.file?.url
-            )}"
+            href="${esc(src || '#')}"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -378,10 +276,10 @@ async function renderBlock(notion, block, depth = 0) {
           </a>
         </div>
       `
+    }
 
 
     case 'image': {
-
       const src =
         d.type === 'external'
           ? d.external?.url
@@ -408,17 +306,10 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'file': {
-
       const src =
         d.type === 'external'
           ? d.external?.url
           : d.file?.url
-
-      const filename =
-        d.name ||
-        (d.caption || [])
-          .map(x => x.plain_text || '')
-          .join('')
 
       return `
         <p class="file-link">
@@ -430,8 +321,8 @@ async function renderBlock(notion, block, depth = 0) {
           >
             ${
               rich(
-                filename
-                  ? [{ plain_text: filename }]
+                d.name
+                  ? [{ plain_text: d.name }]
                   : d.caption || []
               ) || 'Abrir arquivo'
             }
@@ -446,7 +337,8 @@ async function renderBlock(notion, block, depth = 0) {
         <p class="child-page">
           📄 ${esc(d.title || 'Página relacionada')}
         </p>
-      ` + inner
+        ${inner}
+      `
 
 
     case 'column_list':
@@ -458,34 +350,31 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'table': {
-
-      const rows =
-        block.has_children
-          ? await allChildren(notion, block.id)
-          : []
+      const rows = block.has_children
+        ? await allChildren(notion, block.id)
+        : []
 
       const trs = rows.map(row => {
 
-        const cells =
-          row.table_row?.cells || []
+        const cells = row.table_row?.cells || []
 
         return `
           <tr>
-            ${
-              cells.map((cell, i) => {
+            ${cells.map((cell, i) => {
 
-                const tag =
-                  i === 0 && d.has_column_header
-                    ? 'th'
-                    : 'td'
+              const isHeader =
+                i === 0 &&
+                d.has_column_header
 
-                return `
-                  <${tag}>
-                    ${rich(cell)}
-                  </${tag}>
-                `
-              }).join('')
-            }
+              const tag = isHeader ? 'th' : 'td'
+
+              return `
+                <${tag}>
+                  ${rich(cell)}
+                </${tag}>
+              `
+
+            }).join('')}
           </tr>
         `
 
@@ -510,7 +399,12 @@ async function renderBlock(notion, block, depth = 0) {
 
 
     case 'unsupported':
-      return ''
+      return `
+        <aside class="callout">
+          ⚠️ Bloco do Notion ainda não suportado pelo PWA:
+          ${esc(type)}
+        </aside>
+      `
 
 
     case 'synced_block':
@@ -523,13 +417,14 @@ async function renderBlock(notion, block, depth = 0) {
 }
 
 
-/*
- * ============================================================
- * LISTAS
- * ============================================================
- */
-
 function wrapLists(html) {
+
+  /*
+   * Transforma blocos consecutivos <li>
+   * em listas <ul>.
+   *
+   * O conteúdo interno dos itens permanece preservado.
+   */
 
   return html.replace(
     /(?:<li>[\s\S]*?<\/li>)+/g,
@@ -538,72 +433,73 @@ function wrapLists(html) {
 }
 
 
-/*
- * ============================================================
- * DIVISÃO EM SEÇÕES / ABAS
- * ============================================================
- */
-
 function splitSections(blocks, rendered) {
 
   const sections = []
 
-  let current = null
-  let before = ''
-  let idx = 0
+  /*
+   * Todo conteúdo começa em uma seção "Visão geral".
+   * Assim nenhum conteúdo anterior ao primeiro heading_1
+   * é perdido.
+   */
 
-  for (const b of blocks) {
+  let current = {
+    title: 'Visão geral',
+    html: ''
+  }
 
-    const h =
-      b.type === 'heading_1'
-        ? headingText(b)
-        : ''
-
-    const piece =
-      rendered[idx++] || ''
+  sections.push(current)
 
 
-    if (h) {
+  blocks.forEach((block, index) => {
+
+    const piece = rendered[index] || ''
+
+
+    /*
+     * Apenas heading_1 cria uma nova aba/seção.
+     *
+     * heading_2 e heading_3 permanecem dentro
+     * da seção atual.
+     */
+
+    if (block.type === 'heading_1') {
+
+      const title = headingText(block)
+        .replace(/^\s*[-–—]\s*TESTE.*$/i, '')
+        .trim()
+
 
       current = {
-        title: h
-          .replace(/^\s*[-–—]\s*TESTE.*$/i, '')
-          .trim(),
-
+        title: title || 'Seção',
         html: ''
       }
 
+
       sections.push(current)
 
-    } else if (current) {
-
-      current.html += piece
-
-    } else {
-
-      before += piece
+      return
     }
-  }
 
 
-  if (before.trim()) {
+    /*
+     * Regra fundamental:
+     *
+     * todo bloco que não for heading_1
+     * deve ser preservado dentro da seção atual.
+     */
 
-    sections.unshift({
-      title: 'Visão geral',
-      html: before
-    })
-  }
+    current.html += piece
+
+  })
 
 
-  return sections
+  return sections.filter(section =>
+    section.html.trim() ||
+    section.title === 'Visão geral'
+  )
 }
 
-
-/*
- * ============================================================
- * ESTRUTURA PADRÃO DE ABAS
- * ============================================================
- */
 
 const BASE = {
 
@@ -673,20 +569,16 @@ const BASE = {
     'Limitações',
     'Referências'
   ]
+
 }
 
-
-/*
- * ============================================================
- * HANDLER PRINCIPAL
- * ============================================================
- */
 
 module.exports = async function handler(req, res) {
 
   try {
 
     const id = req.query?.id
+
 
     if (!id) {
       return res
@@ -698,7 +590,6 @@ module.exports = async function handler(req, res) {
 
 
     if (!process.env.NOTION_TOKEN) {
-
       return res
         .status(500)
         .json({
@@ -714,47 +605,47 @@ module.exports = async function handler(req, res) {
 
 
     /*
-     * Busca a página
+     * Recupera a página principal.
      */
 
-    const page =
-      await notion.pages.retrieve({
-        page_id: id
-      })
+    const page = await notion.pages.retrieve({
+      page_id: id
+    })
 
 
     /*
-     * Busca todos os blocos da página
+     * Recupera TODOS os blocos de primeiro nível
+     * da página, com paginação.
      */
 
-    const blocks =
-      await allChildren(notion, id)
+    const blocks = await allChildren(
+      notion,
+      id
+    )
 
 
     /*
-     * Renderiza o conteúdo editorial
+     * Renderiza TODOS os blocos.
      */
 
-    const rendered =
-      await Promise.all(
-        blocks.map(b => renderBlock(notion, b))
+    const rendered = await Promise.all(
+      blocks.map(b =>
+        renderBlock(notion, b)
       )
+    )
 
 
     /*
-     * Divide o conteúdo em seções
+     * Divide o conteúdo em seções.
      */
 
-    const sections =
-      splitSections(blocks, rendered)
+    const sections = splitSections(
+      blocks,
+      rendered
+    )
 
 
-    /*
-     * Propriedades do Notion
-     */
-
-    const props =
-      page.properties || {}
+    const props = page.properties || {}
 
 
     const get = name => {
@@ -765,7 +656,6 @@ module.exports = async function handler(req, res) {
 
 
       if (p.type === 'title') {
-
         return (p.title || [])
           .map(x => x.plain_text || '')
           .join('')
@@ -773,7 +663,6 @@ module.exports = async function handler(req, res) {
 
 
       if (p.type === 'rich_text') {
-
         return (p.rich_text || [])
           .map(x => x.plain_text || '')
           .join('')
@@ -781,25 +670,21 @@ module.exports = async function handler(req, res) {
 
 
       if (p.type === 'select') {
-
         return p.select?.name || ''
       }
 
 
       if (p.type === 'status') {
-
         return p.status?.name || ''
       }
 
 
       if (p.type === 'checkbox') {
-
         return !!p.checkbox
       }
 
 
       if (p.type === 'multi_select') {
-
         return (p.multi_select || [])
           .map(x => x.name)
       }
@@ -809,17 +694,14 @@ module.exports = async function handler(req, res) {
     }
 
 
-    /*
-     * Metadados editoriais
-     */
-
     const category =
       get('Categoria') ||
       'Síndrome clínica'
 
 
     const extraTabs =
-      get('Abas adicionais') || []
+      get('Abas adicionais') ||
+      []
 
 
     const title =
@@ -833,85 +715,54 @@ module.exports = async function handler(req, res) {
         : '🧬'
 
 
-    /*
-     * ========================================================
-     * NOVO SISTEMA DE MINIAPPS
-     * ========================================================
-     *
-     * Detecta automaticamente todos os arquivos HTML
-     * anexados diretamente à página do Notion.
-     */
-
-    const detectedMiniApps =
-      detectMiniAppFiles(blocks)
-
-
-    /*
-     * Mantemos a propriedade antiga por compatibilidade.
-     *
-     * Ela NÃO é mais necessária para o novo sistema.
-     */
-
-    const miniAppProperty =
-      get('MiniApps usados') || ''
-
-
-    /*
-     * A variável antiga continua existindo para não quebrar
-     * versões anteriores do frontend.
-     */
-
     const miniApps =
-      miniAppProperty
+      get('MiniApps usados') ||
+      ''
 
-
-    /*
-     * Nova variável usada pelo frontend novo.
-     */
-
-    const miniAppFiles =
-      detectedMiniApps
-
-
-    /*
-     * Página premium
-     */
 
     const premium =
       !!get('Página premium')
 
 
     /*
-     * ========================================================
-     * ABAS CLÍNICAS
-     * ========================================================
+     * Identifica quais seções do Notion
+     * estão disponíveis.
      */
+
+    const available =
+      sections.map(s =>
+        normalize(s.title)
+      )
+
 
     const tabDefs = []
 
 
-    const addIfPresent =
-      (label, section) => {
+    const addIfPresent = (
+      label,
+      section
+    ) => {
 
-        const match =
-          sections.find(s =>
-            normalize(s.title) ===
-              normalize(section || label) ||
+      const match = sections.find(s =>
+        normalize(s.title) ===
+          normalize(section || label) ||
 
-            normalize(s.title).includes(
-              normalize(section || label)
-            )
-          )
+        normalize(s.title).includes(
+          normalize(section || label)
+        )
+      )
 
 
-        if (match) {
+      if (match) {
 
-          tabDefs.push({
-            label,
-            html: wrapLists(match.html)
-          })
-        }
+        tabDefs.push({
+          label,
+          html: wrapLists(match.html)
+        })
+
       }
+
+    }
 
 
     const baseTabs =
@@ -924,17 +775,25 @@ module.exports = async function handler(req, res) {
     )
 
 
-    if (Array.isArray(extraTabs)) {
-
-      extraTabs.forEach(label =>
-        addIfPresent(label)
-      )
-    }
+    ;(
+      Array.isArray(extraTabs)
+        ? extraTabs
+        : []
+    ).forEach(label =>
+      addIfPresent(label)
+    )
 
 
     /*
-     * Nunca esconder conteúdo editorial que não esteja
-     * mapeado nas abas padrão.
+     * REGRA DE INTEGRIDADE:
+     *
+     * Nunca esconder conteúdo editorial
+     * apenas porque o título da seção
+     * não está no conjunto padrão.
+     *
+     * Qualquer seção que não tenha sido
+     * associada a uma aba padrão vira
+     * automaticamente uma aba própria.
      */
 
     const usedHtml =
@@ -955,25 +814,25 @@ module.exports = async function handler(req, res) {
           label: s.title,
           html
         })
+
       }
+
     })
 
 
     /*
-     * Cache curto para o conteúdo editorial.
+     * Durante o desenvolvimento/teste,
+     * não utilizar cache.
+     *
+     * Isso evita que o Vercel entregue
+     * uma versão antiga do conteúdo do Notion.
      */
 
     res.setHeader(
       'Cache-Control',
-      's-maxage=60, stale-while-revalidate=300'
+      'no-store, no-cache, must-revalidate'
     )
 
-
-    /*
-     * ========================================================
-     * RESPOSTA PARA O PWA
-     * ========================================================
-     */
 
     return res.status(200).json({
 
@@ -989,28 +848,21 @@ module.exports = async function handler(req, res) {
 
       premium,
 
-      /*
-       * Compatibilidade com versão antiga
-       */
       miniApps,
-
-      /*
-       * NOVO:
-       * lista automática dos HTML encontrados no Notion
-       */
-      miniAppFiles,
 
       notionUrl: page.url,
 
       updatedAt: page.last_edited_time,
 
       tabs: tabDefs
+
     })
 
 
   } catch (error) {
 
     console.error(error)
+
 
     return res
       .status(500)
@@ -1019,5 +871,7 @@ module.exports = async function handler(req, res) {
           error.message ||
           'Erro ao ler página do Notion'
       })
+
   }
+
 }

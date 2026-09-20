@@ -442,9 +442,9 @@ function miniHtml(){
    */
 
   const apps =
-    Array.isArray(data.miniAppFiles)
-      ? data.miniAppFiles
-      : []
+    Array.isArray(data.miniApps)
+      ? data.miniApps
+      : (Array.isArray(data.miniAppFiles) ? data.miniAppFiles : [])
 
 
   /*
@@ -749,8 +749,8 @@ async function load(){
      */
 
     const hasMiniApps =
-      Array.isArray(data.miniAppFiles) &&
-      data.miniAppFiles.length > 0
+      (Array.isArray(data.miniApps) && data.miniApps.length > 0) ||
+      (Array.isArray(data.miniAppFiles) && data.miniAppFiles.length > 0)
 
 
     const numberOfClinicalTabs =

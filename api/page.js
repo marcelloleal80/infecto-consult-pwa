@@ -855,7 +855,30 @@ module.exports = async function handler(req, res) {
       !!get('Página premium')
 
 
-    const tabDefs = []
+    /*
+     * Conteúdo integral da página.
+     *
+     * Regra de integridade editorial:
+     * a aba "Visão geral" deve conter TODO o conteúdo
+     * renderizado pelo Notion, independentemente de como
+     * os headings estejam estruturados na página.
+     *
+     * Isso evita que um bloco válido (por exemplo,
+     * um heading_3 como "Se profunda:") desapareça
+     * apenas por causa do mapeamento de abas.
+     */
+    const fullHtml =
+      wrapLists(
+        rendered.join('')
+      )
+
+
+    const tabDefs = [
+      {
+        label: 'Visão geral',
+        html: fullHtml
+      }
+    ]
 
 
     const addIfPresent =
@@ -878,13 +901,25 @@ module.exports = async function handler(req, res) {
 
         if (match) {
 
-          tabDefs.push({
-            label,
-            html:
-              wrapLists(
-                match.html
-              )
-          })
+          /*
+           * Não recriar uma segunda aba "Visão geral".
+           * A primeira aba já contém o conteúdo integral.
+           */
+          if (normalize(label) === 'visao geral') {
+            return
+          }
+
+          const html =
+            wrapLists(
+              match.html
+            )
+
+          if (!tabDefs.some(t => t.label === label)) {
+            tabDefs.push({
+              label,
+              html
+            })
+          }
 
         }
 
@@ -988,6 +1023,12 @@ module.exports = async function handler(req, res) {
 
         updatedAt:
           page.last_edited_time,
+
+        /*
+         * Conteúdo integral, usado como garantia de que
+         * nenhum bloco editorial válido fique de fora.
+         */
+        fullHtml,
 
         tabs:
           tabDefs

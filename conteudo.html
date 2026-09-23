@@ -622,14 +622,48 @@ async function load(){
      * Depois vêm as abas editoriais do Notion.
      */
 
+    /*
+     * Ordem das abas:
+     * 1. ⚡ Decisor clínico
+     * 2. 📖 Visão geral
+     * 3. Demais abas editoriais do Notion
+     */
+
+    const editorialTabs = Array.isArray(data.tabs)
+      ? data.tabs
+      : []
+
+    const fullHtml =
+      typeof data.fullHtml === 'string' &&
+      data.fullHtml.trim()
+        ? data.fullHtml
+        : ''
+
+    const overviewHtml =
+      fullHtml ||
+      editorialTabs
+        .map(t => t?.html || '')
+        .join('')
+
     const tabs = [
 
       {
-        label:'Decisor clínico',
+        label:'⚡ Decisor clínico',
         special:true
       },
 
-      ...(data.tabs || [])
+      {
+        label:'📖 Visão geral',
+        special:false,
+        overview:true
+      },
+
+      ...editorialTabs
+        .filter(t =>
+          t &&
+          t.label &&
+          !/^visão geral$/i.test(String(t.label).trim())
+        )
 
     ]
 
@@ -683,28 +717,55 @@ async function load(){
      * ========================================================
      */
 
-    document.getElementById('content')
-      .innerHTML =
+    /*
+     * Visão geral usa fullHtml quando disponível.
+     * Fallback: concatena as abas editoriais recebidas.
+     */
+    const overviewPanel = `
+      <section
+        class="tabpanel panel"
+        style="display:none"
+      >
 
-        (data.tabs || [])
-          .map(
-            t =>
-              `
-                <section
-                  class="tabpanel panel"
-                  style="display:none"
-                >
+        <h2>📖 Visão geral</h2>
 
-                  <h2>
-                    ${esc(t.label)}
-                  </h2>
+        ${
+          overviewHtml ||
+          '<div class="notice">Esta página ainda não possui conteúdo editorial disponível.</div>'
+        }
 
-                  ${t.html}
+      </section>
+    `
 
-                </section>
-              `
-          )
-          .join('')
+    const extraPanels =
+      editorialTabs
+        .filter(t =>
+          t &&
+          t.label &&
+          !/^visão geral$/i.test(String(t.label).trim())
+        )
+        .map(
+          t =>
+            `
+              <section
+                class="tabpanel panel"
+                style="display:none"
+              >
+
+                <h2>
+                  ${esc(t.label)}
+                </h2>
+
+                ${t.html || ''}
+
+              </section>
+            `
+        )
+        .join('')
+
+    document.getElementById('content').innerHTML =
+      overviewPanel +
+      extraPanels
 
 
     /*
@@ -753,21 +814,13 @@ async function load(){
       (Array.isArray(data.miniAppFiles) && data.miniAppFiles.length > 0)
 
 
-    const numberOfClinicalTabs =
-      (data.tabs || []).length
-
-
     if(hasMiniApps){
 
       activate(0)
 
-    }else if(numberOfClinicalTabs > 0){
-
-      activate(1)
-
     }else{
 
-      activate(0)
+      activate(1)
 
     }
 

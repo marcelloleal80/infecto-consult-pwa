@@ -296,6 +296,146 @@ pre{
   margin-top:18px
 }
 
+
+/* ============================================================
+ * IMAGENS CLÍNICAS — thumbnail + modal
+ * ============================================================ */
+
+.clinical-image-card{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:stretch;
+  width:min(320px,100%);
+  margin:14px 0;
+  padding:6px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+  box-shadow:0 2px 7px #0000000a;
+  cursor:zoom-in;
+  transition:box-shadow .15s ease, transform .15s ease;
+}
+
+.clinical-image-card:hover{
+  box-shadow:0 5px 16px #00000016;
+  transform:translateY(-1px);
+}
+
+.clinical-image-card img{
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:180px;
+  object-fit:contain;
+  border-radius:6px;
+  background:#f6f8fa;
+  cursor:zoom-in;
+}
+
+.clinical-image-action{
+  display:block;
+  padding:6px 4px 2px;
+  color:var(--blue);
+  font-size:12px;
+  font-weight:700;
+  text-align:center;
+}
+
+.clinical-image-caption{
+  display:block;
+  padding:4px 4px 1px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.4;
+  text-align:center;
+}
+
+.clinical-image-modal{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:rgba(8,20,30,.82);
+  z-index:1000;
+}
+
+.clinical-image-modal.open{
+  display:flex;
+}
+
+.clinical-image-modal-inner{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  max-width:96vw;
+  max-height:94vh;
+}
+
+.clinical-image-modal img{
+  display:block;
+  max-width:92vw;
+  max-height:82vh;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  border-radius:8px;
+  background:#fff;
+  box-shadow:0 10px 40px #00000055;
+}
+
+.clinical-image-modal-caption{
+  max-width:90vw;
+  margin-top:10px;
+  color:#fff;
+  font-size:13px;
+  line-height:1.45;
+  text-align:center;
+}
+
+.clinical-image-close{
+  position:absolute;
+  top:-14px;
+  right:-14px;
+  width:38px;
+  height:38px;
+  border:1px solid #ffffff55;
+  border-radius:50%;
+  background:#fff;
+  color:#123b5d;
+  font-size:25px;
+  line-height:1;
+  cursor:pointer;
+  box-shadow:0 3px 12px #00000035;
+}
+
+@media(max-width:700px){
+  .clinical-image-card{
+    width:100%;
+    max-width:300px;
+  }
+
+  .clinical-image-card img{
+    height:160px;
+  }
+
+  .clinical-image-modal{
+    padding:12px;
+  }
+
+  .clinical-image-modal img{
+    max-width:96vw;
+    max-height:78vh;
+  }
+
+  .clinical-image-close{
+    top:-10px;
+    right:-6px;
+  }
+}
+
 @media(max-width:700px){
 
   .wrap{
@@ -544,6 +684,269 @@ function activate(i){
  * ============================================================
  */
 
+
+/*
+ * ============================================================
+ * IMAGENS CLÍNICAS
+ * ============================================================
+ *
+ * Converte imagens editoriais em:
+ *   thumbnail/card → clique → modal ampliado.
+ *
+ * O Notion continua sendo o editor. O PWA controla apenas
+ * a apresentação para o assinante.
+ */
+
+function enhanceClinicalImages(){
+
+  const panels =
+    document.querySelectorAll('.tabpanel.panel')
+
+  panels.forEach(panel => {
+
+    /*
+     * Remove o link de arquivo que normalmente aparece
+     * imediatamente depois de uma imagem.
+     * Mantemos links de arquivos que não estejam associados
+     * a uma imagem.
+     */
+    panel
+      .querySelectorAll('.file-link')
+      .forEach(link => {
+
+        const previous =
+          link.previousElementSibling
+
+        if(
+          previous &&
+          previous.querySelector &&
+          previous.querySelector('img')
+        ){
+          link.remove()
+        }
+      })
+
+    /*
+     * Transforma cada imagem editorial em um card clicável.
+     */
+    panel
+      .querySelectorAll('img')
+      .forEach(img => {
+
+        if(
+          img.closest('.miniapp') ||
+          img.closest('.clinical-image-card')
+        ){
+          return
+        }
+
+        const card =
+          document.createElement('div')
+
+        card.className =
+          'clinical-image-card'
+
+        card.setAttribute(
+          'role',
+          'button'
+        )
+
+        card.setAttribute(
+          'tabindex',
+          '0'
+        )
+
+        card.setAttribute(
+          'aria-label',
+          'Ampliar imagem clínica'
+        )
+
+        const parent =
+          img.parentElement
+
+        /*
+         * Se a imagem já estiver dentro de um link,
+         * não criamos HTML inválido. Retiramos o link
+         * e usamos o próprio card como ação.
+         */
+        if(parent && parent.tagName === 'A'){
+          parent.replaceWith(card)
+          card.appendChild(img)
+        }else{
+          img.replaceWith(card)
+          card.appendChild(img)
+        }
+
+        const captionSource =
+          card.parentElement &&
+          card.parentElement.querySelector &&
+          card.parentElement.querySelector('figcaption')
+
+        const captionText =
+          captionSource
+            ? captionSource.textContent.trim()
+            : (
+                img.getAttribute('data-caption') ||
+                ''
+              )
+
+        const action =
+          document.createElement('span')
+
+        action.className =
+          'clinical-image-action'
+
+        action.textContent =
+          '🔍 Ampliar imagem'
+
+        card.appendChild(action)
+
+        if(captionText){
+
+          const caption =
+            document.createElement('span')
+
+          caption.className =
+            'clinical-image-caption'
+
+          caption.textContent =
+            captionText
+
+          card.appendChild(caption)
+        }
+
+        const open =
+          () => openClinicalImage(
+            img.src,
+            captionText || img.alt || ''
+          )
+
+        card.addEventListener(
+          'click',
+          open
+        )
+
+        card.addEventListener(
+          'keydown',
+          e => {
+
+            if(
+              e.key === 'Enter' ||
+              e.key === ' '
+            ){
+
+              e.preventDefault()
+              open()
+            }
+          }
+        )
+      })
+  })
+}
+
+
+function openClinicalImage(
+  src,
+  caption = ''
+){
+
+  const modal =
+    document.getElementById(
+      'clinicalImageModal'
+    )
+
+  const image =
+    document.getElementById(
+      'clinicalImageModalImg'
+    )
+
+  const captionEl =
+    document.getElementById(
+      'clinicalImageModalCaption'
+    )
+
+  image.src = src
+  image.alt = caption || 'Imagem clínica'
+
+  captionEl.textContent =
+    caption
+
+  modal.classList.add('open')
+
+  modal.setAttribute(
+    'aria-hidden',
+    'false'
+  )
+
+  document.body.style.overflow =
+    'hidden'
+}
+
+
+function closeClinicalImage(){
+
+  const modal =
+    document.getElementById(
+      'clinicalImageModal'
+    )
+
+  const image =
+    document.getElementById(
+      'clinicalImageModalImg'
+    )
+
+  modal.classList.remove('open')
+
+  modal.setAttribute(
+    'aria-hidden',
+    'true'
+  )
+
+  image.src = ''
+
+  document.body.style.overflow =
+    ''
+}
+
+
+/* Fechar pelo botão */
+document
+  .getElementById('clinicalImageClose')
+  ?.addEventListener(
+    'click',
+    closeClinicalImage
+  )
+
+
+/* Fechar clicando no fundo */
+document
+  .getElementById('clinicalImageModal')
+  ?.addEventListener(
+    'click',
+    e => {
+
+      if(
+        e.target.id ===
+        'clinicalImageModal'
+      ){
+        closeClinicalImage()
+      }
+    }
+  )
+
+
+/* Fechar com ESC */
+document.addEventListener(
+  'keydown',
+  e => {
+
+    if(e.key === 'Escape'){
+      closeClinicalImage()
+    }
+  }
+)
+
+
 async function load(){
 
   if(!id){
@@ -767,6 +1170,12 @@ async function load(){
       overviewPanel +
       extraPanels
 
+    /*
+     * Converte imagens editoriais em thumbnails clicáveis
+     * com abertura em modal.
+     */
+    enhanceClinicalImages()
+
 
     /*
      * ========================================================
@@ -856,6 +1265,27 @@ async function load(){
 load()
 
 </script>
+
+
+<!-- Modal de imagens clínicas -->
+<div class="clinical-image-modal" id="clinicalImageModal" aria-hidden="true">
+  <div class="clinical-image-modal-inner">
+    <button
+      class="clinical-image-close"
+      id="clinicalImageClose"
+      type="button"
+      aria-label="Fechar imagem"
+      title="Fechar"
+    >×</button>
+
+    <img id="clinicalImageModalImg" src="" alt="">
+
+    <div
+      class="clinical-image-modal-caption"
+      id="clinicalImageModalCaption"
+    ></div>
+  </div>
+</div>
 
 </body>
 </html>

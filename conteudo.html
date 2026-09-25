@@ -396,19 +396,24 @@ pre{
 }
 
 .clinical-image-close{
-  position:absolute;
-  top:-14px;
-  right:-14px;
-  width:38px;
-  height:38px;
-  border:1px solid #ffffff55;
+  position:fixed;
+  top:14px;
+  right:14px;
+  z-index:1002;
+  width:42px;
+  height:42px;
+  border:1px solid #ffffff88;
   border-radius:50%;
   background:#fff;
   color:#123b5d;
-  font-size:25px;
-  line-height:1;
+  font-size:27px;
+  font-weight:700;
+  line-height:38px;
+  text-align:center;
   cursor:pointer;
-  box-shadow:0 3px 12px #00000035;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+  box-shadow:0 3px 14px #00000045;
 }
 
 @media(max-width:700px){
@@ -431,8 +436,12 @@ pre{
   }
 
   .clinical-image-close{
-    top:-10px;
-    right:-6px;
+    top:10px;
+    right:10px;
+    width:44px;
+    height:44px;
+    font-size:28px;
+    line-height:40px;
   }
 }
 
@@ -888,12 +897,25 @@ function closeClinicalImage(){
 
 
 /* Fechar pelo botão */
-document
-  .getElementById('clinicalImageClose')
-  ?.addEventListener(
+const clinicalImageCloseButton =
+  document.getElementById('clinicalImageClose')
+
+if(clinicalImageCloseButton){
+
+  clinicalImageCloseButton.addEventListener(
     'click',
     closeClinicalImage
   )
+
+  clinicalImageCloseButton.addEventListener(
+    'touchend',
+    e => {
+      e.preventDefault()
+      closeClinicalImage()
+    },
+    {passive:false}
+  )
+}
 
 
 /* Fechar clicando no fundo */

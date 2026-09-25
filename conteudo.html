@@ -417,6 +417,17 @@ pre{
   box-shadow:0 4px 18px #00000055;
 }
 
+
+/* ============================================================
+ * ELEMENTOS ADMINISTRATIVOS — não exibir ao assinante
+ * ============================================================ */
+
+/* O arquivo HTML anexado ao Notion é usado como MiniApp,
+   portanto o anexo bruto não deve aparecer na interface. */
+.file-link{
+  display:none !important;
+}
+
 @media(max-width:700px){
   .clinical-image-card{
     width:290px;
@@ -1246,23 +1257,11 @@ async function load(){
      * ========================================================
      */
 
-    document.getElementById('footer')
-      .innerHTML =
-
-        data.notionUrl
-
-          ? `
-              Fonte editorial:
-              <a
-                href="${esc(data.notionUrl)}"
-                target="_blank"
-                rel="noopener"
-              >
-                Notion
-              </a>
-            `
-
-          : ''
+    /*
+     * O Notion é apenas o CMS/editor interno.
+     * Não exibir a origem editorial para o assinante.
+     */
+    document.getElementById('footer').innerHTML = ''
 
 
     /*

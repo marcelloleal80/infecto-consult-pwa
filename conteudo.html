@@ -305,9 +305,9 @@ pre{
   display:inline-flex;
   flex-direction:column;
   align-items:stretch;
-  width:min(320px,100%);
+  width:min(290px,100%);
   margin:14px 0;
-  padding:6px;
+  padding:5px;
   border:1px solid var(--line);
   border-radius:10px;
   background:#fff;
@@ -325,7 +325,7 @@ pre{
   display:block;
   width:100%;
   max-width:100%;
-  height:180px;
+  height:175px;
   object-fit:contain;
   border-radius:6px;
   background:#f6f8fa;
@@ -334,7 +334,7 @@ pre{
 
 .clinical-image-action{
   display:block;
-  padding:6px 4px 2px;
+  padding:5px 4px 1px;
   color:var(--blue);
   font-size:12px;
   font-weight:700;
@@ -413,12 +413,12 @@ pre{
 
 @media(max-width:700px){
   .clinical-image-card{
-    width:100%;
-    max-width:300px;
+    width:290px;
+    max-width:100%;
   }
 
   .clinical-image-card img{
-    height:160px;
+    height:165px;
   }
 
   .clinical-image-modal{
@@ -705,10 +705,8 @@ function enhanceClinicalImages(){
   panels.forEach(panel => {
 
     /*
-     * Remove o link de arquivo que normalmente aparece
-     * imediatamente depois de uma imagem.
-     * Mantemos links de arquivos que não estejam associados
-     * a uma imagem.
+     * Remove file-link exibido pelo renderer quando ele
+     * estiver associado a uma imagem.
      */
     panel
       .querySelectorAll('.file-link')
@@ -726,9 +724,6 @@ function enhanceClinicalImages(){
         }
       })
 
-    /*
-     * Transforma cada imagem editorial em um card clicável.
-     */
     panel
       .querySelectorAll('img')
       .forEach(img => {
@@ -740,22 +735,32 @@ function enhanceClinicalImages(){
           return
         }
 
+        /*
+         * Captura a legenda original antes de transformar
+         * a imagem em card.
+         */
+        const figure =
+          img.closest('figure')
+
+        const originalCaption =
+          figure?.querySelector('figcaption')
+
+        const captionText =
+          originalCaption
+            ? originalCaption.textContent.trim()
+            : (
+                img.getAttribute('data-caption') ||
+                ''
+              )
+
         const card =
           document.createElement('div')
 
         card.className =
           'clinical-image-card'
 
-        card.setAttribute(
-          'role',
-          'button'
-        )
-
-        card.setAttribute(
-          'tabindex',
-          '0'
-        )
-
+        card.setAttribute('role','button')
+        card.setAttribute('tabindex','0')
         card.setAttribute(
           'aria-label',
           'Ampliar imagem clínica'
@@ -764,11 +769,6 @@ function enhanceClinicalImages(){
         const parent =
           img.parentElement
 
-        /*
-         * Se a imagem já estiver dentro de um link,
-         * não criamos HTML inválido. Retiramos o link
-         * e usamos o próprio card como ação.
-         */
         if(parent && parent.tagName === 'A'){
           parent.replaceWith(card)
           card.appendChild(img)
@@ -777,18 +777,14 @@ function enhanceClinicalImages(){
           card.appendChild(img)
         }
 
-        const captionSource =
-          card.parentElement &&
-          card.parentElement.querySelector &&
-          card.parentElement.querySelector('figcaption')
-
-        const captionText =
-          captionSource
-            ? captionSource.textContent.trim()
-            : (
-                img.getAttribute('data-caption') ||
-                ''
-              )
+        /*
+         * A legenda do Notion não fica mais solta
+         * embaixo do card. Ela pode aparecer apenas
+         * no modal, mantendo a página limpa.
+         */
+        if(originalCaption){
+          originalCaption.remove()
+        }
 
         const action =
           document.createElement('span')
@@ -801,30 +797,13 @@ function enhanceClinicalImages(){
 
         card.appendChild(action)
 
-        if(captionText){
-
-          const caption =
-            document.createElement('span')
-
-          caption.className =
-            'clinical-image-caption'
-
-          caption.textContent =
-            captionText
-
-          card.appendChild(caption)
-        }
-
         const open =
           () => openClinicalImage(
             img.src,
             captionText || img.alt || ''
           )
 
-        card.addEventListener(
-          'click',
-          open
-        )
+        card.addEventListener('click', open)
 
         card.addEventListener(
           'keydown',
@@ -843,7 +822,6 @@ function enhanceClinicalImages(){
       })
   })
 }
-
 
 function openClinicalImage(
   src,

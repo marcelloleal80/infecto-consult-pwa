@@ -397,23 +397,24 @@ pre{
 
 .clinical-image-close{
   position:fixed;
-  top:14px;
-  right:14px;
-  z-index:1002;
-  width:42px;
-  height:42px;
-  border:1px solid #ffffff88;
+  top:max(10px, env(safe-area-inset-top));
+  right:max(10px, env(safe-area-inset-right));
+  z-index:100002;
+  width:52px;
+  height:52px;
+  padding:0;
+  border:2px solid #fff;
   border-radius:50%;
   background:#fff;
   color:#123b5d;
-  font-size:27px;
-  font-weight:700;
-  line-height:38px;
+  font-size:32px;
+  font-weight:800;
+  line-height:46px;
   text-align:center;
   cursor:pointer;
   touch-action:manipulation;
   -webkit-tap-highlight-color:transparent;
-  box-shadow:0 3px 14px #00000045;
+  box-shadow:0 4px 18px #00000055;
 }
 
 @media(max-width:700px){
@@ -436,12 +437,12 @@ pre{
   }
 
   .clinical-image-close{
-    top:10px;
-    right:10px;
-    width:44px;
-    height:44px;
-    font-size:28px;
-    line-height:40px;
+    top:max(8px, env(safe-area-inset-top));
+    right:max(8px, env(safe-area-inset-right));
+    width:52px;
+    height:52px;
+    font-size:32px;
+    line-height:46px;
   }
 }
 
@@ -896,43 +897,42 @@ function closeClinicalImage(){
 }
 
 
-/* Fechar pelo botão */
+/* Fechar pelo botão — compatível com toque Android/Xiaomi */
 const clinicalImageCloseButton =
   document.getElementById('clinicalImageClose')
 
 if(clinicalImageCloseButton){
 
+  const closeByTouch = e => {
+    e.preventDefault()
+    e.stopPropagation()
+    closeClinicalImage()
+  }
+
   clinicalImageCloseButton.addEventListener(
-    'click',
-    closeClinicalImage
+    'pointerup',
+    closeByTouch
   )
 
   clinicalImageCloseButton.addEventListener(
-    'touchend',
-    e => {
-      e.preventDefault()
-      closeClinicalImage()
-    },
-    {passive:false}
+    'click',
+    closeByTouch
   )
 }
 
 
-/* Fechar clicando no fundo */
-document
-  .getElementById('clinicalImageModal')
-  ?.addEventListener(
-    'click',
-    e => {
+/* Tocar na área escura fecha; tocar na imagem não fecha */
+const clinicalImageModal =
+  document.getElementById('clinicalImageModal')
 
-      if(
-        e.target.id ===
-        'clinicalImageModal'
-      ){
-        closeClinicalImage()
-      }
+clinicalImageModal?.addEventListener(
+  'pointerup',
+  e => {
+    if(e.target === clinicalImageModal){
+      closeClinicalImage()
     }
-  )
+  }
+)
 
 
 /* Fechar com ESC */
@@ -942,6 +942,69 @@ document.addEventListener(
 
     if(e.key === 'Escape'){
       closeClinicalImage()
+    }
+  }
+)
+
+
+/* Botão/gesto Voltar do Android também fecha a imagem */
+let clinicalImageOpenInHistory = false
+
+const _openClinicalImage = openClinicalImage
+openClinicalImage = function(src, caption = ''){
+
+  _openClinicalImage(src, caption)
+
+  if(!clinicalImageOpenInHistory){
+    history.pushState(
+      {clinicalImageModal:true},
+      '',
+      location.href
+    )
+    clinicalImageOpenInHistory = true
+  }
+}
+
+const _closeClinicalImage = closeClinicalImage
+closeClinicalImage = function(){
+
+  _closeClinicalImage()
+
+  if(clinicalImageOpenInHistory){
+    clinicalImageOpenInHistory = false
+
+    if(history.state?.clinicalImageModal){
+      history.back()
+    }
+  }
+}
+
+window.addEventListener(
+  'popstate',
+  () => {
+
+    const modal =
+      document.getElementById('clinicalImageModal')
+
+    if(
+      modal &&
+      modal.classList.contains('open')
+    ){
+
+      modal.classList.remove('open')
+      modal.setAttribute('aria-hidden','true')
+
+      const image =
+        document.getElementById(
+          'clinicalImageModalImg'
+        )
+
+      if(image){
+        image.src = ''
+      }
+
+      document.body.style.overflow = ''
+      clinicalImageOpenInHistory = false
     }
   }
 )

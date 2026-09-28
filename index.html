@@ -2017,13 +2017,12 @@ function renderNotionSection(items){
 
   const newStatus =
     document.getElementById(
-      "notionStatus"
+        "notionStatus"
     );
 
-  if(newStatus){
-
-    newStatus.textContent =
-      `${modules.length} conteúdos carregados do Contrato editorial.`;
+if(newStatus){
+    newStatus.textContent = "";
+}
 
   }
 

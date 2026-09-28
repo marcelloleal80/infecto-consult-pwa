@@ -590,9 +590,7 @@ function renderNotionSection(items){
     notionModules.innerHTML = `
       <div class="card">
         <div class="ico">📚</div>
-
         <h3>Nenhum módulo publicado</h3>
-
         <p>
           Nenhum conteúdo do Contrato editorial está marcado
           para publicação no site.
@@ -606,9 +604,7 @@ function renderNotionSection(items){
     return;
   }
 
-
   modules = items.map(normalizeItem);
-
 
   notionModules.innerHTML = modules.map(item => {
 
@@ -617,60 +613,54 @@ function renderNotionSection(items){
         ? `conteudo.html?id=${encodeURIComponent(item.id)}`
         : item.notionUrl;
 
-
-    /*
-     * Se existir imagem, mostra a imagem.
-     * Caso contrário, mantém o ícone atual.
-     */
-    const visual = item.image
+    const imageHtml = item.image
       ? `
-        <div class="card-image">
+        <div class="module-image">
           <img
             src="${escapeHtml(item.image)}"
             alt="${escapeHtml(item.title)}"
             loading="lazy"
-            onerror="this.parentElement.innerHTML='<div class=&quot;ico&quot;>${escapeHtml(item.icon)}</div>'"
           >
         </div>
       `
       : `
-        <div class="ico">
-          ${escapeHtml(item.icon)}
+        <div class="module-image module-image-empty">
+          <span>${escapeHtml(item.icon)}</span>
         </div>
       `;
 
-
     return `
-
-      <div
-        class="card feature catalog-card"
+      <article
+        class="module-card"
         onclick="openModule('${target.replace(/'/g,"\\'")}')"
       >
 
-        ${visual}
+        ${imageHtml}
 
-        <div class="card-content">
+        <div class="module-card-body">
+
+          <div class="module-category">
+            ${escapeHtml(item.category || "Infectologia")}
+          </div>
 
           <h3>
             ${escapeHtml(item.title)}
           </h3>
 
-          <p class="card-description">
+          <p>
             ${escapeHtml(item.description)}
           </p>
 
-          <span class="open">
+          <span class="module-open">
             Abrir conteúdo →
           </span>
 
         </div>
 
-      </div>
-
+      </article>
     `;
 
   }).join("");
-
 
   notionStatus.textContent =
     `${modules.length} módulo(s) carregado(s) do Contrato editorial.`;

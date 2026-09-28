@@ -511,6 +511,10 @@ function escapeHtml(value){
    NORMALIZA ITEM VINDO DA API
    ========================================================= */
 
+/* =========================================================
+   NORMALIZA ITEM VINDO DA API
+   ========================================================= */
+
 function normalizeItem(item){
 
   return {
@@ -522,10 +526,35 @@ function normalizeItem(item){
       item.name ||
       "Conteúdo sem título",
 
+    /*
+     * DESCRIÇÃO CURTA
+     * Prioridade:
+     * 1. shortDescription
+     * 2. descricaoCurta
+     * 3. description
+     */
     description:
+      item.shortDescription ||
+      item.descricaoCurta ||
       item.description ||
       "Conteúdo editorial sincronizado do Notion.",
 
+    /*
+     * IMAGEM DO CARD
+     * Aceita diferentes nomes para facilitar
+     * futuras integrações com o Notion/API.
+     */
+    image:
+      item.image ||
+      item.imageUrl ||
+      item.cover ||
+      item.coverUrl ||
+      "",
+
+    /*
+     * ÍCONE
+     * Continua sendo usado quando não houver imagem.
+     */
     icon:
       item.icon ||
       "🧬",
@@ -555,6 +584,98 @@ function normalizeItem(item){
    ========================================================= */
 
 function renderNotionSection(items){
+
+  if(!items || !items.length){
+
+    notionModules.innerHTML = `
+      <div class="card">
+        <div class="ico">📚</div>
+
+        <h3>Nenhum módulo publicado</h3>
+
+        <p>
+          Nenhum conteúdo do Contrato editorial está marcado
+          para publicação no site.
+        </p>
+      </div>
+    `;
+
+    notionStatus.textContent =
+      "Nenhum conteúdo publicado foi retornado pelo catálogo editorial.";
+
+    return;
+  }
+
+
+  modules = items.map(normalizeItem);
+
+
+  notionModules.innerHTML = modules.map(item => {
+
+    const target =
+      item.id
+        ? `conteudo.html?id=${encodeURIComponent(item.id)}`
+        : item.notionUrl;
+
+
+    /*
+     * Se existir imagem, mostra a imagem.
+     * Caso contrário, mantém o ícone atual.
+     */
+    const visual = item.image
+      ? `
+        <div class="card-image">
+          <img
+            src="${escapeHtml(item.image)}"
+            alt="${escapeHtml(item.title)}"
+            loading="lazy"
+            onerror="this.parentElement.innerHTML='<div class=&quot;ico&quot;>${escapeHtml(item.icon)}</div>'"
+          >
+        </div>
+      `
+      : `
+        <div class="ico">
+          ${escapeHtml(item.icon)}
+        </div>
+      `;
+
+
+    return `
+
+      <div
+        class="card feature catalog-card"
+        onclick="openModule('${target.replace(/'/g,"\\'")}')"
+      >
+
+        ${visual}
+
+        <div class="card-content">
+
+          <h3>
+            ${escapeHtml(item.title)}
+          </h3>
+
+          <p class="card-description">
+            ${escapeHtml(item.description)}
+          </p>
+
+          <span class="open">
+            Abrir conteúdo →
+          </span>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }).join("");
+
+
+  notionStatus.textContent =
+    `${modules.length} módulo(s) carregado(s) do Contrato editorial.`;
+
+}
 
   if(!items || !items.length){
 

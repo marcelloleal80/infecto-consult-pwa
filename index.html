@@ -112,7 +112,7 @@ header{
 
 .wrap{
 
-  max-width:1180px;
+  max-width:1100px;
 
   margin:0 auto;
 
@@ -141,7 +141,6 @@ header{
   font-weight:400;
 
 }
-
 
 .hero{
 
@@ -179,7 +178,7 @@ header{
 
 .search{
 
-  max-width:1180px;
+  max-width:1100px;
 
   margin:
     -29px
@@ -255,173 +254,160 @@ main{
 
 
 /* =========================================================
-   SEÇÃO DE CATEGORIA
+   SEÇÕES
    ========================================================= */
 
-.category-section{
+.section{
 
-  margin-top:32px;
-
-}
-
-.category-header{
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  margin-bottom:12px;
+  margin-top:28px;
 
 }
 
-.category-title{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:9px;
-
-  margin:0;
-
-  font-size:21px;
-
-  color:var(--text);
-
-}
-
-.category-icon{
-
-  font-size:22px;
-
-}
-
-.category-count{
-
-  color:var(--muted);
+.section h2{
 
   font-size:12px;
 
+  text-transform:uppercase;
+
+  letter-spacing:1.2px;
+
+  color:var(--muted);
+
+  margin:
+    0
+    0
+    12px;
+
 }
 
 
 /* =========================================================
-   CARROSSEL HORIZONTAL
+   GRID
    ========================================================= */
 
-.carousel-wrapper{
+.grid{
 
-  position:relative;
+  display:grid;
 
-}
-
-.carousel{
-
-  display:flex;
+  grid-template-columns:
+    repeat(
+      3,
+      1fr
+    );
 
   gap:16px;
 
-  overflow-x:auto;
-
-  overflow-y:hidden;
-
-  padding:
-    4px
-    4px
-    16px;
-
-  scroll-behavior:smooth;
-
-  scroll-snap-type:x mandatory;
-
-  scrollbar-width:none;
-
-  -webkit-overflow-scrolling:touch;
-
-}
-
-.carousel::-webkit-scrollbar{
-
-  display:none;
-
 }
 
 
 /* =========================================================
-   SETAS DO CARROSSEL
+   CARD GENÉRICO
    ========================================================= */
 
-.carousel-arrow{
-
-  position:absolute;
-
-  top:50%;
-
-  transform:translateY(-50%);
-
-  width:38px;
-
-  height:38px;
-
-  border-radius:50%;
-
-  border:1px solid var(--line);
+.card{
 
   background:#fff;
 
-  box-shadow:
-    0
-    5px
-    18px
-    rgba(0,0,0,.15);
+  border:
+    1px
+    solid
+    var(--line);
+
+  border-radius:16px;
+
+  padding:19px;
+
+  min-height:155px;
 
   cursor:pointer;
 
-  z-index:4;
-
-  font-size:20px;
-
-  color:var(--navy);
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease;
 
 }
 
-.carousel-arrow.left{
+.card:hover{
 
-  left:-8px;
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0
+    10px
+    28px
+    rgba(23,48,66,.10);
 
 }
 
-.carousel-arrow.right{
+.feature{
 
-  right:-8px;
+  border:
+    2px
+    solid
+    rgba(40,122,168,.25);
 
 }
 
-.carousel-arrow:hover{
+.ico{
 
-  background:#f2f7fa;
+  font-size:27px;
+
+  margin-bottom:11px;
+
+}
+
+.card h3{
+
+  margin:
+    0
+    0
+    7px;
+
+  font-size:17px;
+
+}
+
+.card p{
+
+  margin:0;
+
+  color:var(--muted);
+
+  font-size:13px;
+
+  line-height:1.45;
+
+}
+
+.open{
+
+  display:inline-block;
+
+  margin-top:13px;
+
+  background:var(--navy);
+
+  color:#fff;
+
+  border-radius:9px;
+
+  padding:
+    8px
+    11px;
+
+  font-size:12px;
+
+  font-weight:700;
 
 }
 
 
 /* =========================================================
-   CARD
+   CARDS DO NOTION
    ========================================================= */
 
 .module-card{
-
-  flex:
-    0
-    0
-    270px;
 
   background:#fff;
 
@@ -436,11 +422,11 @@ main{
 
   cursor:pointer;
 
-  scroll-snap-align:start;
-
   transition:
     transform .18s ease,
     box-shadow .18s ease;
+
+  min-height:100%;
 
 }
 
@@ -459,7 +445,7 @@ main{
 
 
 /* =========================================================
-   IMAGEM
+   IMAGEM DO CARD
    ========================================================= */
 
 .module-image{
@@ -506,16 +492,6 @@ main{
       #f7fafc
     );
 
-  width:100%;
-
-  height:150px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
 }
 
 .module-image-empty span{
@@ -531,7 +507,7 @@ main{
 
 .module-card-body{
 
-  padding:17px;
+  padding:18px;
 
 }
 
@@ -560,7 +536,7 @@ main{
     0
     7px;
 
-  font-size:17px;
+  font-size:18px;
 
   line-height:1.25;
 
@@ -575,8 +551,6 @@ main{
   font-size:13px;
 
   line-height:1.5;
-
-  min-height:58px;
 
 }
 
@@ -613,16 +587,6 @@ main{
 
 }
 
-.results-title{
-
-  font-size:14px;
-
-  font-weight:700;
-
-  margin-bottom:10px;
-
-}
-
 .results button{
 
   width:100%;
@@ -651,12 +615,6 @@ main{
 .results button:hover{
 
   border-color:#287aa8;
-
-}
-
-.results small{
-
-  color:var(--muted);
 
 }
 
@@ -690,7 +648,7 @@ main{
 
 .info{
 
-  margin-top:35px;
+  margin-top:24px;
 
   background:#fff;
 
@@ -868,17 +826,25 @@ footer{
    RESPONSIVO
    ========================================================= */
 
-@media(max-width:700px){
+@media(max-width:800px){
+
+  .grid{
+
+    grid-template-columns:
+      repeat(
+        2,
+        1fr
+      );
+
+  }
+
+}
+
+@media(max-width:600px){
 
   .hero h1{
 
     font-size:29px;
-
-  }
-
-  .module-card{
-
-    flex-basis:245px;
 
   }
 
@@ -888,37 +854,25 @@ footer{
 
   }
 
-  .module-image-empty{
-
-    height:135px;
-
-  }
-
-  .category-title{
-
-    font-size:19px;
-
-  }
-
-  .carousel-arrow{
-
-    display:none;
-
-  }
-
 }
 
 @media(max-width:470px){
 
-  .module-card{
+  .grid{
 
-    flex-basis:230px;
+    grid-template-columns:1fr;
 
   }
 
   header{
 
     padding-bottom:55px;
+
+  }
+
+  .module-image{
+
+    height:155px;
 
   }
 
@@ -976,7 +930,7 @@ footer{
     id="q"
     type="search"
     autocomplete="off"
-    placeholder="🔎 Buscar síndrome, patógeno, medicamento ou exame"
+    placeholder="🔎 Buscar síndrome ou módulo"
   >
 
 </div>
@@ -989,203 +943,259 @@ footer{
 <main class="wrap">
 
 
-  <!-- =====================================================
-       RESULTADOS DA BUSCA
-       ===================================================== -->
-
   <div
     id="results"
     class="results"
   ></div>
 
 
-  <!-- =====================================================
-       CATÁLOGO
-       ===================================================== -->
+  <div id="home">
 
-  <div id="catalog">
+
+    <!-- =====================================================
+         MÓDULOS DO NOTION
+         ===================================================== -->
 
     <div
-      id="notionStatus"
-      class="status"
+      id="notionModulesSection"
+      class="section"
     >
-      Sincronizando com o Contrato editorial...
-    </div>
 
-  </div>
-
-
-  <!-- =====================================================
-       FALLBACK
-       ===================================================== -->
-
-  <div
-    id="fallbackSection"
-    style="display:none"
-  >
-
-    <div class="category-section">
-
-      <div class="category-header">
-
-        <h2 class="category-title">
-          <span class="category-icon">🩺</span>
-          Síndromes clínicas
-        </h2>
-
-      </div>
+      <h2>
+        Módulos clínicos
+      </h2>
 
 
-      <div class="carousel-wrapper">
+      <div
+        id="notionModules"
+        class="grid"
+      >
 
-        <button
-          class="carousel-arrow left"
-          onclick="scrollCarousel(this,-1)"
-          aria-label="Anterior"
-        >
-          ‹
-        </button>
+        <div class="card">
 
-        <div class="carousel">
+          <div class="ico">
+            ⏳
+          </div>
 
-          <article
-            class="module-card"
-            onclick="openModule('pneumonia.html')"
-          >
+          <h3>
+            Carregando módulos...
+          </h3>
 
-            <div class="module-image-empty">
-              <span>🫁</span>
-            </div>
-
-            <div class="module-card-body">
-
-              <div class="module-category">
-                Síndrome clínica
-              </div>
-
-              <h3>
-                Pneumonia — Decisão Clínica
-              </h3>
-
-              <p>
-                PSI, PAC grave, risco de MRSA/Pseudomonas,
-                antibiótico, microbiologia, IV→VO e duração.
-              </p>
-
-              <span class="module-open">
-                Abrir módulo →
-              </span>
-
-            </div>
-
-          </article>
-
-
-          <article
-            class="module-card"
-            onclick="openModule('pielonefrite.html')"
-          >
-
-            <div class="module-image-empty">
-              <span>🧪</span>
-            </div>
-
-            <div class="module-card-body">
-
-              <div class="module-category">
-                Síndrome clínica
-              </div>
-
-              <h3>
-                Pielonefrite Aguda
-              </h3>
-
-              <p>
-                Triagem, microbiologia, antibiótico empírico,
-                imagem, situações especiais e reavaliação.
-              </p>
-
-              <span class="module-open">
-                Abrir módulo →
-              </span>
-
-            </div>
-
-          </article>
-
-
-          <article
-            class="module-card"
-            onclick="openModule('clostridioides_difficile.html')"
-          >
-
-            <div class="module-image-empty">
-              <span>🦠</span>
-            </div>
-
-            <div class="module-card-body">
-
-              <div class="module-category">
-                Síndrome clínica
-              </div>
-
-              <h3>
-                Infecção por
-                <i>Clostridioides difficile</i>
-              </h3>
-
-              <p>
-                Diagnóstico, colonização × infecção,
-                gravidade, tratamento, recorrência e prevenção.
-              </p>
-
-              <span class="module-open">
-                Abrir módulo →
-              </span>
-
-            </div>
-
-          </article>
+          <p>
+            Sincronizando o catálogo editorial.
+          </p>
 
         </div>
 
-        <button
-          class="carousel-arrow right"
-          onclick="scrollCarousel(this,1)"
-          aria-label="Próximo"
+      </div>
+
+
+      <div
+        id="notionStatus"
+        class="status"
+      >
+        Sincronizando com o Contrato editorial...
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FALLBACK
+         ===================================================== -->
+
+    <div
+      id="fallbackSection"
+      class="section"
+      style="display:none"
+    >
+
+      <h2>
+        Módulos disponíveis
+      </h2>
+
+
+      <div class="grid">
+
+
+        <div
+          class="card feature"
+          onclick="openModule('pneumonia.html')"
         >
-          ›
-        </button>
+
+          <div class="ico">
+            🫁
+          </div>
+
+          <h3>
+            Pneumonia — Decisão Clínica
+          </h3>
+
+          <p>
+            PSI, PAC grave, risco de MRSA/Pseudomonas,
+            antibiótico, microbiologia, IV→VO e duração.
+          </p>
+
+          <span class="open">
+            Abrir módulo →
+          </span>
+
+        </div>
+
+
+        <div
+          class="card feature"
+          onclick="openModule('pielonefrite.html')"
+        >
+
+          <div class="ico">
+            🧪
+          </div>
+
+          <h3>
+            Pielonefrite Aguda
+          </h3>
+
+          <p>
+            Triagem, microbiologia, antibiótico empírico,
+            imagem, situações especiais e reavaliação.
+          </p>
+
+          <span class="open">
+            Abrir módulo →
+          </span>
+
+        </div>
+
+
+        <div
+          class="card feature"
+          onclick="openModule('clostridioides_difficile.html')"
+        >
+
+          <div class="ico">
+            🦠
+          </div>
+
+          <h3>
+            Infecção por
+            <i>Clostridioides difficile</i>
+          </h3>
+
+          <p>
+            Diagnóstico, colonização × infecção,
+            gravidade, tratamento, recorrência e prevenção.
+          </p>
+
+          <span class="open">
+            Abrir módulo →
+          </span>
+
+        </div>
+
 
       </div>
 
     </div>
 
+
+    <!-- =====================================================
+         PRÓXIMOS MÓDULOS
+         ===================================================== -->
+
+    <div class="section">
+
+      <h2>
+        Próximos módulos
+      </h2>
+
+
+      <div class="grid">
+
+
+        <div class="card">
+
+          <div class="ico">
+            💊
+          </div>
+
+          <h3>
+            Antimicrobianos
+          </h3>
+
+          <p>
+            Banco transversal: dose, espectro,
+            ajuste renal/hepático, interações e alertas.
+          </p>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="ico">
+            🦠
+          </div>
+
+          <h3>
+            Patógenos
+          </h3>
+
+          <p>
+            Resistência, epidemiologia e opções terapêuticas.
+          </p>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="ico">
+            🔬
+          </div>
+
+          <h3>
+            Exames
+          </h3>
+
+          <p>
+            Interpretação e utilidade na decisão clínica.
+          </p>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         AVISO REGULATÓRIO
+         ===================================================== -->
+
+    <div class="info">
+
+      <b>
+        Aviso regulatório:
+      </b>
+
+      O conteúdo do Infecto Consult tem finalidade
+      exclusivamente informativa e educacional e foi
+      desenvolvido para consulta por profissionais de saúde.
+
+      A utilização da plataforma deve estar integrada
+      à avaliação clínica e aos recursos disponíveis
+      no atendimento.
+
+      As decisões sobre investigação, diagnóstico e
+      tratamento permanecem sob responsabilidade do
+      profissional assistente.
+
+    </div>
+
+
   </div>
-
-
-  <!-- =====================================================
-       AVISO REGULATÓRIO
-       ===================================================== -->
-
-  <div class="info">
-
-    <b>Aviso regulatório:</b>
-
-    O conteúdo do Infecto Consult tem finalidade
-    exclusivamente informativa e educacional e foi
-    desenvolvido para consulta por profissionais de saúde.
-
-    A utilização da plataforma deve estar integrada
-    à avaliação clínica e aos recursos disponíveis
-    no atendimento.
-
-    As decisões sobre investigação, diagnóstico e
-    tratamento permanecem sob responsabilidade do
-    profissional assistente.
-
-  </div>
-
 
 </main>
 
@@ -1257,8 +1267,8 @@ const q =
 const results =
   document.getElementById("results");
 
-const catalog =
-  document.getElementById("catalog");
+const notionModules =
+  document.getElementById("notionModules");
 
 const notionStatus =
   document.getElementById("notionStatus");
@@ -1271,7 +1281,7 @@ let modules = [];
 
 
 /* =========================================================
-   ABRIR CONTEÚDO
+   ABRIR MÓDULO
    ========================================================= */
 
 function openModule(url){
@@ -1330,8 +1340,7 @@ function normalizeItem(item){
   return {
 
     id:
-      item.id ||
-      "",
+      item.id || "",
 
 
     title:
@@ -1388,523 +1397,46 @@ function normalizeItem(item){
 
 
 /* =========================================================
-   CLASSIFICAÇÃO EDITORIAL
-   =========================================================
-
-   IMPORTANTE:
-
-   Aqui está a nova lógica do site.
-
-   O Notion continua sendo a fonte dos dados.
-
-   O index apenas organiza os conteúdos em
-   categorias visuais.
-
-   ========================================================= */
-
-function editorialCategory(item){
-
-  const title =
-    String(item.title || "")
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g,"");
-
-
-  const raw =
-    String(item.category || "")
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g,"");
-
-
-  /* -------------------------------------------------------
-     HEPATITE B E HEPATITE C
-     Sempre entram em PATÓGENOS
-     ------------------------------------------------------- */
-
-  if(
-    title.includes("hepatite b") ||
-    title.includes("hepatite c")
-  ){
-
-    return "Patógenos";
-
-  }
-
-
-  /* -------------------------------------------------------
-     SÍNDROMES CLÍNICAS
-     ------------------------------------------------------- */
-
-  if(
-    raw.includes("sindrome") ||
-    raw.includes("sindromes")
-  ){
-
-    return "Síndromes clínicas";
-
-  }
-
-
-  /* -------------------------------------------------------
-     MEDICAMENTOS
-     ------------------------------------------------------- */
-
-  if(
-    raw.includes("antimicrobiano") ||
-    raw.includes("antimicrobianos") ||
-    raw.includes("medicamento") ||
-    raw.includes("medicamentos") ||
-    raw.includes("antibiotico") ||
-    raw.includes("antifungico") ||
-    raw.includes("antiviral") ||
-    raw.includes("antiparasitario") ||
-    raw.includes("tuberculostatico")
-  ){
-
-    return "Medicamentos";
-
-  }
-
-
-  /* -------------------------------------------------------
-     PATÓGENOS
-     ------------------------------------------------------- */
-
-  if(
-    raw.includes("patogeno") ||
-    raw.includes("patogenos") ||
-    raw.includes("microorganismo")
-  ){
-
-    return "Patógenos";
-
-  }
-
-
-  /* -------------------------------------------------------
-     EXAMES
-     ------------------------------------------------------- */
-
-  if(
-    raw.includes("exame") ||
-    raw.includes("exames") ||
-    raw.includes("laboratorio") ||
-    raw.includes("imagem")
-  ){
-
-    return "Exames";
-
-  }
-
-
-  /* -------------------------------------------------------
-     FERRAMENTAS
-     ------------------------------------------------------- */
-
-  if(
-    raw.includes("ferramenta") ||
-    raw.includes("ferramentas") ||
-    raw.includes("calculadora") ||
-    raw.includes("escore")
-  ){
-
-    return "Ferramentas";
-
-  }
-
-
-  /* -------------------------------------------------------
-     COMPATIBILIDADE:
-
-     "Doença" NÃO vira uma categoria visual.
-
-     Para conteúdos que ainda não foram classificados,
-     usamos Síndromes clínicas como fallback.
-
-     Isso evita criar novamente a seção "Doenças".
-     ------------------------------------------------------- */
-
-  if(
-    raw.includes("doenca") ||
-    raw.includes("doencas")
-  ){
-
-    return "Síndromes clínicas";
-
-  }
-
-
-  /* -------------------------------------------------------
-     PADRÃO
-     ------------------------------------------------------- */
-
-  return "Síndromes clínicas";
-
-}
-
-
-/* =========================================================
-   CONFIGURAÇÃO DAS CATEGORIAS
-   ========================================================= */
-
-const CATEGORY_CONFIG = {
-
-  "Síndromes clínicas":{
-
-    icon:"🩺",
-
-    order:1
-
-  },
-
-
-  "Patógenos":{
-
-    icon:"🦠",
-
-    order:2
-
-  },
-
-
-  "Medicamentos":{
-
-    icon:"💊",
-
-    order:3
-
-  },
-
-
-  "Exames":{
-
-    icon:"🧪",
-
-    order:4
-
-  },
-
-
-  "Ferramentas":{
-
-    icon:"⚙️",
-
-    order:5
-
-  }
-
-};
-
-
-/* =========================================================
-   CRIA CARD
-   ========================================================= */
-
-function createCard(item){
-
-  const target =
-
-    item.id
-
-      ? `conteudo.html?id=${encodeURIComponent(item.id)}`
-
-      : item.notionUrl;
-
-
-  const category =
-    editorialCategory(item);
-
-
-  let imageHtml;
-
-
-  /* -------------------------------------------------------
-     COM IMAGEM
-     ------------------------------------------------------- */
-
-  if(item.image){
-
-    imageHtml = `
-
-      <div class="module-image">
-
-        <img
-
-          src="${escapeHtml(item.image)}"
-
-          alt="${escapeHtml(item.title)}"
-
-          loading="lazy"
-
-          onerror="
-            this.parentElement.innerHTML =
-            '<div class=&quot;module-image-empty&quot;><span>${escapeHtml(item.icon)}</span></div>'
-          "
-
-        >
-
-      </div>
-
-    `;
-
-  }
-
-
-  /* -------------------------------------------------------
-     SEM IMAGEM
-     ------------------------------------------------------- */
-
-  else{
-
-    imageHtml = `
-
-      <div class="module-image-empty">
-
-        <span>
-          ${escapeHtml(item.icon)}
-        </span>
-
-      </div>
-
-    `;
-
-  }
-
-
-  return `
-
-    <article
-
-      class="module-card"
-
-      onclick="
-        openModule(
-          '${target.replace(
-            /'/g,
-            "\\'"
-          )}'
-        )
-      "
-
-    >
-
-      ${imageHtml}
-
-
-      <div class="module-card-body">
-
-
-        <div class="module-category">
-
-          ${escapeHtml(category)}
-
-        </div>
-
-
-        <h3>
-
-          ${escapeHtml(item.title)}
-
-        </h3>
-
-
-        <p>
-
-          ${escapeHtml(item.description)}
-
-        </p>
-
-
-        <span class="module-open">
-
-          Abrir conteúdo →
-
-        </span>
-
-
-      </div>
-
-    </article>
-
-  `;
-
-}
-
-
-/* =========================================================
-   CRIA UMA SEÇÃO / CARROSSEL
-   ========================================================= */
-
-function createCategorySection(
-  category,
-  items
-){
-
-  const config =
-    CATEGORY_CONFIG[category];
-
-
-  if(
-    !config ||
-    !items ||
-    !items.length
-  ){
-
-    return "";
-
-  }
-
-
-  const safeId =
-    category
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g,"")
-      .replace(/[^a-z0-9]+/g,"-");
-
-
-  return `
-
-    <section
-
-      class="category-section"
-
-      data-category="${escapeHtml(category)}"
-
-    >
-
-
-      <div class="category-header">
-
-
-        <h2 class="category-title">
-
-          <span class="category-icon">
-
-            ${config.icon}
-
-          </span>
-
-          ${escapeHtml(category)}
-
-        </h2>
-
-
-        <span class="category-count">
-
-          ${items.length}
-          ${items.length === 1 ? "conteúdo" : "conteúdos"}
-
-        </span>
-
-
-      </div>
-
-
-      <div class="carousel-wrapper">
-
-
-        <button
-
-          class="carousel-arrow left"
-
-          onclick="scrollCarousel(this,-1)"
-
-          aria-label="Anterior"
-
-        >
-
-          ‹
-
-        </button>
-
-
-        <div
-
-          id="carousel-${safeId}"
-
-          class="carousel"
-
-        >
-
-          ${items
-            .map(createCard)
-            .join("")}
-
-        </div>
-
-
-        <button
-
-          class="carousel-arrow right"
-
-          onclick="scrollCarousel(this,1)"
-
-          aria-label="Próximo"
-
-        >
-
-          ›
-
-        </button>
-
-
-      </div>
-
-
-    </section>
-
-  `;
-
-}
-
-
-/* =========================================================
-   RENDERIZA TODO O CATÁLOGO
+   RENDERIZA CATÁLOGO
    ========================================================= */
 
 function renderNotionSection(items){
 
+
+  /* -------------------------------------------------------
+     SEM ITENS
+     ------------------------------------------------------- */
+
   if(
     !items ||
     !items.length
   ){
 
-    catalog.innerHTML = `
+    notionModules.innerHTML = `
 
-      <div class="category-section">
+      <div class="card">
 
-        <div class="module-card">
-
-          <div class="module-image-empty">
-
-            <span>📚</span>
-
-          </div>
-
-          <div class="module-card-body">
-
-            <h3>
-              Nenhum conteúdo publicado
-            </h3>
-
-            <p>
-              Nenhum conteúdo do Contrato editorial
-              está marcado para publicação no site.
-            </p>
-
-          </div>
-
+        <div class="ico">
+          📚
         </div>
+
+        <h3>
+          Nenhum módulo publicado
+        </h3>
+
+        <p>
+          Nenhum conteúdo do Contrato editorial
+          está marcado para publicação no site.
+        </p>
 
       </div>
 
     `;
 
+
     notionStatus.textContent =
       "Nenhum conteúdo publicado foi retornado pelo catálogo editorial.";
+
 
     return;
 
@@ -1922,160 +1454,155 @@ function renderNotionSection(items){
 
 
   /* -------------------------------------------------------
-     AGRUPA POR CATEGORIA
+     RENDERIZA
      ------------------------------------------------------- */
 
-  const grouped = {};
+  notionModules.innerHTML =
+
+    modules.map(
+      item => {
 
 
-  modules.forEach(
-    item => {
+        const target =
+          item.id
 
-      const category =
-        editorialCategory(item);
+            ? `conteudo.html?id=${encodeURIComponent(item.id)}`
+
+            : item.notionUrl;
 
 
-      if(
-        !grouped[category]
-      ){
+        /* ---------------------------------------------------
+           IMAGEM
+           --------------------------------------------------- */
 
-        grouped[category] = [];
+        const imageHtml =
+
+          item.image
+
+            ?
+
+            `
+
+              <div class="module-image">
+
+                <img
+
+                  src="${escapeHtml(item.image)}"
+
+                  alt="${escapeHtml(item.title)}"
+
+                  loading="lazy"
+
+                  onerror="
+                    this.parentElement.innerHTML =
+                    '<div class=&quot;module-image-empty&quot;><span>${escapeHtml(item.icon)}</span></div>'
+                  "
+
+                >
+
+              </div>
+
+            `
+
+            :
+
+            `
+
+              <div
+                class="module-image
+                       module-image-empty"
+              >
+
+                <span>
+                  ${escapeHtml(item.icon)}
+                </span>
+
+              </div>
+
+            `;
+
+
+        /* ---------------------------------------------------
+           CARD
+           --------------------------------------------------- */
+
+        return `
+
+          <article
+
+            class="module-card"
+
+            onclick="
+              openModule(
+                '${target.replace(
+                  /'/g,
+                  "\\'"
+                )}'
+              )
+            "
+
+          >
+
+            ${imageHtml}
+
+
+            <div class="module-card-body">
+
+
+              <div class="module-category">
+
+                ${escapeHtml(
+                  item.category ||
+                  "Infectologia"
+                )}
+
+              </div>
+
+
+              <h3>
+
+                ${escapeHtml(
+                  item.title
+                )}
+
+              </h3>
+
+
+              <p>
+
+                ${escapeHtml(
+                  item.description
+                )}
+
+              </p>
+
+
+              <span class="module-open">
+
+                Abrir conteúdo →
+
+              </span>
+
+
+            </div>
+
+
+          </article>
+
+        `;
 
       }
 
-
-      grouped[category].push(
-        item
-      );
-
-    }
-  );
+    ).join("");
 
 
   /* -------------------------------------------------------
-     ORDENA CATEGORIAS
+     STATUS
      ------------------------------------------------------- */
 
-  const categories =
-    Object.keys(grouped)
-      .sort(
-        (a,b) => {
+  notionStatus.textContent =
 
-          const orderA =
-            CATEGORY_CONFIG[a]?.order ??
-            99;
-
-          const orderB =
-            CATEGORY_CONFIG[b]?.order ??
-            99;
-
-          return orderA - orderB;
-
-        }
-      );
-
-
-  /* -------------------------------------------------------
-     MONTA HTML
-     ------------------------------------------------------- */
-
-  let html = "";
-
-
-  categories.forEach(
-    category => {
-
-      html +=
-        createCategorySection(
-          category,
-          grouped[category]
-        );
-
-    }
-  );
-
-
-  catalog.innerHTML =
-    html +
-    `
-      <div
-        id="notionStatus"
-        class="status"
-      >
-
-        ${modules.length}
-        ${modules.length === 1 ? "conteúdo" : "conteúdos"}
-        carregado(s) do Contrato editorial.
-
-      </div>
-    `;
-
-
-  /* -------------------------------------------------------
-     ATUALIZA REFERÊNCIA
-     ------------------------------------------------------- */
-
-  const newStatus =
-    document.getElementById(
-        "notionStatus"
-    );
-
-if(newStatus){
-    newStatus.textContent = "";
-}
-
-  }
-
-}
-
-
-/* =========================================================
-   CARROSSEL
-   ========================================================= */
-
-function scrollCarousel(
-  button,
-  direction
-){
-
-  const wrapper =
-    button.closest(
-      ".carousel-wrapper"
-    );
-
-
-  if(!wrapper){
-    return;
-  }
-
-
-  const carousel =
-    wrapper.querySelector(
-      ".carousel"
-    );
-
-
-  if(!carousel){
-    return;
-  }
-
-
-  const amount =
-    Math.max(
-      carousel.clientWidth * .78,
-      260
-    );
-
-
-  carousel.scrollBy({
-
-    left:
-      amount *
-      direction,
-
-    behavior:"smooth"
-
-  });
+    `${modules.length} módulo(s) carregado(s) do Contrato editorial.`;
 
 }
 
@@ -2087,6 +1614,7 @@ function scrollCarousel(
 async function loadNotionContent(){
 
   try{
+
 
     notionStatus.textContent =
       "Sincronizando com o Contrato editorial...";
@@ -2133,6 +1661,7 @@ async function loadNotionContent(){
 
 
     const items =
+
       data.items
 
         .map(
@@ -2157,7 +1686,9 @@ async function loadNotionContent(){
 
   }
 
+
   catch(error){
+
 
     console.warn(
       "Notion indisponível:",
@@ -2165,40 +1696,57 @@ async function loadNotionContent(){
     );
 
 
-    catalog.innerHTML = `
+    notionModules.innerHTML = `
 
-      <div class="category-section">
+      <div class="card">
 
-        <div class="module-card">
-
-          <div class="module-image-empty">
-
-            <span>⚠️</span>
-
-          </div>
-
-          <div class="module-card-body">
-
-            <h3>
-              Catálogo editorial temporariamente indisponível
-            </h3>
-
-            <p>
-              O conteúdo do Notion não pôde ser carregado.
-              Os módulos locais disponíveis continuam acessíveis.
-            </p>
-
-          </div>
-
+        <div class="ico">
+          ⚠️
         </div>
+
+        <h3>
+          Catálogo editorial temporariamente indisponível
+        </h3>
+
+        <p>
+          O conteúdo do Notion não pôde ser carregado.
+          Os módulos locais disponíveis continuam acessíveis.
+        </p>
 
       </div>
 
     `;
 
 
+    notionStatus.textContent =
+      "Não foi possível sincronizar o catálogo do Notion.";
+
+
     fallbackSection.style.display =
       "block";
+
+
+    modules = [
+
+      [
+        "Pneumonia — Decisão Clínica",
+        "pneumonia.html",
+        "PSI PAC grave MRSA Pseudomonas antibiótico duração"
+      ],
+
+      [
+        "Pielonefrite Aguda",
+        "pielonefrite.html",
+        "pielonefrite ITU urocultura ESBL MDR imagem antibiótico"
+      ],
+
+      [
+        "Infecção por Clostridioides difficile",
+        "clostridioides_difficile.html",
+        "Clostridioides difficile C difficile diarreia colonização infecção gravidade tratamento recorrência"
+      ]
+
+    ];
 
   }
 
@@ -2226,47 +1774,77 @@ q.addEventListener(
 
     if(!search){
 
-      results.innerHTML =
-        "";
+      results.innerHTML = "";
 
       return;
 
     }
 
 
+    let found = [];
+
+
     /* -------------------------------------------------------
-       PROCURA
+       COMPATIBILIDADE COM MÓDULOS ANTIGOS
        ------------------------------------------------------- */
 
-    const found =
-      modules.filter(
-        item => {
-
-          const category =
-            editorialCategory(item);
+    if(modules.length){
 
 
-          const text =
-
-            (
-              (item.title || "") +
-              " " +
-              (item.description || "") +
-              " " +
-              (item.category || "") +
-              " " +
-              category
-            )
-
-            .toLowerCase();
+      if(
+        Array.isArray(
+          modules[0]
+        )
+      ){
 
 
-          return text.includes(
-            search
+        found =
+          modules.filter(
+            m =>
+
+              (
+                m[0] +
+                " " +
+                m[2]
+              )
+
+              .toLowerCase()
+
+              .includes(
+                search
+              )
           );
 
-        }
-      );
+
+      }
+
+      else{
+
+
+        found =
+          modules.filter(
+            m =>
+
+              (
+
+                (m.title || "") +
+                " " +
+                (m.description || "") +
+                " " +
+                (m.category || "")
+
+              )
+
+              .toLowerCase()
+
+              .includes(
+                search
+              )
+          );
+
+      }
+
+    }
 
 
     /* -------------------------------------------------------
@@ -2275,17 +1853,15 @@ q.addEventListener(
 
     if(!found.length){
 
-      results.innerHTML = `
+      results.innerHTML =
 
-        <p style="
-          color:#687B88;
-        ">
-
-          Nenhum conteúdo encontrado.
-
-        </p>
-
-      `;
+        `
+          <p style="
+            color:#687B88;
+          ">
+            Nenhum módulo encontrado.
+          </p>
+        `;
 
       return;
 
@@ -2296,29 +1872,19 @@ q.addEventListener(
        RESULTADOS
        ------------------------------------------------------- */
 
-    results.innerHTML = `
+    results.innerHTML =
 
-      <div class="results-title">
-
-        ${found.length}
-        ${found.length === 1 ? "resultado" : "resultados"}
-
-      </div>
+      found.map(
+        m => {
 
 
-      ${found
-        .map(
-          item => {
+          /* -----------------------------------------------
+             MÓDULO ANTIGO
+             ----------------------------------------------- */
 
-            const target =
-              item.id
-                ? `conteudo.html?id=${encodeURIComponent(item.id)}`
-                : item.notionUrl;
-
-
-            const category =
-              editorialCategory(item);
-
+          if(
+            Array.isArray(m)
+          ){
 
             return `
 
@@ -2326,10 +1892,7 @@ q.addEventListener(
 
                 onclick="
                   openModule(
-                    '${target.replace(
-                      /'/g,
-                      "\\'"
-                    )}'
+                    '${m[1]}'
                   )
                 "
 
@@ -2338,27 +1901,13 @@ q.addEventListener(
                 🔎
 
                 <b>
-
-                  ${escapeHtml(
-                    item.title
-                  )}
-
+                  ${escapeHtml(m[0])}
                 </b>
 
                 <br>
 
                 <small>
-
-                  ${escapeHtml(
-                    category
-                  )}
-
-                  ·
-
-                  ${escapeHtml(
-                    item.description
-                  )}
-
+                  ${escapeHtml(m[2])}
                 </small>
 
               </button>
@@ -2366,12 +1915,58 @@ q.addEventListener(
             `;
 
           }
-        )
-        .join("")}
 
-    `;
+
+          /* -----------------------------------------------
+             MÓDULO NOTION
+             ----------------------------------------------- */
+
+          const target =
+
+            m.id
+
+              ? `conteudo.html?id=${encodeURIComponent(m.id)}`
+
+              : m.notionUrl;
+
+
+          return `
+
+            <button
+
+              onclick="
+                openModule(
+                  '${target.replace(
+                    /'/g,
+                    "\\'"
+                  )}'
+                )
+              "
+
+            >
+
+              🔎
+
+              <b>
+                ${escapeHtml(m.title)}
+              </b>
+
+              <br>
+
+              <small>
+                ${escapeHtml(m.description)}
+              </small>
+
+            </button>
+
+          `;
+
+        }
+
+      ).join("");
 
   }
+
 );
 
 
@@ -2380,7 +1975,8 @@ q.addEventListener(
    ========================================================= */
 
 if(
-  "serviceWorker" in navigator
+  "serviceWorker"
+  in navigator
 ){
 
   window.addEventListener(
@@ -2388,11 +1984,9 @@ if(
     () => {
 
       navigator.serviceWorker
-
         .register(
           "sw.js"
         )
-
         .catch(
           error => {
 
@@ -2415,7 +2009,6 @@ if(
    ========================================================= */
 
 loadNotionContent();
-
 
 </script>
 
@@ -2477,10 +2070,13 @@ loadNotionContent();
     "beforeinstallprompt",
     event => {
 
+
       event.preventDefault();
+
 
       deferredPrompt =
         event;
+
 
       setTimeout(
         showPopup,
@@ -2534,6 +2130,7 @@ loadNotionContent();
   window.addEventListener(
     "appinstalled",
     () => {
+
 
       deferredPrompt =
         null;

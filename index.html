@@ -1,2524 +1,750 @@
 <!doctype html>
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="utf-8">
-
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1"
->
-
-<meta
-  name="theme-color"
-  content="#123B5D"
->
-
-<meta
-  name="description"
-  content="Infecto Consult — apoio à decisão clínica em infectologia"
->
-
-<link
-  rel="manifest"
-  href="manifest.json"
->
-
-<link
-  rel="icon"
-  href="icon-192.png"
-  type="image/png"
->
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123B5D">
+<meta name="description" content="Infecto Consult — apoio à decisão clínica em infectologia">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png" type="image/png">
 <title>Infecto Consult</title>
 
-
 <style>
-
-/* =========================================================
-   VARIÁVEIS
-   ========================================================= */
-
 :root{
-
   --navy:#123B5D;
   --blue:#287AA8;
-  --blue2:#1d6f9d;
-
   --bg:#F4F7F9;
   --card:#FFFFFF;
-
   --text:#173042;
   --muted:#687B88;
-
   --line:#DCE5EA;
-
-  --gold:#C7A348;
-
 }
-
-
-/* =========================================================
-   BASE
-   ========================================================= */
-
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
-
-  margin:0;
-
-  background:var(--bg);
-
-  color:var(--text);
-
-  font-family:
-    Inter,
-    Arial,
-    Helvetica,
-    sans-serif;
-
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Inter,Arial,Helvetica,sans-serif
 }
-
-
-/* =========================================================
-   HEADER
-   ========================================================= */
-
 header{
-
-  background:
-    linear-gradient(
-      135deg,
-      #0d304a,
-      #287aa8
-    );
-
-  color:#fff;
-
-  padding:
-    24px
-    18px
-    62px;
-
+  background:linear-gradient(135deg,#0d304a,#287aa8);
+  color:#fff;padding:24px 18px 62px
 }
-
-.wrap{
-
-  max-width:1180px;
-
-  margin:0 auto;
-
-}
-
-.bar{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-}
-
-.logo{
-
-  font-size:25px;
-
-  font-weight:800;
-
-}
-
-.logo span{
-
-  font-weight:400;
-
-}
-
-
-.hero{
-
-  margin-top:35px;
-
-}
-
-.hero h1{
-
-  font-size:35px;
-
-  margin:
-    0
-    0
-    8px;
-
-}
-
-.hero p{
-
-  margin:0;
-
-  color:#dcebf3;
-
-  max-width:680px;
-
-  line-height:1.5;
-
-}
-
-
-/* =========================================================
-   BUSCA
-   ========================================================= */
+.wrap{max-width:1180px;margin:0 auto}
+.bar{display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:25px;font-weight:800}
+.logo span{font-weight:400}
+.hero{margin-top:35px}
+.hero h1{font-size:35px;margin:0 0 8px}
+.hero p{margin:0;color:#dcebf3;max-width:680px;line-height:1.5}
 
 .search{
-
-  max-width:1180px;
-
-  margin:
-    -29px
-    auto
-    0;
-
-  padding:
-    0
-    18px;
-
-  position:relative;
-
-  z-index:5;
-
+  max-width:1180px;margin:-29px auto 0;padding:0 18px;
+  position:relative;z-index:5
 }
-
 .search input{
-
-  width:100%;
-
-  height:58px;
-
-  border:
-    1px
-    solid
-    var(--line);
-
-  border-radius:15px;
-
-  padding:
-    0
-    20px;
-
-  font-size:16px;
-
-  box-shadow:
-    0
-    10px
-    30px
-    rgba(23,48,66,.10);
-
-  outline:none;
-
-  background:#fff;
-
+  width:100%;height:58px;border:1px solid var(--line);
+  border-radius:15px;padding:0 20px;font-size:16px;
+  box-shadow:0 10px 30px rgba(23,48,66,.10);
+  outline:none;background:#fff
 }
-
 .search input:focus{
-
-  border-color:#287aa8;
-
-  box-shadow:
-    0
-    10px
-    30px
-    rgba(40,122,168,.16);
-
+  border-color:var(--blue);
+  box-shadow:0 10px 30px rgba(40,122,168,.16)
 }
+main{padding:0 18px 55px}
 
-
-/* =========================================================
-   MAIN
-   ========================================================= */
-
-main{
-
-  padding:
-    0
-    18px
-    55px;
-
-}
-
-
-/* =========================================================
-   SEÇÃO DE CATEGORIA
-   ========================================================= */
-
-.category-section{
-
-  margin-top:32px;
-
-}
-
+.category-section{margin-top:32px}
 .category-header{
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  margin-bottom:12px;
-
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:12px
 }
-
 .category-title{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:9px;
-
-  margin:0;
-
-  font-size:21px;
-
-  color:var(--text);
-
+  display:flex;align-items:center;gap:9px;margin:0;
+  font-size:21px;color:var(--text)
 }
+.category-icon{font-size:22px}
+.category-count{color:var(--muted);font-size:12px}
 
-.category-icon{
-
-  font-size:22px;
-
-}
-
-.category-count{
-
-  color:var(--muted);
-
-  font-size:12px;
-
-}
-
-
-/* =========================================================
-   CARROSSEL HORIZONTAL
-   ========================================================= */
-
-.carousel-wrapper{
-
-  position:relative;
-
-}
-
+.carousel-wrapper{position:relative}
 .carousel{
-
-  display:flex;
-
-  gap:16px;
-
-  overflow-x:auto;
-
-  overflow-y:hidden;
-
-  padding:
-    4px
-    4px
-    16px;
-
-  scroll-behavior:smooth;
-
-  scroll-snap-type:x mandatory;
-
-  scrollbar-width:none;
-
-  -webkit-overflow-scrolling:touch;
-
+  display:flex;gap:16px;overflow-x:auto;overflow-y:hidden;
+  padding:4px 4px 16px;scroll-behavior:smooth;
+  scroll-snap-type:x mandatory;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch
 }
-
-.carousel::-webkit-scrollbar{
-
-  display:none;
-
-}
-
-
-/* =========================================================
-   SETAS DO CARROSSEL
-   ========================================================= */
-
+.carousel::-webkit-scrollbar{display:none}
 .carousel-arrow{
-
-  position:absolute;
-
-  top:50%;
-
-  transform:translateY(-50%);
-
-  width:38px;
-
-  height:38px;
-
-  border-radius:50%;
-
-  border:1px solid var(--line);
-
-  background:#fff;
-
-  box-shadow:
-    0
-    5px
-    18px
-    rgba(0,0,0,.15);
-
-  cursor:pointer;
-
-  z-index:4;
-
-  font-size:20px;
-
-  color:var(--navy);
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--line);background:#fff;
+  box-shadow:0 5px 18px rgba(0,0,0,.15);
+  cursor:pointer;z-index:4;font-size:20px;color:var(--navy);
+  display:flex;align-items:center;justify-content:center
 }
-
-.carousel-arrow.left{
-
-  left:-8px;
-
-}
-
-.carousel-arrow.right{
-
-  right:-8px;
-
-}
-
-.carousel-arrow:hover{
-
-  background:#f2f7fa;
-
-}
-
-
-/* =========================================================
-   CARD
-   ========================================================= */
+.carousel-arrow.left{left:-8px}
+.carousel-arrow.right{right:-8px}
+.carousel-arrow:hover{background:#f2f7fa}
 
 .module-card{
-
-  flex:
-    0
-    0
-    270px;
-
-  background:#fff;
-
-  border:
-    1px
-    solid
-    var(--line);
-
-  border-radius:17px;
-
-  overflow:hidden;
-
-  cursor:pointer;
-
+  flex:0 0 270px;background:#fff;border:1px solid var(--line);
+  border-radius:17px;overflow:hidden;cursor:pointer;
   scroll-snap-align:start;
-
-  transition:
-    transform .18s ease,
-    box-shadow .18s ease;
-
+  transition:transform .18s ease,box-shadow .18s ease
 }
-
 .module-card:hover{
-
-  transform:
-    translateY(-3px);
-
-  box-shadow:
-    0
-    12px
-    30px
-    rgba(23,48,66,.12);
-
+  transform:translateY(-3px);
+  box-shadow:0 12px 30px rgba(23,48,66,.12)
 }
-
-
-/* =========================================================
-   IMAGEM
-   ========================================================= */
-
 .module-image{
-
-  width:100%;
-
-  height:150px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #e9f2f7,
-      #f7fafc
-    );
-
-  overflow:hidden;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
+  width:100%;height:150px;background:linear-gradient(135deg,#e9f2f7,#f7fafc);
+  overflow:hidden;display:flex;align-items:center;justify-content:center
 }
-
-.module-image img{
-
-  width:100%;
-
-  height:100%;
-
-  object-fit:cover;
-
-  display:block;
-
-}
-
+.module-image img{width:100%;height:100%;object-fit:cover;display:block}
 .module-image-empty{
-
-  background:
-    linear-gradient(
-      135deg,
-      #eaf3f7,
-      #f7fafc
-    );
-
-  width:100%;
-
-  height:150px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
+  background:linear-gradient(135deg,#eaf3f7,#f7fafc);
+  width:100%;height:150px;display:flex;align-items:center;justify-content:center
 }
-
-.module-image-empty span{
-
-  font-size:45px;
-
-}
-
-
-/* =========================================================
-   CORPO DO CARD
-   ========================================================= */
-
-.module-card-body{
-
-  padding:17px;
-
-}
-
+.module-image-empty span{font-size:45px}
+.module-card-body{padding:17px}
 .module-category{
-
-  display:inline-block;
-
-  margin-bottom:8px;
-
-  font-size:10px;
-
-  text-transform:uppercase;
-
-  letter-spacing:.7px;
-
-  color:#287aa8;
-
-  font-weight:700;
-
+  display:inline-block;margin-bottom:8px;font-size:10px;
+  text-transform:uppercase;letter-spacing:.7px;color:#287aa8;font-weight:700
 }
-
-.module-card h3{
-
-  margin:
-    0
-    0
-    7px;
-
-  font-size:17px;
-
-  line-height:1.25;
-
-}
-
+.module-card h3{margin:0 0 7px;font-size:17px;line-height:1.25}
 .module-card p{
-
-  margin:0;
-
-  color:var(--muted);
-
-  font-size:13px;
-
-  line-height:1.5;
-
-  min-height:58px;
-
+  margin:0;color:var(--muted);font-size:13px;line-height:1.5;min-height:58px
 }
-
 .module-open{
-
-  display:inline-block;
-
-  margin-top:14px;
-
-  background:var(--navy);
-
-  color:#fff;
-
-  border-radius:9px;
-
-  padding:
-    8px
-    11px;
-
-  font-size:12px;
-
-  font-weight:700;
-
+  display:inline-block;margin-top:14px;background:var(--navy);color:#fff;
+  border-radius:9px;padding:8px 11px;font-size:12px;font-weight:700
 }
 
-
-/* =========================================================
-   RESULTADOS DA BUSCA
-   ========================================================= */
-
-.results{
-
-  margin-top:25px;
-
-}
-
-.results-title{
-
-  font-size:14px;
-
-  font-weight:700;
-
-  margin-bottom:10px;
-
-}
-
+.results{margin-top:25px}
+.results-title{font-size:14px;font-weight:700;margin-bottom:10px}
 .results button{
-
-  width:100%;
-
-  text-align:left;
-
-  background:#fff;
-
-  border:
-    1px
-    solid
-    var(--line);
-
-  border-radius:11px;
-
-  padding:13px;
-
-  margin:
-    5px
-    0;
-
-  cursor:pointer;
-
+  width:100%;text-align:left;background:#fff;border:1px solid var(--line);
+  border-radius:11px;padding:13px;margin:5px 0;cursor:pointer
 }
-
-.results button:hover{
-
-  border-color:#287aa8;
-
-}
-
-.results small{
-
-  color:var(--muted);
-
-}
-
-
-/* =========================================================
-   STATUS
-   ========================================================= */
-
+.results button:hover{border-color:#287aa8}
+.results small{color:var(--muted)}
 .status{
-
-  display:none;
-
-  margin-top:12px;
-
-  padding:
-    10px
-    12px;
-
-  border-radius:10px;
-
-  background:#eef5f8;
-
-  color:var(--muted);
-
-  font-size:12px;
-
+  display:none;margin-top:12px;padding:10px 12px;border-radius:10px;
+  background:#eef5f8;color:var(--muted);font-size:12px
 }
-
-
-/* =========================================================
-   AVISO
-   ========================================================= */
-
 .info{
-
-  margin-top:35px;
-
-  background:#fff;
-
-  border:
-    1px
-    solid
-    var(--line);
-
-  border-radius:14px;
-
-  padding:15px;
-
-  font-size:13px;
-
-  color:var(--muted);
-
-  line-height:1.45;
-
+  margin-top:35px;background:#fff;border:1px solid var(--line);
+  border-radius:14px;padding:15px;font-size:13px;color:var(--muted);
+  line-height:1.45
 }
-
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-footer{
-
-  text-align:center;
-
-  color:var(--muted);
-
-  font-size:11px;
-
-  padding:25px;
-
-}
-
-
-/* =========================================================
-   PWA INSTALL
-   ========================================================= */
+footer{text-align:center;color:var(--muted);font-size:11px;padding:25px}
 
 #pwaInstallOverlay{
-
-  position:fixed;
-
-  inset:0;
-
-  background:
-    rgba(0,0,0,.42);
-
-  display:none;
-
-  align-items:flex-end;
-
-  justify-content:center;
-
-  z-index:9999;
-
-  padding:18px;
-
+  position:fixed;inset:0;background:rgba(0,0,0,.42);display:none;
+  align-items:flex-end;justify-content:center;z-index:9999;padding:18px
 }
-
 #pwaInstallCard{
-
-  width:
-    min(
-      440px,
-      100%
-    );
-
-  background:#fff;
-
-  border-radius:22px;
-
-  padding:22px;
-
-  box-shadow:
-    0
-    18px
-    50px
-    rgba(0,0,0,.25);
-
+  width:min(440px,100%);background:#fff;border-radius:22px;padding:22px;
+  box-shadow:0 18px 50px rgba(0,0,0,.25)
 }
-
 #pwaInstallCard .pwaIcon{
-
-  width:72px;
-
-  height:72px;
-
-  border-radius:16px;
-
-  display:block;
-
-  margin:
-    0
-    auto
-    12px;
-
+  width:72px;height:72px;border-radius:16px;display:block;margin:0 auto 12px
 }
-
-#pwaInstallCard h3{
-
-  margin:
-    0
-    0
-    7px;
-
-  text-align:center;
-
-  font-size:21px;
-
-}
-
-#pwaInstallCard p{
-
-  margin:
-    0
-    0
-    17px;
-
-  text-align:center;
-
-  color:#555;
-
-  line-height:1.45;
-
-}
-
+#pwaInstallCard h3{margin:0 0 7px;text-align:center;font-size:21px}
+#pwaInstallCard p{margin:0 0 17px;text-align:center;color:#555;line-height:1.45}
 #pwaInstallBtn{
-
-  width:100%;
-
-  border:0;
-
-  border-radius:13px;
-
-  padding:
-    13px
-    16px;
-
-  font-size:16px;
-
-  font-weight:700;
-
-  cursor:pointer;
-
-  background:var(--navy);
-
-  color:#fff;
-
+  width:100%;border:0;border-radius:13px;padding:13px 16px;font-size:16px;
+  font-weight:700;cursor:pointer;background:var(--navy);color:#fff
 }
-
 #pwaInstallLater{
-
-  width:100%;
-
-  border:0;
-
-  background:transparent;
-
-  padding:11px;
-
-  margin-top:5px;
-
-  cursor:pointer;
-
-  color:#666;
-
+  width:100%;border:0;background:transparent;padding:11px;margin-top:5px;
+  cursor:pointer;color:#666
 }
-
-
-/* =========================================================
-   RESPONSIVO
-   ========================================================= */
 
 @media(max-width:700px){
-
-  .hero h1{
-
-    font-size:29px;
-
-  }
-
-  .module-card{
-
-    flex-basis:245px;
-
-  }
-
-  .module-image{
-
-    height:135px;
-
-  }
-
-  .module-image-empty{
-
-    height:135px;
-
-  }
-
-  .category-title{
-
-    font-size:19px;
-
-  }
-
-  .carousel-arrow{
-
-    display:none;
-
-  }
-
+  .hero h1{font-size:29px}
+  .module-card{flex-basis:245px}
+  .module-image,.module-image-empty{height:135px}
+  .category-title{font-size:19px}
+  .carousel-arrow{display:none}
 }
-
 @media(max-width:470px){
-
-  .module-card{
-
-    flex-basis:230px;
-
-  }
-
-  header{
-
-    padding-bottom:55px;
-
-  }
-
+  .module-card{flex-basis:230px}
+  header{padding-bottom:55px}
 }
-
 </style>
-
 </head>
 
-
 <body>
-
-
-<!-- =======================================================
-     HEADER
-     ======================================================= -->
-
 <header>
-
   <div class="wrap">
-
     <div class="bar">
-
-      <div class="logo">
-        Infecto <span>Consult</span>
-      </div>
-
+      <div class="logo">Infecto <span>Consult</span></div>
     </div>
-
-
     <div class="hero">
-
-      <h1>
-        Decisão clínica. Sem perder tempo.
-      </h1>
-
-      <p>
-        Seu ambiente de consulta rápida em infectologia.
-      </p>
-
+      <h1>Decisão clínica. Sem perder tempo.</h1>
+      <p>Seu ambiente de consulta rápida em infectologia.</p>
     </div>
-
   </div>
-
 </header>
 
-
-<!-- =======================================================
-     BUSCA
-     ======================================================= -->
-
 <div class="search">
-
-  <input
-    id="q"
-    type="search"
-    autocomplete="off"
-    placeholder="🔎 Buscar síndrome, patógeno, medicamento ou exame"
-  >
-
+  <input id="q" type="search" autocomplete="off"
+    placeholder="🔎 Buscar síndrome, patógeno, medicamento, raciocínio clínico ou exame">
 </div>
 
-
-<!-- =======================================================
-     CONTEÚDO
-     ======================================================= -->
-
 <main class="wrap">
-
-
-  <!-- =====================================================
-       RESULTADOS DA BUSCA
-       ===================================================== -->
-
-  <div
-    id="results"
-    class="results"
-  ></div>
-
-
-  <!-- =====================================================
-       CATÁLOGO
-       ===================================================== -->
+  <div id="results" class="results"></div>
 
   <div id="catalog">
-
-    <div
-      id="notionStatus"
-      class="status"
-    >
+    <div id="notionStatus" class="status">
       Sincronizando com o Contrato editorial...
     </div>
-
   </div>
 
-
-  <!-- =====================================================
-       FALLBACK
-       ===================================================== -->
-
-  <div
-    id="fallbackSection"
-    style="display:none"
-  >
-
+  <div id="fallbackSection" style="display:none">
     <div class="category-section">
-
       <div class="category-header">
-
         <h2 class="category-title">
           <span class="category-icon">🩺</span>
           Síndromes clínicas
         </h2>
-
       </div>
-
-
       <div class="carousel-wrapper">
-
-        <button
-          class="carousel-arrow left"
-          onclick="scrollCarousel(this,-1)"
-          aria-label="Anterior"
-        >
-          ‹
-        </button>
-
+        <button class="carousel-arrow left" onclick="scrollCarousel(this,-1)" aria-label="Anterior">‹</button>
         <div class="carousel">
-
-          <article
-            class="module-card"
-            onclick="openModule('pneumonia.html')"
-          >
-
-            <div class="module-image-empty">
-              <span>🫁</span>
-            </div>
-
+          <article class="module-card" onclick="openModule('pneumonia.html')">
+            <div class="module-image-empty"><span>🫁</span></div>
             <div class="module-card-body">
-
-              <div class="module-category">
-                Síndrome clínica
-              </div>
-
-              <h3>
-                Pneumonia — Decisão Clínica
-              </h3>
-
-              <p>
-                PSI, PAC grave, risco de MRSA/Pseudomonas,
-                antibiótico, microbiologia, IV→VO e duração.
-              </p>
-
-              <span class="module-open">
-                Abrir módulo →
-              </span>
-
+              <div class="module-category">Síndrome clínica</div>
+              <h3>Pneumonia — Decisão Clínica</h3>
+              <p>PSI, PAC grave, risco de MRSA/Pseudomonas, antibiótico, microbiologia, IV→VO e duração.</p>
+              <span class="module-open">Abrir módulo →</span>
             </div>
-
           </article>
-
-
-          <article
-            class="module-card"
-            onclick="openModule('pielonefrite.html')"
-          >
-
-            <div class="module-image-empty">
-              <span>🧪</span>
-            </div>
-
+          <article class="module-card" onclick="openModule('pielonefrite.html')">
+            <div class="module-image-empty"><span>🧪</span></div>
             <div class="module-card-body">
-
-              <div class="module-category">
-                Síndrome clínica
-              </div>
-
-              <h3>
-                Pielonefrite Aguda
-              </h3>
-
-              <p>
-                Triagem, microbiologia, antibiótico empírico,
-                imagem, situações especiais e reavaliação.
-              </p>
-
-              <span class="module-open">
-                Abrir módulo →
-              </span>
-
+              <div class="module-category">Síndrome clínica</div>
+              <h3>Pielonefrite Aguda</h3>
+              <p>Triagem, microbiologia, antibiótico empírico, imagem, situações especiais e reavaliação.</p>
+              <span class="module-open">Abrir módulo →</span>
             </div>
-
           </article>
-
-
-          <article
-            class="module-card"
-            onclick="openModule('clostridioides_difficile.html')"
-          >
-
-            <div class="module-image-empty">
-              <span>🦠</span>
-            </div>
-
+          <article class="module-card" onclick="openModule('clostridioides_difficile.html')">
+            <div class="module-image-empty"><span>🦠</span></div>
             <div class="module-card-body">
-
-              <div class="module-category">
-                Síndrome clínica
-              </div>
-
-              <h3>
-                Infecção por
-                <i>Clostridioides difficile</i>
-              </h3>
-
-              <p>
-                Diagnóstico, colonização × infecção,
-                gravidade, tratamento, recorrência e prevenção.
-              </p>
-
-              <span class="module-open">
-                Abrir módulo →
-              </span>
-
+              <div class="module-category">Síndrome clínica</div>
+              <h3>Infecção por <i>Clostridioides difficile</i></h3>
+              <p>Diagnóstico, colonização × infecção, gravidade, tratamento, recorrência e prevenção.</p>
+              <span class="module-open">Abrir módulo →</span>
             </div>
-
           </article>
-
         </div>
-
-        <button
-          class="carousel-arrow right"
-          onclick="scrollCarousel(this,1)"
-          aria-label="Próximo"
-        >
-          ›
-        </button>
-
+        <button class="carousel-arrow right" onclick="scrollCarousel(this,1)" aria-label="Próximo">›</button>
       </div>
-
     </div>
-
   </div>
-
-
-  <!-- =====================================================
-       AVISO REGULATÓRIO
-       ===================================================== -->
 
   <div class="info">
-
     <b>Aviso regulatório:</b>
-
-    O conteúdo do Infecto Consult tem finalidade
-    exclusivamente informativa e educacional e foi
-    desenvolvido para consulta por profissionais de saúde.
-
-    A utilização da plataforma deve estar integrada
-    à avaliação clínica e aos recursos disponíveis
-    no atendimento.
-
-    As decisões sobre investigação, diagnóstico e
-    tratamento permanecem sob responsabilidade do
-    profissional assistente.
-
+    O conteúdo do Infecto Consult tem finalidade exclusivamente informativa e educacional e foi
+    desenvolvido para consulta por profissionais de saúde. A utilização da plataforma deve estar
+    integrada à avaliação clínica e aos recursos disponíveis no atendimento. As decisões sobre
+    investigação, diagnóstico e tratamento permanecem sob responsabilidade do profissional assistente.
   </div>
-
-
 </main>
 
-
-<!-- =======================================================
-     FOOTER
-     ======================================================= -->
-
 <footer>
-
   Infecto Consult™ • Marca em processo de registro no INPI.
   Conteúdo protegido por direitos autorais.
-  © 2026 Dr. Marcello Leal.
-  Todos os direitos reservados.
-
+  © 2026 Dr. Marcello Leal. Todos os direitos reservados.
 </footer>
 
-
-<!-- =======================================================
-     PWA INSTALL
-     ======================================================= -->
-
-<div
-  id="pwaInstallOverlay"
-  role="dialog"
-  aria-modal="true"
-  aria-labelledby="pwaInstallTitle"
->
-
+<div id="pwaInstallOverlay" role="dialog" aria-modal="true" aria-labelledby="pwaInstallTitle">
   <div id="pwaInstallCard">
-
-    <img
-      class="pwaIcon"
-      src="icon-192.png"
-      alt="Infecto Consult"
-    >
-
-    <h3 id="pwaInstallTitle">
-      Instalar Infecto Consult
-    </h3>
-
-    <p>
-      Tenha o Infecto Consult na tela inicial
-      para acesso rápido, como um aplicativo.
-    </p>
-
-    <button id="pwaInstallBtn">
-      📲 Instalar aplicativo
-    </button>
-
-    <button id="pwaInstallLater">
-      Agora não
-    </button>
-
+    <img class="pwaIcon" src="icon-192.png" alt="Infecto Consult">
+    <h3 id="pwaInstallTitle">Instalar Infecto Consult</h3>
+    <p>Tenha o Infecto Consult na tela inicial para acesso rápido, como um aplicativo.</p>
+    <button id="pwaInstallBtn">📲 Instalar aplicativo</button>
+    <button id="pwaInstallLater">Agora não</button>
   </div>
-
 </div>
 
-
 <script>
-
-/* =========================================================
-   ELEMENTOS
-   ========================================================= */
-
-const q =
-  document.getElementById("q");
-
-const results =
-  document.getElementById("results");
-
-const catalog =
-  document.getElementById("catalog");
-
-const notionStatus =
-  document.getElementById("notionStatus");
-
-const fallbackSection =
-  document.getElementById("fallbackSection");
-
+const q = document.getElementById("q");
+const results = document.getElementById("results");
+const catalog = document.getElementById("catalog");
+const notionStatus = document.getElementById("notionStatus");
+const fallbackSection = document.getElementById("fallbackSection");
 
 let modules = [];
 
-
-/* =========================================================
-   ABRIR CONTEÚDO
-   ========================================================= */
-
 function openModule(url){
-
-  if(!url){
-    return;
-  }
-
-  window.location.href = url;
-
+  if(url) window.location.href = url;
 }
-
-
-/* =========================================================
-   ESCAPAR HTML
-   ========================================================= */
 
 function escapeHtml(value){
-
   return String(value ?? "")
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
-
-/* =========================================================
-   NORMALIZA ITEM DA API
-   ========================================================= */
+function normalizeText(value){
+  return String(value ?? "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .trim();
+}
 
 function normalizeItem(item){
-
   return {
-
-    id:
-      item.id ||
-      "",
-
-
-    title:
-      item.title ||
-      item.name ||
-      "Conteúdo sem título",
-
-
+    id: item.id || "",
+    title: item.title || item.name || "Conteúdo sem título",
     description:
       item.shortDescription ||
       item.descricaoCurta ||
       item.description ||
       "Conteúdo editorial sincronizado do Notion.",
-
-
     image:
       item.image ||
       item.imageUrl ||
+      item.imageURL ||
       item.cover ||
       item.coverUrl ||
       "",
-
-
-    icon:
-      item.icon ||
-      "🧬",
-
-
-    notionUrl:
-      item.notionUrl ||
-      item.url ||
-      "",
-
-
-    category:
-      item.category ||
-      item.categoria ||
-      "",
-
-
-    premium:
-      item.premium ??
-      item.paginaPremium ??
-      false,
-
-
-    updatedAt:
-      item.updatedAt ||
-      ""
-
+    icon: item.icon || "📄",
+    category: item.category || item.categoria || "",
+    miniApps: item.miniApps || "",
+    notionUrl: item.notionUrl || item.url || "",
+    updatedAt: item.updatedAt || ""
   };
-
 }
 
+/*
+  CLASSIFICAÇÃO EDITORIAL
 
-/* =========================================================
-   CLASSIFICAÇÃO EDITORIAL
-   =========================================================
+  Ordem visual:
+  1. Síndromes clínicas
+  2. Patógenos
+  3. Medicamentos
+  4. Raciocínio clínico
+  5. Exames
+  6. Ferramentas
 
-   IMPORTANTE:
-
-   Aqui está a nova lógica do site.
-
-   O Notion continua sendo a fonte dos dados.
-
-   O index apenas organiza os conteúdos em
-   categorias visuais.
-
-   ========================================================= */
-
+  Hepatite B e Hepatite C permanecem em Patógenos.
+  A categoria "Doença" não cria uma seção própria.
+*/
 function editorialCategory(item){
+  const raw = normalizeText(item.category);
+  const title = normalizeText(item.title);
 
-  const title =
-    String(item.title || "")
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g,"");
-
-
-  const raw =
-    String(item.category || "")
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g,"");
-
-
-  /* -------------------------------------------------------
-     HEPATITE B E HEPATITE C
-     Sempre entram em PATÓGENOS
-     ------------------------------------------------------- */
-
+  /* Hepatite B e C: regra editorial */
   if(
     title.includes("hepatite b") ||
     title.includes("hepatite c")
   ){
-
     return "Patógenos";
-
   }
 
-
-  /* -------------------------------------------------------
-     SÍNDROMES CLÍNICAS
-     ------------------------------------------------------- */
-
+  /* Síndromes clínicas */
   if(
-    raw.includes("sindrome") ||
-    raw.includes("sindromes")
+    raw.includes("sindrome clinica") ||
+    raw.includes("sindromes clinicas") ||
+    raw === "sindrome" ||
+    raw === "sindromes"
   ){
-
     return "Síndromes clínicas";
-
   }
 
-/* -------------------------------------------------------
-   RACIOCÍNIO CLÍNICO
-   ------------------------------------------------------- */
-if(
-  raw.includes("raciocinio clinico") ||
-  raw.includes("raciocinio")
-){
-  return "Raciocínio clínico";
-}  
-  /* -------------------------------------------------------
-     MEDICAMENTOS
-     ------------------------------------------------------- */
-
-  if(
-    raw.includes("antimicrobiano") ||
-    raw.includes("antimicrobianos") ||
-    raw.includes("medicamento") ||
-    raw.includes("medicamentos") ||
-    raw.includes("antibiotico") ||
-    raw.includes("antifungico") ||
-    raw.includes("antiviral") ||
-    raw.includes("antiparasitario") ||
-    raw.includes("tuberculostatico")
-  ){
-
-    return "Medicamentos";
-
-  }
-
-
-  /* -------------------------------------------------------
-     PATÓGENOS
-     ------------------------------------------------------- */
-
+  /* Patógenos */
   if(
     raw.includes("patogeno") ||
     raw.includes("patogenos") ||
+    raw.includes("microrganismo") ||
     raw.includes("microorganismo")
   ){
-
     return "Patógenos";
-
   }
 
+  /* Medicamentos */
+  if(
+    raw.includes("medicamento") ||
+    raw.includes("medicamentos") ||
+    raw.includes("antimicrobiano") ||
+    raw.includes("antimicrobianos")
+  ){
+    return "Medicamentos";
+  }
 
-  /* -------------------------------------------------------
-     EXAMES
-     ------------------------------------------------------- */
+  /* Raciocínio clínico */
+  if(
+    raw.includes("raciocinio clinico") ||
+    raw.includes("raciocinio") ||
+    raw.includes("principios de decisao clinica")
+  ){
+    return "Raciocínio clínico";
+  }
 
+  /* Exames */
   if(
     raw.includes("exame") ||
     raw.includes("exames") ||
     raw.includes("laboratorio") ||
     raw.includes("imagem")
   ){
-
     return "Exames";
-
   }
 
-
-  /* -------------------------------------------------------
-     FERRAMENTAS
-     ------------------------------------------------------- */
-
+  /* Ferramentas */
   if(
     raw.includes("ferramenta") ||
     raw.includes("ferramentas") ||
     raw.includes("calculadora") ||
     raw.includes("escore")
   ){
-
     return "Ferramentas";
-
   }
 
-
-  /* -------------------------------------------------------
-     COMPATIBILIDADE:
-
-     "Doença" NÃO vira uma categoria visual.
-
-     Para conteúdos que ainda não foram classificados,
-     usamos Síndromes clínicas como fallback.
-
-     Isso evita criar novamente a seção "Doenças".
-     ------------------------------------------------------- */
-
+  /*
+    "Doença" não vira categoria visual.
+    Conteúdos ainda não classificados ficam em Síndromes clínicas
+    para evitar uma seção "Doenças".
+  */
   if(
     raw.includes("doenca") ||
     raw.includes("doencas")
   ){
-
     return "Síndromes clínicas";
-
   }
 
-
-  /* -------------------------------------------------------
-     PADRÃO
-     ------------------------------------------------------- */
-
   return "Síndromes clínicas";
-
 }
 
-
-/* =========================================================
-   CONFIGURAÇÃO DAS CATEGORIAS
-   ========================================================= */
-
 const CATEGORY_CONFIG = {
-
   "Síndromes clínicas":{
     icon:"🩺",
     order:1
   },
-
   "Patógenos":{
     icon:"🦠",
-    order:3
+    order:2
   },
-
   "Medicamentos":{
     icon:"💊",
+    order:3
+  },
+  "Raciocínio clínico":{
+    icon:"🧠",
     order:4
   },
-
   "Exames":{
     icon:"🧪",
     order:5
   },
-
   "Ferramentas":{
     icon:"⚙️",
     order:6
+  }
 };
-  
-  "Raciocínio clínico":{
-    icon:"🧠",
-    order:2
-  },
-
-/* =========================================================
-   CRIA CARD
-   ========================================================= */
 
 function createCard(item){
+  const target = item.id
+    ? `conteudo.html?id=${encodeURIComponent(item.id)}`
+    : item.notionUrl;
 
-  const target =
-
-    item.id
-
-      ? `conteudo.html?id=${encodeURIComponent(item.id)}`
-
-      : item.notionUrl;
-
-
-  const category =
-    editorialCategory(item);
-
-
-  let imageHtml;
-
-
-  /* -------------------------------------------------------
-     COM IMAGEM
-     ------------------------------------------------------- */
+  const category = editorialCategory(item);
+  let imageHtml = "";
 
   if(item.image){
-
     imageHtml = `
-
       <div class="module-image">
-
         <img
-
           src="${escapeHtml(item.image)}"
-
           alt="${escapeHtml(item.title)}"
-
           loading="lazy"
-
-          onerror="
-            this.parentElement.innerHTML =
-            '<div class=&quot;module-image-empty&quot;><span>${escapeHtml(item.icon)}</span></div>'
-          "
-
+          onerror="this.parentElement.innerHTML='<div class=&quot;module-image-empty&quot;><span>${escapeHtml(item.icon)}</span></div>'"
         >
-
       </div>
-
     `;
-
-  }
-
-
-  /* -------------------------------------------------------
-     SEM IMAGEM
-     ------------------------------------------------------- */
-
-  else{
-
+  }else{
     imageHtml = `
-
       <div class="module-image-empty">
-
-        <span>
-          ${escapeHtml(item.icon)}
-        </span>
-
+        <span>${escapeHtml(item.icon)}</span>
       </div>
-
     `;
-
   }
 
+  const safeTarget = String(target || "").replace(/\\/g,"\\\\").replace(/'/g,"\\'");
 
   return `
-
-    <article
-
-      class="module-card"
-
-      onclick="
-        openModule(
-          '${target.replace(
-            /'/g,
-            "\\'"
-          )}'
-        )
-      "
-
-    >
-
+    <article class="module-card" onclick="openModule('${safeTarget}')">
       ${imageHtml}
-
-
       <div class="module-card-body">
-
-
-        <div class="module-category">
-
-          ${escapeHtml(category)}
-
-        </div>
-
-
-        <h3>
-
-          ${escapeHtml(item.title)}
-
-        </h3>
-
-
-        <p>
-
-          ${escapeHtml(item.description)}
-
-        </p>
-
-
-        <span class="module-open">
-
-          Abrir conteúdo →
-
-        </span>
-
-
+        <div class="module-category">${escapeHtml(category)}</div>
+        <h3>${escapeHtml(item.title)}</h3>
+        <p>${escapeHtml(item.description)}</p>
+        <span class="module-open">Abrir conteúdo →</span>
       </div>
-
     </article>
-
   `;
-
 }
 
+function createCategorySection(category, items){
+  const config = CATEGORY_CONFIG[category] || {
+    icon:"📚",
+    order:99
+  };
 
-/* =========================================================
-   CRIA UMA SEÇÃO / CARROSSEL
-   ========================================================= */
-
-function createCategorySection(
-  category,
-  items
-){
-
-  const config =
-    CATEGORY_CONFIG[category];
-
-
-  if(
-    !config ||
-    !items ||
-    !items.length
-  ){
-
-    return "";
-
-  }
-
-
-  const safeId =
-    category
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g,"")
-      .replace(/[^a-z0-9]+/g,"-");
-
+  const safeId = normalizeText(category)
+    .replace(/[^a-z0-9]+/g,"-");
 
   return `
-
-    <section
-
-      class="category-section"
-
-      data-category="${escapeHtml(category)}"
-
-    >
-
-
+    <section class="category-section" data-category="${escapeHtml(category)}">
       <div class="category-header">
-
-
         <h2 class="category-title">
-
-          <span class="category-icon">
-
-            ${config.icon}
-
-          </span>
-
+          <span class="category-icon">${config.icon}</span>
           ${escapeHtml(category)}
-
         </h2>
-
-
         <span class="category-count">
-
           ${items.length}
           ${items.length === 1 ? "conteúdo" : "conteúdos"}
-
         </span>
-
-
       </div>
-
 
       <div class="carousel-wrapper">
-
-
-        <button
-
-          class="carousel-arrow left"
-
+        <button class="carousel-arrow left"
           onclick="scrollCarousel(this,-1)"
+          aria-label="Anterior">‹</button>
 
-          aria-label="Anterior"
-
-        >
-
-          ‹
-
-        </button>
-
-
-        <div
-
-          id="carousel-${safeId}"
-
-          class="carousel"
-
-        >
-
-          ${items
-            .map(createCard)
-            .join("")}
-
+        <div id="carousel-${safeId}" class="carousel">
+          ${items.map(createCard).join("")}
         </div>
 
-
-        <button
-
-          class="carousel-arrow right"
-
+        <button class="carousel-arrow right"
           onclick="scrollCarousel(this,1)"
-
-          aria-label="Próximo"
-
-        >
-
-          ›
-
-        </button>
-
-
+          aria-label="Próximo">›</button>
       </div>
-
-
     </section>
-
   `;
-
 }
 
-
-/* =========================================================
-   RENDERIZA TODO O CATÁLOGO
-   ========================================================= */
-
 function renderNotionSection(items){
-
-  if(
-    !items ||
-    !items.length
-  ){
-
+  if(!items || !items.length){
     catalog.innerHTML = `
-
       <div class="category-section">
-
         <div class="module-card">
-
-          <div class="module-image-empty">
-
-            <span>📚</span>
-
-          </div>
-
+          <div class="module-image-empty"><span>📚</span></div>
           <div class="module-card-body">
-
-            <h3>
-              Nenhum conteúdo publicado
-            </h3>
-
-            <p>
-              Nenhum conteúdo do Contrato editorial
-              está marcado para publicação no site.
-            </p>
-
+            <h3>Nenhum conteúdo publicado</h3>
+            <p>Nenhum conteúdo do Contrato editorial está marcado para publicação no site.</p>
           </div>
-
         </div>
-
       </div>
-
     `;
-
     notionStatus.textContent =
       "Nenhum conteúdo publicado foi retornado pelo catálogo editorial.";
-
     return;
-
   }
 
-
-  /* -------------------------------------------------------
-     NORMALIZA
-     ------------------------------------------------------- */
-
-  modules =
-    items.map(
-      normalizeItem
-    );
-
-
-  /* -------------------------------------------------------
-     AGRUPA POR CATEGORIA
-     ------------------------------------------------------- */
+  modules = items.map(normalizeItem);
 
   const grouped = {};
 
-
-  modules.forEach(
-    item => {
-
-      const category =
-        editorialCategory(item);
-
-
-      if(
-        !grouped[category]
-      ){
-
-        grouped[category] = [];
-
-      }
-
-
-      grouped[category].push(
-        item
-      );
-
-    }
-  );
-
-
-  /* -------------------------------------------------------
-     ORDENA CATEGORIAS
-     ------------------------------------------------------- */
-
-  const categories =
-    Object.keys(grouped)
-      .sort(
-        (a,b) => {
-
-          const orderA =
-            CATEGORY_CONFIG[a]?.order ??
-            99;
-
-          const orderB =
-            CATEGORY_CONFIG[b]?.order ??
-            99;
-
-          return orderA - orderB;
-
-        }
-      );
-
-
-  /* -------------------------------------------------------
-     MONTA HTML
-     ------------------------------------------------------- */
-
-  let html = "";
-
-
-  categories.forEach(
-    category => {
-
-      html +=
-        createCategorySection(
-          category,
-          grouped[category]
-        );
-
-    }
-  );
-
-
-  catalog.innerHTML = html;
-
-}
-
-
-/* =========================================================
-   CARROSSEL
-   ========================================================= */
-
-function scrollCarousel(
-  button,
-  direction
-){
-
-  const wrapper =
-    button.closest(
-      ".carousel-wrapper"
-    );
-
-
-  if(!wrapper){
-    return;
-  }
-
-
-  const carousel =
-    wrapper.querySelector(
-      ".carousel"
-    );
-
-
-  if(!carousel){
-    return;
-  }
-
-
-  const amount =
-    Math.max(
-      carousel.clientWidth * .78,
-      260
-    );
-
-
-  carousel.scrollBy({
-
-    left:
-      amount *
-      direction,
-
-    behavior:"smooth"
-
+  modules.forEach(item => {
+    const category = editorialCategory(item);
+    if(!grouped[category]) grouped[category] = [];
+    grouped[category].push(item);
   });
 
+  const categories = Object.keys(grouped).sort((a,b) => {
+    const orderA = CATEGORY_CONFIG[a]?.order ?? 99;
+    const orderB = CATEGORY_CONFIG[b]?.order ?? 99;
+    return orderA - orderB;
+  });
+
+  catalog.innerHTML = categories
+    .map(category => createCategorySection(category, grouped[category]))
+    .join("");
+
+  notionStatus.style.display = "none";
 }
 
+function scrollCarousel(button,direction){
+  const wrapper = button.closest(".carousel-wrapper");
+  const carousel = wrapper?.querySelector(".carousel");
+  if(!carousel) return;
 
-/* =========================================================
-   CARREGAR NOTION
-   ========================================================= */
+  const amount = Math.max(
+    carousel.clientWidth * 0.78,
+    300
+  );
+
+  carousel.scrollBy({
+    left: direction * amount,
+    behavior:"smooth"
+  });
+}
 
 async function loadNotionContent(){
-
   try{
+    notionStatus.style.display = "block";
+    notionStatus.textContent = "Sincronizando com o Contrato editorial...";
 
-    notionStatus.textContent =
-      "Sincronizando com o Contrato editorial...";
-
-
-    const res =
-      await fetch(
-        "/api/content",
-        {
-          cache:"no-store"
-        }
-      );
-
+    const res = await fetch("/api/content",{cache:"no-store"});
 
     if(!res.ok){
-
-      throw new Error(
-        `API /api/content retornou HTTP ${res.status}`
-      );
-
+      throw new Error(`API /api/content retornou HTTP ${res.status}`);
     }
 
+    const data = await res.json();
 
-    const data =
-      await res.json();
-
-
-    console.log(
-      "Contrato editorial recebido:",
-      data
-    );
-
-
-    if(
-      !data ||
-      !Array.isArray(data.items)
-    ){
-
-      throw new Error(
-        "Resposta da API não contém data.items."
-      );
-
+    if(!data || !Array.isArray(data.items)){
+      throw new Error("Resposta da API não contém data.items.");
     }
 
+    const items = data.items
+      .map(normalizeItem)
+      .filter(item => item.id || item.notionUrl);
 
-    const items =
-      data.items
+    renderNotionSection(items);
+    fallbackSection.style.display = "none";
 
-        .map(
-          normalizeItem
-        )
-
-        .filter(
-          item =>
-            item.id ||
-            item.notionUrl
-        );
-
-
-    renderNotionSection(
-      items
-    );
-
-
-    fallbackSection.style.display =
-      "none";
-
-
-  }
-
-  catch(error){
-
-    console.warn(
-      "Notion indisponível:",
-      error
-    );
-
+  }catch(error){
+    console.warn("Notion indisponível:",error);
 
     catalog.innerHTML = `
-
       <div class="category-section">
-
         <div class="module-card">
-
-          <div class="module-image-empty">
-
-            <span>⚠️</span>
-
-          </div>
-
+          <div class="module-image-empty"><span>⚠️</span></div>
           <div class="module-card-body">
-
-            <h3>
-              Catálogo editorial temporariamente indisponível
-            </h3>
-
-            <p>
-              O conteúdo do Notion não pôde ser carregado.
-              Os módulos locais disponíveis continuam acessíveis.
-            </p>
-
+            <h3>Catálogo editorial temporariamente indisponível</h3>
+            <p>O conteúdo do Notion não pôde ser carregado. Os módulos locais disponíveis continuam acessíveis.</p>
           </div>
-
         </div>
-
       </div>
-
     `;
 
-
-    fallbackSection.style.display =
-      "block";
-
+    fallbackSection.style.display = "block";
+    notionStatus.style.display = "none";
   }
-
 }
 
+q.addEventListener("input",event => {
+  const search = normalizeText(event.target.value);
 
-/* =========================================================
-   BUSCA
-   ========================================================= */
+  if(!search){
+    results.innerHTML = "";
+    return;
+  }
 
-q.addEventListener(
-  "input",
-  event => {
+  const found = modules.filter(item => {
+    const category = editorialCategory(item);
+    const text = (
+      (item.title || "") + " " +
+      (item.description || "") + " " +
+      (item.category || "") + " " +
+      category
+    ).toLowerCase();
 
+    return text.includes(search);
+  });
 
-    const search =
-      event.target.value
-        .toLowerCase()
-        .trim();
-
-
-    /* -------------------------------------------------------
-       LIMPA
-       ------------------------------------------------------- */
-
-    if(!search){
-
-      results.innerHTML =
-        "";
-
-      return;
-
-    }
-
-
-    /* -------------------------------------------------------
-       PROCURA
-       ------------------------------------------------------- */
-
-    const found =
-      modules.filter(
-        item => {
-
-          const category =
-            editorialCategory(item);
-
-
-          const text =
-
-            (
-              (item.title || "") +
-              " " +
-              (item.description || "") +
-              " " +
-              (item.category || "") +
-              " " +
-              category
-            )
-
-            .toLowerCase();
-
-
-          return text.includes(
-            search
-          );
-
-        }
-      );
-
-
-    /* -------------------------------------------------------
-       NENHUM RESULTADO
-       ------------------------------------------------------- */
-
-    if(!found.length){
-
-      results.innerHTML = `
-
-        <p style="
-          color:#687B88;
-        ">
-
-          Nenhum conteúdo encontrado.
-
-        </p>
-
-      `;
-
-      return;
-
-    }
-
-
-    /* -------------------------------------------------------
-       RESULTADOS
-       ------------------------------------------------------- */
-
+  if(!found.length){
     results.innerHTML = `
-
-      <div class="results-title">
-
-        ${found.length}
-        ${found.length === 1 ? "resultado" : "resultados"}
-
-      </div>
-
-
-      ${found
-        .map(
-          item => {
-
-            const target =
-              item.id
-                ? `conteudo.html?id=${encodeURIComponent(item.id)}`
-                : item.notionUrl;
-
-
-            const category =
-              editorialCategory(item);
-
-
-            return `
-
-              <button
-
-                onclick="
-                  openModule(
-                    '${target.replace(
-                      /'/g,
-                      "\\'"
-                    )}'
-                  )
-                "
-
-              >
-
-                🔎
-
-                <b>
-
-                  ${escapeHtml(
-                    item.title
-                  )}
-
-                </b>
-
-                <br>
-
-                <small>
-
-                  ${escapeHtml(
-                    category
-                  )}
-
-                  ·
-
-                  ${escapeHtml(
-                    item.description
-                  )}
-
-                </small>
-
-              </button>
-
-            `;
-
-          }
-        )
-        .join("")}
-
+      <p style="color:#687B88">
+        Nenhum conteúdo encontrado.
+      </p>
     `;
-
+    return;
   }
-);
 
+  results.innerHTML = `
+    <div class="results-title">
+      ${found.length}
+      ${found.length === 1 ? "resultado" : "resultados"}
+    </div>
 
-/* =========================================================
-   SERVICE WORKER
-   ========================================================= */
+    ${found.map(item => {
+      const target = item.id
+        ? `conteudo.html?id=${encodeURIComponent(item.id)}`
+        : item.notionUrl;
 
-if(
-  "serviceWorker" in navigator
-){
+      const safeTarget = String(target || "")
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'");
 
-  window.addEventListener(
-    "load",
-    () => {
+      return `
+        <button onclick="openModule('${safeTarget}')">
+          <b>${escapeHtml(item.title)}</b><br>
+          <small>
+            ${escapeHtml(editorialCategory(item))}
+            ·
+            ${escapeHtml(item.description)}
+          </small>
+        </button>
+      `;
+    }).join("")}
+  `;
+});
 
-      navigator.serviceWorker
-
-        .register(
-          "sw.js"
-        )
-
-        .catch(
-          error => {
-
-            console.warn(
-              "Service Worker:",
-              error
-            );
-
-          }
-        );
-
-    }
-  );
-
+/* Service Worker */
+if("serviceWorker" in navigator){
+  window.addEventListener("load",() => {
+    navigator.serviceWorker.register("sw.js").catch(error => {
+      console.warn("Service Worker:",error);
+    });
+  });
 }
 
-
-/* =========================================================
-   INICIALIZAÇÃO
-   ========================================================= */
-
+/* Inicialização */
 loadNotionContent();
 
-
-</script>
-
-
-<!-- =======================================================
-     SCRIPT DE INSTALAÇÃO PWA
-     ======================================================= -->
-
-<script>
-
+/* Instalação */
 (() => {
-
-
   let deferredPrompt = null;
 
-
-  const overlay =
-    document.getElementById(
-      "pwaInstallOverlay"
-    );
-
-
-  const installBtn =
-    document.getElementById(
-      "pwaInstallBtn"
-    );
-
-
-  const laterBtn =
-    document.getElementById(
-      "pwaInstallLater"
-    );
-
+  const overlay = document.getElementById("pwaInstallOverlay");
+  const installBtn = document.getElementById("pwaInstallBtn");
+  const laterBtn = document.getElementById("pwaInstallLater");
 
   const showPopup = () => {
-
-
     if(
-
       overlay &&
-
       deferredPrompt &&
-
-      !window.matchMedia(
-        "(display-mode: standalone)"
-      ).matches
-
+      !window.matchMedia("(display-mode: standalone)").matches
     ){
-
-      overlay.style.display =
-        "flex";
-
+      overlay.style.display = "flex";
     }
-
   };
 
+  window.addEventListener("beforeinstallprompt",event => {
+    event.preventDefault();
+    deferredPrompt = event;
+    setTimeout(showPopup,900);
+  });
 
-  window.addEventListener(
-    "beforeinstallprompt",
-    event => {
+  installBtn?.addEventListener("click",async () => {
+    if(!deferredPrompt) return;
 
-      event.preventDefault();
+    overlay.style.display = "none";
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  });
 
-      deferredPrompt =
-        event;
+  laterBtn?.addEventListener("click",() => {
+    overlay.style.display = "none";
+  });
 
-      setTimeout(
-        showPopup,
-        900
-      );
-
-    }
-  );
-
-
-  installBtn?.addEventListener(
-    "click",
-    async () => {
-
-
-      if(!deferredPrompt){
-
-        return;
-
-      }
-
-
-      overlay.style.display =
-        "none";
-
-
-      deferredPrompt.prompt();
-
-
-      await deferredPrompt.userChoice;
-
-
-      deferredPrompt =
-        null;
-
-    }
-  );
-
-
-  laterBtn?.addEventListener(
-    "click",
-    () => {
-
-      overlay.style.display =
-        "none";
-
-    }
-  );
-
-
-  window.addEventListener(
-    "appinstalled",
-    () => {
-
-      deferredPrompt =
-        null;
-
-
-      if(overlay){
-
-        overlay.style.display =
-          "none";
-
-      }
-
-    }
-  );
-
-
+  window.addEventListener("appinstalled",() => {
+    deferredPrompt = null;
+    if(overlay) overlay.style.display = "none";
+  });
 })();
-
 </script>
-
-
 </body>
-
 </html>

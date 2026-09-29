@@ -535,6 +535,8 @@ main{
     0
     270px;
 
+  position:relative;
+
   background:#fff;
 
   border:
@@ -569,6 +571,54 @@ main{
 
 }
 
+
+/* =========================================================
+   FAVORITOS
+   ========================================================= */
+
+.favorite-button{
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:34px;
+  height:34px;
+  border:1px solid rgba(220,229,234,.95);
+  border-radius:50%;
+  background:rgba(255,255,255,.96);
+  color:#687B88;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  line-height:1;
+  cursor:pointer;
+  z-index:8;
+  box-shadow:0 4px 12px rgba(23,48,66,.14);
+  transition:transform .15s ease, background .15s ease, color .15s ease;
+}
+
+.favorite-button:hover{
+  transform:scale(1.08);
+}
+
+.favorite-button.active{
+  color:#C7A348;
+  background:#fff;
+}
+
+.favorite-section{
+  margin-top:32px;
+}
+
+.favorite-section .category-header{
+  margin-bottom:12px;
+}
+
+.favorite-empty{
+  color:var(--muted);
+  font-size:13px;
+  margin:0 0 4px;
+}
 
 /* =========================================================
    IMAGEM
@@ -1753,6 +1803,155 @@ function createClassBar(category){
 
 
 /* =========================================================
+   FAVORITOS
+   ========================================================= */
+
+const FAVORITES_KEY = "infectoConsultFavorites";
+
+function getFavoriteIds(){
+  try{
+    const value = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+    return Array.isArray(value) ? value : [];
+  }catch(error){
+    return [];
+  }
+}
+
+function isFavorite(id){
+  if(!id) return false;
+  return getFavoriteIds().includes(String(id));
+}
+
+function saveFavoriteIds(ids){
+  try{
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(ids));
+  }catch(error){
+    console.warn("Não foi possível salvar favoritos.", error);
+  }
+}
+
+function toggleFavorite(event,id){
+
+  if(event){
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  if(!id) return;
+
+  const normalizedId = String(id);
+  const ids = getFavoriteIds();
+  const index = ids.indexOf(normalizedId);
+
+  if(index >= 0){
+    ids.splice(index,1);
+  }else{
+    ids.unshift(normalizedId);
+  }
+
+  saveFavoriteIds(ids);
+  updateFavoriteButtons();
+  renderFavoritesOnly();
+}
+
+function updateFavoriteButtons(){
+
+  document
+    .querySelectorAll(".favorite-button[data-favorite-id]")
+    .forEach(button => {
+
+      const id = button.dataset.favoriteId || "";
+      const active = isFavorite(id);
+
+      button.classList.toggle("active",active);
+      button.textContent = active ? "★" : "☆";
+      button.setAttribute(
+        "aria-label",
+        active ? "Remover dos favoritos" : "Adicionar aos favoritos"
+      );
+    });
+}
+
+function createFavoritesSection(){
+
+  const ids = getFavoriteIds();
+
+  const favoriteItems = ids
+    .map(id => modules.find(item => String(item.id) === String(id)))
+    .filter(Boolean);
+
+  if(!favoriteItems.length){
+    return "";
+  }
+
+  return `
+    <section
+      id="favoritesSection"
+      class="favorite-section category-section"
+      data-category="Favoritos">
+
+      <div class="category-header">
+        <h2 class="category-title">
+          <span class="category-icon">⭐</span>
+          Meus favoritos
+        </h2>
+
+        <span class="category-count">
+          ${favoriteItems.length}
+          ${favoriteItems.length === 1 ? "conteúdo" : "conteúdos"}
+        </span>
+      </div>
+
+      <div class="carousel-wrapper">
+
+        <button
+          type="button"
+          class="carousel-arrow left"
+          onclick="scrollCarousel(this,-1)"
+          aria-label="Favoritos anteriores">
+          ‹
+        </button>
+
+        <div class="carousel">
+          ${favoriteItems.map(createCard).join("")}
+        </div>
+
+        <button
+          type="button"
+          class="carousel-arrow right"
+          onclick="scrollCarousel(this,1)"
+          aria-label="Próximos favoritos">
+          ›
+        </button>
+
+      </div>
+    </section>
+  `;
+}
+
+function renderFavoritesOnly(){
+
+  const current = document.getElementById("favoritesSection");
+  const wrapper = document.createElement("div");
+  wrapper.innerHTML = createFavoritesSection();
+  const next = wrapper.firstElementChild;
+
+  if(current && next){
+    current.replaceWith(next);
+  }else if(current && !next){
+    current.remove();
+  }else if(next){
+    const catalogElement = document.getElementById("catalog");
+    if(catalogElement){
+      catalogElement.insertBefore(next,catalogElement.firstElementChild);
+    }
+  }
+
+  updateFavoriteButtons();
+}
+
+
+/* =========================================================
    CRIA CARD
    ========================================================= */
 
@@ -1831,6 +2030,18 @@ function createCard(item){
   }
 
 
+  const favoriteButton = item.id ? `
+      <button
+        type="button"
+        class="favorite-button ${isFavorite(item.id) ? "active" : ""}"
+        data-favorite-id="${escapeHtml(item.id)}"
+        aria-label="${isFavorite(item.id) ? "Remover dos favoritos" : "Adicionar aos favoritos"}"
+        onclick="toggleFavorite(event,'${escapeHtml(item.id)}')"
+      >
+        ${isFavorite(item.id) ? "★" : "☆"}
+      </button>
+    ` : "";
+
   return `
 
     <article
@@ -1838,6 +2049,8 @@ function createCard(item){
       class="module-card"
 
       data-class="${escapeHtml(item.className || "")}"
+
+      data-id="${escapeHtml(item.id || "")}"
 
       onclick="
         openModule(
@@ -1849,6 +2062,8 @@ function createCard(item){
       "
 
     >
+
+      ${favoriteButton}
 
       ${imageHtml}
 
@@ -2140,7 +2355,7 @@ function renderNotionSection(items){
      MONTA HTML
      ------------------------------------------------------- */
 
-  let html = "";
+  let html = createFavoritesSection();
 
 
   categories.forEach(

@@ -55,7 +55,7 @@ function pageIcon(page) {
    Aceita:
    1. propriedade Notion "Imagem URL"
    2. propriedade Notion "Imagem" do tipo files
-   3. capa da página do Notion
+   3. capa da página
    ========================================================= */
 
 function pageImage(page) {
@@ -253,6 +253,16 @@ module.exports = async function handler(req, res) {
           category:
             propText(
               page.properties?.["Categoria"]
+            ),
+
+          /* =================================================
+             NOVO CAMPO
+             Lê a propriedade "Classe" do Notion
+             ================================================= */
+
+          className:
+            propText(
+              page.properties?.["Classe"]
             ),
 
           level:

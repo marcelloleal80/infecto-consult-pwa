@@ -311,6 +311,86 @@ main{
    SUBCATEGORIAS / CLASSES
    ========================================================= */
 
+/* =========================================================
+   BARRA DE CLASSES
+   ========================================================= */
+
+.class-filter-wrapper{
+  position:relative;
+  display:flex;
+  align-items:center;
+  margin:0 0 12px;
+}
+
+.class-filter{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-behavior:smooth;
+  scrollbar-width:none;
+  padding:3px 34px;
+  width:100%;
+  -webkit-overflow-scrolling:touch;
+}
+
+.class-filter::-webkit-scrollbar{
+  display:none;
+}
+
+.class-button{
+  flex:0 0 auto;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--navy);
+  border-radius:999px;
+  padding:7px 13px;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .18s ease;
+}
+
+.class-button:hover{
+  border-color:var(--blue);
+  background:#f2f7fa;
+}
+
+.class-button.active{
+  background:var(--navy);
+  color:#fff;
+  border-color:var(--navy);
+}
+
+.class-filter-arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--navy);
+  box-shadow:0 4px 12px rgba(23,48,66,.12);
+  cursor:pointer;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  line-height:1;
+}
+
+.class-filter-arrow.left{ left:0; }
+.class-filter-arrow.right{ right:0; }
+
+.class-filter-arrow:hover{
+  background:#f2f7fa;
+}
+
+
 .subcategory-block{
   margin-top:22px;
 }
@@ -896,12 +976,6 @@ footer{
 }
 
 
-.class-filter{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;margin:-2px 0 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
-.class-filter::-webkit-scrollbar{display:none;}
-.class-button{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:#36505f;border-radius:999px;padding:7px 13px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .18s ease,color .18s ease,border-color .18s ease;}
-.class-button:hover{border-color:var(--blue);}
-.class-button.active{background:var(--navy);color:#fff;border-color:var(--navy);}
-
 /* =========================================================
    RESPONSIVO
    ========================================================= */
@@ -962,7 +1036,23 @@ footer{
 
 }
 
-@media(max-width:700px){.class-filter{gap:6px;padding-bottom:9px}.class-button{font-size:11px;padding:6px 11px}}
+
+@media(max-width:700px){
+  .class-filter{
+    gap:6px;
+    padding-left:30px;
+    padding-right:30px;
+  }
+  .class-button{
+    font-size:11px;
+    padding:6px 11px;
+  }
+  .class-filter-arrow{
+    width:28px;
+    height:28px;
+  }
+}
+
 </style>
 
 </head>
@@ -1510,15 +1600,45 @@ function editorialCategory(item){
 
 const CATEGORY_CONFIG = {
 
-  "Síndromes clínicas":{ icon:"🩺", order:1 },
-  "Patógenos":{ icon:"🦠", order:2 },
-  "Medicamentos":{ icon:"💊", order:3 },
-  "Raciocínio clínico":{ icon:"🧠", order:4 },
-  "Exames":{ icon:"🧪", order:5 },
-  "Ferramentas":{ icon:"⚙️", order:6 }
+  "Síndromes clínicas":{
+    icon:"🩺",
+    order:1
+  },
+
+  "Patógenos":{
+    icon:"🦠",
+    order:2
+  },
+
+  "Medicamentos":{
+    icon:"💊",
+    order:3
+  },
+
+  "Raciocínio clínico":{
+    icon:"🧠",
+    order:4
+  },
+
+  "Exames":{
+    icon:"🧪",
+    order:5
+  },
+
+  "Ferramentas":{
+    icon:"⚙️",
+    order:6
+  }
+
 };
 
+
+/* =========================================================
+   CLASSES EDITORIAIS
+   ========================================================= */
+
 const CLASS_CONFIG = {
+
   "Síndromes clínicas":[
     "Respiratório",
     "Pele e partes moles",
@@ -1531,26 +1651,105 @@ const CLASS_CONFIG = {
     "Síndromes sistêmicas",
     "Linfonodos e baço"
   ],
-  "Patógenos":["Bactérias","Vírus","Fungos","Micobactérias","Parasitas"],
-  "Medicamentos":["Antibacterianos","Antifúngicos","Antivirais","Antiparasitários","Antimicobacterianos"],
+
+  "Patógenos":[
+    "Bactérias",
+    "Vírus",
+    "Fungos",
+    "Micobactérias",
+    "Parasitas"
+  ],
+
+  "Medicamentos":[
+    "Antibacterianos",
+    "Antifúngicos",
+    "Antivirais",
+    "Antiparasitários",
+    "Antimicobacterianos"
+  ],
+
   "Raciocínio clínico":[],
   "Exames":[],
   "Ferramentas":[]
 };
 
-function createClassBar(category){
-  const classes=CLASS_CONFIG[category]||[];
-  if(!classes.length) return "";
-  return `
-    <div class="class-filter">
-      <button class="class-button active" data-class="Todos" onclick="filterCategoryClass(this,'Todos')">Todos</button>
-      ${classes.map(c=>{
-        const safe=String(c).replace(/\\/g,"\\\\").replace(/'/g,"\\'");
-        return `<button class="class-button" data-class="${escapeHtml(c)}" onclick="filterCategoryClass(this,'${safe}')">${escapeHtml(c)}</button>`;
-      }).join("")}
-    </div>`;
+
+/* =========================================================
+   NORMALIZAÇÃO PARA FILTRO DE CLASSES
+   ========================================================= */
+
+function normalizeClass(value){
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/\s+/g," ");
 }
 
+
+/* =========================================================
+   CRIA BARRA DE CLASSES
+   ========================================================= */
+
+function createClassBar(category){
+
+  const classes = CLASS_CONFIG[category] || [];
+
+  if(!classes.length){
+    return "";
+  }
+
+  return `
+    <div class="class-filter-wrapper">
+
+      <button
+        type="button"
+        class="class-filter-arrow left"
+        onclick="scrollClassBar(this,-1)"
+        aria-label="Classes anteriores">
+        ‹
+      </button>
+
+      <div class="class-filter" role="tablist" aria-label="Classes de ${escapeHtml(category)}">
+
+        <button
+          type="button"
+          class="class-button active"
+          data-class="Todos"
+          onclick="filterCategoryClass(this,'Todos')">
+          Todos
+        </button>
+
+        ${classes.map(className => {
+          const safeClass = String(className)
+            .replace(/\\/g,"\\\\")
+            .replace(/'/g,"\\'");
+
+          return `
+            <button
+              type="button"
+              class="class-button"
+              data-class="${escapeHtml(className)}"
+              onclick="filterCategoryClass(this,'${safeClass}')">
+              ${escapeHtml(className)}
+            </button>
+          `;
+        }).join("")}
+
+      </div>
+
+      <button
+        type="button"
+        class="class-filter-arrow right"
+        onclick="scrollClassBar(this,1)"
+        aria-label="Próximas classes">
+        ›
+      </button>
+
+    </div>
+  `;
+}
 
 
 /* =========================================================
@@ -1637,6 +1836,8 @@ function createCard(item){
     <article
 
       class="module-card"
+
+      data-class="${escapeHtml(item.className || "")}"
 
       onclick="
         openModule(
@@ -1755,26 +1956,70 @@ function createCategorySection(
   category,
   items
 ){
-  const config=CATEGORY_CONFIG[category];
-  if(!config || !items || !items.length) return "";
-  const safeId=category.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-");
+
+  const config = CATEGORY_CONFIG[category];
+
+  if(!config || !items || !items.length){
+    return "";
+  }
+
+  const safeId =
+    category
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g,"")
+      .replace(/[^a-z0-9]+/g,"-");
+
   return `
-    <section class="category-section" data-category="${escapeHtml(category)}">
+    <section
+      class="category-section"
+      data-category="${escapeHtml(category)}">
+
       <div class="category-header">
-        <h2 class="category-title"><span class="category-icon">${config.icon}</span>${escapeHtml(category)}</h2>
-        <span class="category-count">${items.length} ${items.length===1?"conteúdo":"conteúdos"}</span>
+
+        <h2 class="category-title">
+          <span class="category-icon">${config.icon}</span>
+          ${escapeHtml(category)}
+        </h2>
+
+        <span class="category-count">
+          ${items.length}
+          ${items.length === 1 ? "conteúdo" : "conteúdos"}
+        </span>
+
       </div>
+
       ${createClassBar(category)}
+
       <div class="carousel-wrapper">
-        <button class="carousel-arrow left" onclick="scrollCarousel(this,-1)" aria-label="Anterior">‹</button>
-        <div id="carousel-${safeId}" class="carousel">
+
+        <button
+          type="button"
+          class="carousel-arrow left"
+          onclick="scrollCarousel(this,-1)"
+          aria-label="Anterior">
+          ‹
+        </button>
+
+        <div
+          id="carousel-${safeId}"
+          class="carousel">
           ${items.map(createCard).join("")}
         </div>
-        <button class="carousel-arrow right" onclick="scrollCarousel(this,1)" aria-label="Próximo">›</button>
-      </div>
-    </section>`;
-}
 
+        <button
+          type="button"
+          class="carousel-arrow right"
+          onclick="scrollCarousel(this,1)"
+          aria-label="Próximo">
+          ›
+        </button>
+
+      </div>
+
+    </section>
+  `;
+}
 
 
 /* =========================================================
@@ -1967,16 +2212,69 @@ function scrollCarousel(
 }
 
 
-function filterCategoryClass(button, selectedClass){
-  const section=button.closest(".category-section");
-  if(!section) return;
-  section.querySelectorAll(".class-button").forEach(b=>b.classList.remove("active"));
-  button.classList.add("active");
-  const selected=String(selectedClass).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-  section.querySelectorAll(".module-card").forEach(card=>{
-    const cardClass=String(card.dataset.class||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-    card.style.display=(selected==="todos" || cardClass===selected)?"":"none";
+/* =========================================================
+   NAVEGAÇÃO DA BARRA DE CLASSES
+   ========================================================= */
+
+function scrollClassBar(button,direction){
+
+  const wrapper =
+    button.closest(".class-filter-wrapper");
+
+  if(!wrapper) return;
+
+  const bar =
+    wrapper.querySelector(".class-filter");
+
+  if(!bar) return;
+
+  bar.scrollBy({
+    left: Math.max(bar.clientWidth * .65,220) * direction,
+    behavior:"smooth"
   });
+}
+
+
+function filterCategoryClass(button,selectedClass){
+
+  const section =
+    button.closest(".category-section");
+
+  if(!section) return;
+
+  section
+    .querySelectorAll(".class-button")
+    .forEach(btn => btn.classList.remove("active"));
+
+  button.classList.add("active");
+
+  const selected =
+    normalizeClass(selectedClass);
+
+  const cards =
+    section.querySelectorAll(".module-card");
+
+  cards.forEach(card => {
+
+    const cardClass =
+      normalizeClass(card.dataset.class || "");
+
+    const show =
+      selected === "todos" ||
+      cardClass === selected;
+
+    card.style.display = show ? "" : "none";
+  });
+
+  const carousel =
+    section.querySelector(".carousel");
+
+  if(carousel){
+    carousel.scrollTo({
+      left:0,
+      behavior:"smooth"
+    });
+  }
 }
 
 

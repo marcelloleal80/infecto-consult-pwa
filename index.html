@@ -1448,7 +1448,15 @@ function editorialCategory(item){
 
   }
 
-
+/* -------------------------------------------------------
+   RACIOCÍNIO CLÍNICO
+   ------------------------------------------------------- */
+if(
+  raw.includes("raciocinio clinico") ||
+  raw.includes("raciocinio")
+){
+  return "Raciocínio clínico";
+}  
   /* -------------------------------------------------------
      MEDICAMENTOS
      ------------------------------------------------------- */
@@ -1554,51 +1562,34 @@ function editorialCategory(item){
 const CATEGORY_CONFIG = {
 
   "Síndromes clínicas":{
-
     icon:"🩺",
-
     order:1
-
   },
-
 
   "Patógenos":{
-
     icon:"🦠",
-
-    order:2
-
+    order:3
   },
-
 
   "Medicamentos":{
-
     icon:"💊",
-
-    order:3
-
+    order:4
   },
-
 
   "Exames":{
-
     icon:"🧪",
-
-    order:4
-
+    order:5
   },
 
-
   "Ferramentas":{
-
     icon:"⚙️",
-
-    order:5
-
-  }
-
+    order:6
 };
-
+  
+  "Raciocínio clínico":{
+    icon:"🧠",
+    order:2
+  },
 
 /* =========================================================
    CRIA CARD

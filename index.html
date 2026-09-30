@@ -2036,7 +2036,6 @@ function createCard(item){
         class="favorite-button ${isFavorite(item.id) ? "active" : ""}"
         data-favorite-id="${escapeHtml(item.id)}"
         aria-label="${isFavorite(item.id) ? "Remover dos favoritos" : "Adicionar aos favoritos"}"
-        onclick="toggleFavorite(event,'${escapeHtml(item.id)}')"
       >
         ${isFavorite(item.id) ? "★" : "☆"}
       </button>
@@ -2051,15 +2050,7 @@ function createCard(item){
       data-class="${escapeHtml(item.className || "")}"
 
       data-id="${escapeHtml(item.id || "")}"
-
-      onclick="
-        openModule(
-          '${target.replace(
-            /'/g,
-            "\\'"
-          )}'
-        )
-      "
+      data-target="${escapeHtml(target)}"
 
     >
 
@@ -2494,6 +2485,42 @@ function filterCategoryClass(button,selectedClass){
 
 
 /* =========================================================
+   NAVEGAÇÃO SEGURA DOS CARDS E RESULTADOS
+   ========================================================= */
+
+function getSafeTarget(element){
+  return element?.dataset?.target || "";
+}
+
+if(catalog){
+  catalog.addEventListener("click", event => {
+    const favoriteButton = event.target.closest(".favorite-button[data-favorite-id]");
+
+    if(favoriteButton){
+      toggleFavorite(event, favoriteButton.dataset.favoriteId || "");
+      return;
+    }
+
+    const card = event.target.closest(".module-card[data-target]");
+
+    if(card && catalog.contains(card)){
+      openModule(getSafeTarget(card));
+    }
+  });
+}
+
+if(results){
+  results.addEventListener("click", event => {
+    const resultButton = event.target.closest("button[data-target]");
+
+    if(resultButton && results.contains(resultButton)){
+      openModule(getSafeTarget(resultButton));
+    }
+  });
+}
+
+
+/* =========================================================
    CARREGAR NOTION
    ========================================================= */
 
@@ -2738,16 +2765,8 @@ q.addEventListener(
             return `
 
               <button
-
-                onclick="
-                  openModule(
-                    '${target.replace(
-                      /'/g,
-                      "\\'"
-                    )}'
-                  )
-                "
-
+                type="button"
+                data-target="${escapeHtml(target)}"
               >
 
                 🔎

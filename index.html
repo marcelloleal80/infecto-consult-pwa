@@ -1615,11 +1615,31 @@ function editorialCategory(item){
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g,"");
 
-  /* O Contrato editorial é a fonte principal da categoria.
-     Regras abaixo existem apenas para compatibilidade com conteúdos
-     antigos ainda não migrados para a nova taxonomia. */
+  /* Categorias principais do Infecto Consult.
+     A categoria editorial explícita do Notion tem prioridade. */
 
-  if(raw.includes("raciocinio")){
+  if(raw.includes("prevenc") || raw.includes("profilax")){
+    return "Prevenção";
+  }
+
+  if(
+    raw === "hiv" || raw.includes("hiv") ||
+    raw.includes("ist") || raw.includes("infeccoes sexualmente") ||
+    raw.includes("infeccoes sexual")
+  ){
+    return "HIV e ISTs";
+  }
+
+  if(
+    raw.includes("arbov") || raw.includes("zoon") ||
+    raw.includes("viajante") || raw.includes("medicina tropical")
+  ){
+    return "Arboviroses e zoonoses";
+  }
+
+  if(raw.includes("raciocinio") || raw.includes("ferramenta") ||
+     raw.includes("calculadora") || raw.includes("escore") ||
+     raw.includes("exame") || raw.includes("laboratorio") || raw.includes("imagem")){
     return "Raciocínio clínico";
   }
 
@@ -1635,23 +1655,53 @@ function editorialCategory(item){
     return "Síndromes clínicas";
   }
 
-  if(raw.includes("exame") || raw.includes("laboratorio") || raw.includes("imagem")){
-    return "Exames";
-  }
-
-  if(raw.includes("ferramenta") || raw.includes("calculadora") || raw.includes("escore")){
-    return "Ferramentas";
-  }
-
-  /* Compatibilidade: Hepatite B/C deixam de aparecer como Doença. */
+  /* Compatibilidade com páginas antigas ainda sem categoria migrada. */
   if(
-    (raw.includes("doenca") || raw.includes("doencas")) &&
-    (title.includes("hepatite b") || title.includes("hepatite c"))
+    title.includes("pep hiv") || title.includes("profilaxia pos-exposicao") ||
+    title.includes("profilaxia pós-exposição") || title.includes("profilaxia do tetano") ||
+    title.includes("profilaxia da raiva") || title.includes("exposicao ao virus da raiva") ||
+    title.includes("exposição ao vírus da raiva") || title.includes("exposicao sexual") ||
+    title.includes("exposição sexual") || title.includes("profilaxia")
   ){
+    return "Prevenção";
+  }
+
+  if(
+    title.includes("hiv") || title.includes("aids") ||
+    title.includes("ist") || title.includes("sifilis") ||
+    title.includes("sífilis") || title.includes("gonorreia") ||
+    title.includes("clamidia") || title.includes("clamídia")
+  ){
+    return "HIV e ISTs";
+  }
+
+  if(
+    title.includes("dengue") || title.includes("chikungunya") ||
+    title.includes("zika") || title.includes("febre amarela") ||
+    title.includes("leptospirose") || title.includes("raiva") ||
+    title.includes("leishmaniose") || title.includes("doenca de chagas") ||
+    title.includes("doença de chagas") || title.includes("malaria") ||
+    title.includes("malária") || title.includes("febre em viajante")
+  ){
+    return "Arboviroses e zoonoses";
+  }
+
+  if(raw.includes("patogeno") || raw.includes("microorganismo")){
     return "Patógenos";
   }
 
-  /* Conteúdos antigos classificados como Doença não criam uma seção nova. */
+  if(raw.includes("medicamento") || raw.includes("antimicrobiano")){
+    return "Medicamentos";
+  }
+
+  if(raw.includes("raciocinio") || raw.includes("ferramenta") ||
+     raw.includes("calculadora") || raw.includes("escore") ||
+     raw.includes("exame") || raw.includes("laboratorio") || raw.includes("imagem")){
+    return "Raciocínio clínico";
+  }
+
+  /* Hepatites B/C podem ser encontradas em HIV e ISTs se a página for
+     de prevenção/exposição; páginas específicas do vírus permanecem em Patógenos. */
   if(raw.includes("doenca") || raw.includes("doencas")){
     return "Síndromes clínicas";
   }
@@ -1661,7 +1711,7 @@ function editorialCategory(item){
 
 
 /* =========================================================
-   CONFIGURAÇÃO DAS CATEGORIAS
+   CONFIGURAÇÃO DAS CATEGORIAS PRINCIPAIS
    ========================================================= */
 
 const CATEGORY_CONFIG = {
@@ -1676,24 +1726,29 @@ const CATEGORY_CONFIG = {
     order:2
   },
 
+  "HIV e ISTs":{
+    icon:"🧬",
+    order:3
+  },
+
+  "Arboviroses e zoonoses":{
+    icon:"🌎",
+    order:4
+  },
+
+  "Prevenção":{
+    icon:"🛡️",
+    order:5
+  },
+
   "Medicamentos":{
     icon:"💊",
-    order:3
+    order:6
   },
 
   "Raciocínio clínico":{
     icon:"🧠",
-    order:4
-  },
-
-  "Exames":{
-    icon:"🧪",
-    order:5
-  },
-
-  "Ferramentas":{
-    icon:"⚙️",
-    order:6
+    order:7
   }
 
 };
@@ -1726,6 +1781,27 @@ const CLASS_CONFIG = {
     "Parasitas"
   ],
 
+  "HIV e ISTs":[
+    "HIV e aids",
+    "Infecções sexualmente transmissíveis",
+    "Hepatites virais",
+    "Exposição sexual"
+  ],
+
+  "Arboviroses e zoonoses":[
+    "Arboviroses",
+    "Zoonoses",
+    "Doenças transmitidas por vetores",
+    "Medicina do viajante"
+  ],
+
+  "Prevenção":[
+    "Profilaxia pós-exposição",
+    "Profilaxia pré-exposição",
+    "Vacinação e imunoprofilaxia",
+    "Profilaxias específicas"
+  ],
+
   "Medicamentos":[
     "Antibacterianos",
     "Antifúngicos",
@@ -1734,10 +1810,9 @@ const CLASS_CONFIG = {
     "Antimicobacterianos"
   ],
 
-  "Raciocínio clínico":[],
-  "Exames":[],
-  "Ferramentas":[]
+  "Raciocínio clínico":[]
 };
+
 
 
 /* =========================================================

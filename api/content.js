@@ -111,9 +111,13 @@ module.exports = async function handler(req, res) {
 
           // Os três campos usados pelo index.html para ordenar os cards.
           featured: properties["Destacar no início"]?.checkbox === true,
-          // Data editorial. NÃO usar last_edited_time como substituto:
-          // marcar um checkbox também alteraria a última edição automática.
-          updatedAt: properties["Última atualização"]?.date?.start ?? null,
+          // Atualização automática = última edição da página.
+          // Equivale à fórmula "Última atualização" que espelha "Última edição".
+          // Qualquer alteração, inclusive em propriedades/checkboxes, muda essa data.
+          updatedAt: page.last_edited_time ??
+            properties["Última atualização"]?.formula?.date?.start ??
+            properties["Última edição"]?.last_edited_time ??
+            null,
           createdAt: page.created_time ?? null
         };
       });

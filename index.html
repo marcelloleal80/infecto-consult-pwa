@@ -1520,6 +1520,57 @@ function escapeHtml(value){
    NORMALIZA ITEM DA API
    ========================================================= */
 
+/* Ordenação editorial: destaque é diferente dos favoritos pessoais.
+   Contrato de /api/content:
+   featured = checkbox "Destacar no início";
+   updatedAt = propriedade editorial "Última atualização" (NÃO last_edited_time);
+   createdAt = created_time da página no Notion.
+   As duas normalizações existentes preservam esses campos. */
+function readEditorialCheckbox(value){
+  if(value && typeof value === "object") value = value.checkbox;
+  if(typeof value === "boolean") return value;
+  if(typeof value === "number") return value === 1;
+  return ["true", "1", "__yes__", "sim", "x"].includes(
+    String(value ?? "").trim().toLowerCase()
+  );
+}
+
+function readEditorialDate(value){
+  if(typeof value === "string") return value.trim();
+  return value?.date?.start || value?.start || "";
+}
+
+function editorialTimestamp(value){
+  if(!value) return null;
+  const timestamp = Date.parse(value);
+  return Number.isFinite(timestamp) ? timestamp : null;
+}
+
+function compareDatesNewestFirst(a,b){
+  if(a === null) return b === null ? 0 : 1;
+  if(b === null) return -1;
+  return b - a;
+}
+
+function compareEditorialItems(a,b){
+  // 1. Todos os destacados precedem os não destacados.
+  const featuredDifference = Number(b.featured) - Number(a.featured);
+  if(featuredDifference) return featuredDifference;
+
+  // 2. Dentro de cada grupo, datados primeiro, atualização decrescente.
+  const updatedDifference = compareDatesNewestFirst(
+    editorialTimestamp(a.updatedAt), editorialTimestamp(b.updatedAt)
+  );
+  if(updatedDifference) return updatedDifference;
+
+  // 3. Sem atualização (ou em empate), criação decrescente.
+  // Se criação também faltar, permanece após os de criação conhecida.
+  // Empates completos preservam a ordem recebida da API (sort estável).
+  return compareDatesNewestFirst(
+    editorialTimestamp(a.createdAt), editorialTimestamp(b.createdAt)
+  );
+}
+
 function normalizeItem(item){
 
   return {
@@ -1577,9 +1628,29 @@ function normalizeItem(item){
 
 
 
+    featured:
+      readEditorialCheckbox(
+        item.featured ??
+        item.destacarNoInicio ??
+        item["Destacar no início"] ??
+        item.properties?.["Destacar no início"]
+      ),
+
     updatedAt:
-      item.updatedAt ||
-      ""
+      readEditorialDate(
+        item.ultimaAtualizacao ??
+        item["Última atualização"] ??
+        item.properties?.["Última atualização"] ??
+        item.updatedAt
+      ),
+
+    createdAt:
+      readEditorialDate(
+        item.createdAt ??
+        item.createdTime ??
+        item.created_time ??
+        item.dataCriacao
+      )
 
   };
 
@@ -2408,6 +2479,18 @@ function renderNotionSection(items){
 
     }
   );
+
+
+  /* -------------------------------------------------------
+     ORDENA CARDS DENTRO DE CADA CATEGORIA
+     A ordem do array é a ordem visual da esquerda para a direita.
+     Os filtros de classe apenas ocultam cards e preservam a sequência.
+     Favoritos pessoais mantêm seu comportamento original.
+     ------------------------------------------------------- */
+
+  Object.values(grouped).forEach(categoryItems => {
+    categoryItems.sort(compareEditorialItems);
+  });
 
 
   /* -------------------------------------------------------
